@@ -32,6 +32,37 @@ enum keycodes {
   MOUSE
 };
 
+enum tapdance {
+    TD_RESET = 0
+};
+
+void reset_dance_each(qk_tap_dance_state_t *state, void *user_data) {
+    switch(state->count) {
+    case 1:
+        SEND_STRING ("R");
+        break;
+    case 2:
+        SEND_STRING ("E");
+        break;
+    case 3:
+        SEND_STRING ("S");
+        break;
+    case 4:
+        SEND_STRING ("E");
+        break;
+    default:
+        SEND_STRING ("T");
+        break;
+    }
+}
+
+void reset_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count > 4) {
+        reset_keyboard();
+        reset_tap_dance(state);
+    }
+}
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
@@ -103,7 +134,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______, _______, TERM_ON, TERM_OFF,_______, _______, KC_DEL ,
     _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______, _______, _______, UC(0x03bb), _______,
     _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______,
-    RESET,   DEBUG,   _______, _______, _______,     _______,      _______, _______, _______, _______, _______
+    TD(TD_RESET),   DEBUG,   _______, _______, _______,     _______,      _______, _______, _______, _______, _______
     ),
 
 /* Mouse
@@ -166,3 +197,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   return true;
 }
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_RESET]     = ACTION_TAP_DANCE_FN_ADVANCED(reset_dance_each, reset_dance_finished, NULL)
+};
