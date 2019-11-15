@@ -50,8 +50,11 @@ void reset_dance_each(qk_tap_dance_state_t *state, void *user_data) {
     case 4:
         SEND_STRING ("E");
         break;
-    default:
+    case 5:
         SEND_STRING ("T");
+        break;
+    default:
+        SEND_STRING (" ");
         break;
     }
 }
