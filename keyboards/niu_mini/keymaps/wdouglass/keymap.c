@@ -22,14 +22,12 @@ enum layers {
   _QWERTY,
   _LOWER,
   _RAISE,
-  _ADJUST,
-  _MOUSE
+  _ADJUST
 };
 
 enum keycodes {
   LOWER = SAFE_RANGE,
-  RAISE,
-  MOUSE
+  RAISE
 };
 
 enum tapdance {
@@ -76,14 +74,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |---------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift   |   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
  * |---------+------+------+------+------+------+------+------+------+------+------+------|
- * | Mouse   | Ctrl | GUI  | Alt  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
+ * |         | Ctrl | GUI  | Alt  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
  * `--------------------------------------------------------------------------------------'
  */
   [_QWERTY] = LAYOUT_planck_mit(
     KC_TAB,          KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     LCTL_T(KC_ESC),  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
     KC_LSFT,         KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
-    MOUSE,           KC_LCTL, KC_LGUI, KC_LALT, LOWER,       KC_SPC,       RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    _______,           KC_LCTL, KC_LGUI, KC_LALT, LOWER,       KC_SPC,       RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
     ),
 
 /* Lower
@@ -135,34 +133,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
   [_ADJUST] = LAYOUT_planck_mit(
     _______, _______, _______, _______, _______, _______, _______, TERM_ON, TERM_OFF,_______, _______, KC_DEL ,
-    _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______, _______, _______, UC(0x03bb), _______,
+    _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______, _______, _______, _______, _______,
     _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______,
     TD(TD_RESET),   DEBUG,   _______, _______, _______,     _______,      _______, _______, _______, _______, _______
-    ),
-
-/* Mouse
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-  [_MOUSE] = LAYOUT_planck_mit(
-    XXXXXXX, KC_BTN1, KC_MS_U, KC_BTN2, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_UP,   XXXXXXX, XXXXXXX, XXXXXXX,
-    _______, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX,
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN1, KC_BTN2, XXXXXXX,
-    _______, _______, _______, _______, XXXXXXX,     XXXXXXX,      XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R
     )
 
 
-};
-
-void matrix_init_user(void) {
-    set_unicode_input_mode(UC_LNX); // REPLACE UC_XXXX with the Unicode Input Mode for your OS. See table below.
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -186,14 +162,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       update_tri_layer(_LOWER, _RAISE, _ADJUST);
     }
     return false;
-    break;
-  case MOUSE:
-    if (record->event.pressed) {
-      layer_on(_MOUSE);
-    }
-    else {
-      layer_off(_MOUSE);
-    }
     break;
   default:
     break;
