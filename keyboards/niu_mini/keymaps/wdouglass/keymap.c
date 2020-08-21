@@ -19,13 +19,105 @@
 extern keymap_config_t keymap_config;
 
 enum unicode_names {
+    ALPHA_L,
+    ALPHA_U,
+    BETA_L,
+    BETA_U,
+    GAMMA_L,
+    GAMMA_U,
+    DELTA_L,
+    DELTA_U,
+    EPSILON_L,
+    EPSILON_U,
+    ZETA_L,
+    ZETA_U,
+    ETA_L,
+    ETA_U,
+    THETA_L,
+    THETA_U,
+    IOTA_L,
+    IOTA_U,
+    KAPPA_L,
+    KAPPA_U,
     LAMBDA_L,
-    LAMBDA_U
+    LAMBDA_U,
+    MU_L,
+    MU_U,
+    NU_L,
+    NU_U,
+    XI_L,
+    XI_U,
+    OMICRON_L,
+    OMICRON_U,
+    PI_L,
+    PI_U,
+    RHO_L,
+    RHO_U,
+    SIGMA_L,
+    SIGMA_U,
+    TAU_L,
+    TAU_U,
+    UPSILON_L,
+    UPSILON_U,
+    PHI_L,
+    PHI_U,
+    CHI_L,
+    CHI_U,
+    PSI_L,
+    PSI_U,
+    OMEGA_L,
+    OMEGA_U
 };
 
 const uint32_t PROGMEM unicode_map[] = {
-    [LAMBDA_L] = 0x3BB,
-    [LAMBDA_U] = 0x39B
+    [ALPHA_L] = 0x03B1,
+    [ALPHA_U] = 0x0391,
+    [BETA_L] = 0x03B2,
+    [BETA_U] = 0x0392,
+    [GAMMA_L] = 0x03B3,
+    [GAMMA_U] = 0x0393,
+    [DELTA_L] = 0x03B4,
+    [DELTA_U] = 0x0394,
+    [EPSILON_L] = 0x03B5,
+    [EPSILON_U] = 0x0395,
+    [ZETA_L] = 0x03B6,
+    [ZETA_U] = 0x0396,
+    [ETA_L] = 0x03B7,
+    [ETA_U] = 0x0397,
+    [THETA_L] = 0x03B8,
+    [THETA_U] = 0x0398,
+    [IOTA_L] = 0x03B9,
+    [IOTA_U] = 0x0399,
+    [KAPPA_L] = 0x03BA,
+    [KAPPA_U] = 0x039A,
+    [LAMBDA_L] = 0x03BB,
+    [LAMBDA_U] = 0x039B,
+    [MU_L] = 0x03BC,
+    [MU_U] = 0x039C,
+    [NU_L] = 0x03BD,
+    [NU_U] = 0x039D,
+    [XI_L] = 0x03BE,
+    [XI_U] = 0x039E,
+    [OMICRON_L] = 0x03BF,
+    [OMICRON_U] = 0x039F,
+    [PI_L] = 0x03C0,
+    [PI_U] = 0x03A0,
+    [RHO_L] = 0x03C1,
+    [RHO_U] = 0x03A1,
+    [SIGMA_L] = 0x03C3,
+    [SIGMA_U] = 0x03A3,
+    [TAU_L] = 0x03C4,
+    [TAU_U] = 0x03A4,
+    [UPSILON_L] = 0x03C5,
+    [UPSILON_U] = 0x03A5,
+    [PHI_L] = 0x03C6,
+    [PHI_U] = 0x03A6,
+    [CHI_L] = 0x03C7,
+    [CHI_U] = 0x03A7,
+    [PSI_L] = 0x03C8,
+    [PSI_U] = 0x03A8,
+    [OMEGA_L] = 0x03C9,
+    [OMEGA_U] = 0x03A9,
 };
 
 enum layers {
@@ -96,21 +188,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     UNICODE,         KC_LCTL, KC_LGUI, KC_LALT, LOWER,       KC_SPC,       RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
     ),
 
-/* Qwerty
- * ,--------------------------------------------------------------------------------------.
- * | Tab     |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
- * |---------+------+------+------+------+-------------+------+------+------+------+------|
- * | Ctrl/Esc|   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
- * |---------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift   |   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
- * |---------+------+------+------+------+------+------+------+------+------+------+------|
- * |         | Ctrl | GUI  | Alt  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
- * `--------------------------------------------------------------------------------------'
+/* Unicode 
+
+
+ * ,-----------------------------------------------------------------------------------.
+ * |      |  ψ   |  ω   |  ε   |  ρ   |  τ   |  θ   |  υ   |   υ  |  ι   |  π   |      |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      |  α   |  σ   |  δ   |  φ   |  γ   |  η   |      |   κ  |  λ   |      |      |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |      |  ζ   |  ξ   |  χ   |      |  β   |  ν   |  μ   |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |             |      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
  */
   [_UNICODE] = LAYOUT_planck_mit(
-    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,              _______,    _______,    
-    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    XP(LAMBDA_L, LAMBDA_U),    _______,    _______,    
-    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,               _______,    _______,    
+      _______,    XP(PSI_L, PSI_U),    XP(OMEGA_L, OMEGA_U),    XP(EPSILON_L, EPSILON_U), XP(RHO_L, RHO_U), XP(TAU_L, TAU_U),    XP(THETA_L, THETA_U),    XP(UPSILON_L, UPSILON_U),    XP(IOTA_L, IOTA_U),    XP(OMICRON_L, OMICRON_U), XP(PI_L, PI_U),    _______,    
+      _______,    XP(ALPHA_L, ALPHA_U), XP(SIGMA_L, SIGMA_U), XP(DELTA_L, DELTA_U),    XP(PHI_L, PHI_U),    XP(GAMMA_L, GAMMA_U),    XP(ETA_L, ETA_U),    _______,    XP(KAPPA_L, KAPPA_U),    XP(LAMBDA_L, LAMBDA_U),    _______,    _______,    
+      _______,    XP(ZETA_L, ZETA_U),    XP(XI_L, XI_U),    XP(CHI_L, CHI_U),    _______,    XP(BETA_L, BETA_U),    XP(NU_L, NU_U),    XP(MU_L, MU_U),    _______,    _______,               _______,    _______,    
     _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______
     ),
 
