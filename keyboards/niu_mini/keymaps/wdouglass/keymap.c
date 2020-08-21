@@ -18,16 +18,28 @@
 
 extern keymap_config_t keymap_config;
 
+enum unicode_names {
+    LAMBDA_L,
+    LAMBDA_U
+};
+
+const uint32_t PROGMEM unicode_map[] = {
+    [LAMBDA_L] = 0x3BB,
+    [LAMBDA_U] = 0x39B
+};
+
 enum layers {
   _QWERTY,
   _LOWER,
   _RAISE,
+  _UNICODE,
   _ADJUST
 };
 
 enum keycodes {
   LOWER = SAFE_RANGE,
-  RAISE
+  RAISE,
+  UNICODE
 };
 
 enum tapdance {
@@ -81,7 +93,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,          KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     LCTL_T(KC_ESC),  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
     KC_LSFT,         KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
-    _______,         KC_LCTL, KC_LGUI, KC_LALT, LOWER,       KC_SPC,       RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    UNICODE,         KC_LCTL, KC_LGUI, KC_LALT, LOWER,       KC_SPC,       RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    ),
+
+/* Qwerty
+ * ,--------------------------------------------------------------------------------------.
+ * | Tab     |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+ * |---------+------+------+------+------+-------------+------+------+------+------+------|
+ * | Ctrl/Esc|   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
+ * |---------+------+------+------+------+------|------+------+------+------+------+------|
+ * | Shift   |   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
+ * |---------+------+------+------+------+------+------+------+------+------+------+------|
+ * |         | Ctrl | GUI  | Alt  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
+ * `--------------------------------------------------------------------------------------'
+ */
+  [_UNICODE] = LAYOUT_planck_mit(
+    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,              _______,    _______,    
+    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    XP(LAMBDA_L, LAMBDA_U),    _______,    _______,    
+    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,               _______,    _______,    
+    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______
     ),
 
 /* Lower
@@ -163,6 +193,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return false;
     break;
+  case UNICODE:
+    if (record->event.pressed) {
+      layer_on(_UNICODE);
+    } else {
+      layer_off(_UNICODE);
+    }
   default:
     break;
   }
