@@ -13,26 +13,5 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#pragma once
+#include QMK_KEYBOARD_H
 
-#include "config_common.h"
-
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0xAA96
-#define PRODUCT_ID      0xAAAD
-#define DEVICE_VER      0x0001
-#define MANUFACTURER    lkaill-Y&R
-#define PRODUCT         zhou65
-
-/* enable the nkro when using the VIA. */
-#define FORCE_NKRO
-
-/* fix VIA RGB_light */
-#define VIA_HAS_BROKEN_KEYCODES
-
-
-/* Set 0 if debouncing isn't needed */
-#define DEBOUNCE 1
-
-#define USB_POLLING_INTERVAL_MS 1
-#define QMK_KEYS_PER_SCAN 4
