@@ -20,7 +20,7 @@
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0xAA96
 #define DEVICE_VER      0x0001
-#define MANUFACTURER    JasonRen biu
+#define MANUFACTURER    JasonRen biu-Y&R
 #define PRODUCT         M69
 
 // enable the nkro when using the VIA.

@@ -15,7 +15,7 @@
  */
 #pragma once
 
-#if defined(KEYBOARD_yandrstudio_M69_solder)
+#if defined(KEYBOARD_yandrstudio_m69_solder)
     #include "solder.h"
 #else
     #include "hotswap.h"

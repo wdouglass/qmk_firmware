@@ -18,7 +18,6 @@
 #include <stdbool.h>
 #include "util.h"
 #include "matrix.h"
-#include "debounce.h"
 #include "quantum.h"
 
 #ifdef DIRECT_PINS
@@ -199,7 +198,7 @@ static bool read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row)
 #    error DIODE_DIRECTION is not defined!
 #endif
 
-void matrix_init(void) {
+void matrix_init_custom(void) {
     // initialize key pins
     init_pins();
 
@@ -208,13 +207,9 @@ void matrix_init(void) {
         raw_matrix[i] = 0;
         matrix[i]     = 0;
     }
-
-    debounce_init(MATRIX_ROWS);
-
-    matrix_init_quantum();
 }
 
-uint8_t matrix_scan(void) {
+uint8_t matrix_scan_custom(void) {
     bool changed = false;
 
 #if defined(DIRECT_PINS) || (DIODE_DIRECTION == COL2ROW)
@@ -229,8 +224,5 @@ uint8_t matrix_scan(void) {
     }
 #endif
 
-    debounce(raw_matrix, matrix, MATRIX_ROWS, changed);
-
-    matrix_scan_quantum();
     return (uint8_t)changed;
 }

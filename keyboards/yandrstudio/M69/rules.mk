@@ -12,4 +12,4 @@ NKRO_ENABLE = yes           # USB Nkey Rollover
 NO_USB_STARTUP_CHECK = no	# Disable initialization only when usb is plugged in
 
 
-DEFAULT_FOLDER = yandrstudio/M69/solder
+DEFAULT_FOLDER = yandrstudio/m69/solder
