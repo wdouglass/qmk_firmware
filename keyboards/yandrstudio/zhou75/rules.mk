@@ -10,5 +10,3 @@ COMMAND_ENABLE = no         # Commands for debug and configuration
 # if this doesn't work, see here: https://github.com/tmk/tmk_keyboard/wiki/FAQ#nkro-doesnt-work
 NKRO_ENABLE = yes           # USB Nkey Rollover
 NO_USB_STARTUP_CHECK = no	# Disable initialization only when usb is plugged in
-
-
