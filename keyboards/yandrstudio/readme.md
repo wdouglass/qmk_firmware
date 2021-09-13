@@ -39,6 +39,8 @@ A creative coder.
 | boy40ble     | 0xAA96    | 0xAAAB     | BLE 5.0 Dual mode         | &cross;           |
 | boyPad       | 0xAA96    | 0xAAAC     | F401                      | &cross;           |
 | zhou65       | 0xAA96    | 0xAAAD     | F401                      | &cross;           |
+| lh68         | 0xAA96    | 0xAAAE     | F401, RGB                 | &cross;           |
+
 
 
 ### Keyboard Tools Developed by Y&R Studio
