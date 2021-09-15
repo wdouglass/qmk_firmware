@@ -17,6 +17,10 @@
 // stm32_clock_init
 
 #ifdef RGB_MATRIX_ENABLE
+
+// globol
+uint8_t underground_rgb_sw;
+
 led_config_t g_led_config = {
     {
         { 61,  62,  63,  64,  65,  66,  67,  68,  69,  70,  71,  72,  73,  74,  75 }, \
@@ -53,11 +57,13 @@ led_config_t g_led_config = {
 
 
 void rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
-    for (uint8_t i = led_min; i < led_max; ++i) {
-        if (g_led_config.flags[i] & LED_FLAG_KEYLIGHT)
+    if (rgb_matrix_config.enable) {
+        for (uint8_t i = led_min; i < led_max; ++i) {
+            if ((underground_rgb_sw != 1) && (g_led_config.flags[i] == 2)) {
+                rgb_matrix_set_color(i, 0, 0, 0);
+            }
+        }
     }
 }
-
-
 #endif
 
