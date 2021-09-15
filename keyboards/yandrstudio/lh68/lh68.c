@@ -21,6 +21,11 @@
 // globol
 uint8_t underground_rgb_sw;
 
+enum keyboard_keycodes {
+    UNDERRGB_TOG = SAFE_RANGE,
+    NEW_SAFE_RANGE  // Important!
+};
+
 led_config_t g_led_config = {
     {
         { 61,  62,  63,  64,  65,  66,  67,  68,  69,  70,  71,  72,  73,  74,  75 }, \
@@ -55,14 +60,25 @@ led_config_t g_led_config = {
     }
 };
 
-enum keyboard_keycodes {
-    UNDERRGB_TOG = SAFE_RANGE,
-    NEW_SAFE_RANGE  // Important!
-};
+void rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
+    if (rgb_matrix_config.enable) {
+        if (underground_rgb_sw != 1) {
+            for (uint8_t i = led_min; i < led_max; ++i) {
+                if ((g_led_config.flags[i] == 2)) {
+                    rgb_matrix_set_color(i, 0, 0, 0);
+                }
+            }
+        }
+    } else {
+        rgb_matrix_set_color_all(0,0,0);
+    }
+}
+
+
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     switch(keycode) {
         case UNDERRGB_TOG:
-            if (record->event.pressed) {
+            if (rgb_matrix_config.enable && record->event.pressed) {
                 underground_rgb_sw ^= 1;
             }
             return false;
@@ -72,14 +88,11 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-
-void rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
+void keyboard_post_init_kb(void) {
     if (rgb_matrix_config.enable) {
-        for (uint8_t i = led_min; i < led_max; ++i) {
-            if ((underground_rgb_sw != 1) && (g_led_config.flags[i] == 2)) {
-                rgb_matrix_set_color(i, 0, 0, 0);
-            }
-        }
+        underground_rgb_sw = 1;
+    } else {
+        underground_rgb_sw = 0;
     }
 }
 
