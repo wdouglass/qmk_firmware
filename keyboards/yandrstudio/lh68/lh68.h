@@ -17,6 +17,11 @@
 
 #include "quantum.h"
 
+enum keyboard_keycodes {
+    UNDERRGB_TOG = SAFE_RANGE,
+    NEW_SAFE_RANGE  // Important!
+};
+
 #define LAYOUT( \
 	K000, K001, K002, K003, K004, K005, K006, K007, K008, K009, K010, K011, K012, K013, K014, \
 	K100, K101, K102, K103, K104, K105, K106, K107, K108, K109, K110, K111, K112, K113, K114, \

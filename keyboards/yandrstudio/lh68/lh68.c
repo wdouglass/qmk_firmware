@@ -21,11 +21,6 @@
 // globol
 uint8_t underground_rgb_sw;
 
-enum keyboard_keycodes {
-    UNDERRGB_TOG = SAFE_RANGE,
-    NEW_SAFE_RANGE  // Important!
-};
-
 led_config_t g_led_config = {
     {
         { 61,  62,  63,  64,  65,  66,  67,  68,  69,  70,  71,  72,  73,  74,  75 }, \
