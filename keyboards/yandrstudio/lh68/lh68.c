@@ -56,8 +56,14 @@ led_config_t g_led_config = {
 };
 
 void rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
-    if (rgb_matrix_config.enable) {
-        if (underground_rgb_sw != 1) {
+    if (rgb_matrix_is_enabled()) {
+        if (underground_rgb_sw == 0) {
+            for (uint8_t i = led_min; i < led_max; ++i) {
+                if ((g_led_config.flags[i] == 4)) {
+                    rgb_matrix_set_color(i, 0, 0, 0);
+                }
+            }
+        } else if (underground_rgb_sw == 1) {
             for (uint8_t i = led_min; i < led_max; ++i) {
                 if ((g_led_config.flags[i] == 2)) {
                     rgb_matrix_set_color(i, 0, 0, 0);
@@ -74,7 +80,8 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     switch(keycode) {
         case UNDERRGB_TOG:
             if (rgb_matrix_config.enable && record->event.pressed) {
-                underground_rgb_sw ^= 1;
+                underground_rgb_sw += 1;
+                underground_rgb_sw %= 3;
             }
             return false;
         default:
@@ -84,8 +91,8 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
 }
 
 void keyboard_post_init_kb(void) {
-    if (rgb_matrix_config.enable) {
-        underground_rgb_sw = 1;
+    if (rgb_matrix_is_enabled()) {
+        underground_rgb_sw = 2;
     } else {
         underground_rgb_sw = 0;
     }
