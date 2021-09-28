@@ -13,3 +13,68 @@ state.keep_connection_update // 用来保持连接的计时器，定时更新nrf
 
 唤醒逻辑：
 
+BLE SEND: 0XFF 0X4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0XFE 
+    send_buf_send_one: have 0 remaining
+    last connection update latency 1ms
+  > BLE SEND: 0XFF 0X12 0XFE // * ask
+  > Put a time into resp buf, resp_buf size 1
+    send_buf_send_one: have 0 remaining
+    recv latency 3ms, resp_buf size 1
+  > Set the LED state as 2.
+  > Set the LED state as 2.
+  > Start Init the Nrf!!!
+  > BLE SEND: 0XFF 0X12 0XFE 
+    Put a time into resp buf, resp_buf size 1
+    waited 1ms for resp_buf
+    send_buf_send_one: have 0 remaining
+  > Some thing wrong, resp_buf size 1
+  > Start Init the Nrf!!!
+    BLE SEND: 0XFF 0X12 0XFE 
+  > Put a time into resp buf, resp_buf size 1
+    send_buf_send_one: have 0 remaining
+  > recv latency 1501ms, resp_buf size 1
+    Start Configure the Nrf!!!
+  > BLE SEND: 0XFF 0X12 0XFE 
+    Put a time into resp buf, resp_buf size 1
+    waited 1ms for resp_buf
+    send_buf_send_one: have 0 remaining
+  > recv latency 2ms, resp_buf size 1
+    Set the LED state as 2.
+  > Set the LED state as 2.
+  > Start Init the Nrf!!!
+    BLE SEND: 0XFF 0X12 0XFE 
+  > Put a time into resp buf, resp_buf size 1
+    waited 1ms for resp_buf
+    send_buf_send_one: have 0 remaining
+  > recv latency 1502ms, resp_buf size 1
+    Set the LED state as 2.
+  > Start Init the Nrf!!!
+    BLE SEND: 0XFF 0X12 0XFE 
+  > Put a time into resp buf, resp_buf size 1
+    send_buf_send_one: have 0 remaining
+  > recv latency 1501ms, resp_buf size 1
+    Start Configure the Nrf!!!
+  > BLE SEND: 0XFF 0X12 0XFE 
+    Put a time into resp buf, resp_buf size 1
+    send_buf_send_one: have 0 remaining
+    recv latency 1ms, resp_buf size 1
+    Set the LED state as 0.
+  > Set the LED state as 0.
+  > Start Init the Nrf!!!
+    BLE SEND: 0XFF 0X12 0XFE 
+  > Put a time into resp buf, resp_buf size 1
+    send_buf_send_one: have 0 remaining
+  > recv latency 1500ms, resp_buf size 1
+    Start Configure the Nrf!!!
+  > BLE SEND: 0XFF 0X12 0XFE 
+    Put a time into resp buf, resp_buf size 1
+    send_buf_send_one: have 0 remaining
+    recv latency 1ms, resp_buf size 1
+  > BLE SEND: 0XFF 0X12 0XFE 
+    Put a time into resp buf, resp_buf size 1
+    send_buf_send_one: have 0 remaining
+    recv latency 3ms, resp_buf size 1
+  > send latency 3ms
+    BLE SEND: 0XFF 0X11 0XA 0XFE 
+    send_buf_send_one
+*** HID console disconnected (AA96:AA05:0001)

@@ -18,6 +18,9 @@ bool bluetooth_init(void);
 bool bluetooth_init_pre(void);
 bool bluetooth_init_pos(void);
 void bluetooth_task(void);
+void bluetooth_send_resive_task(bool);
+void bluetooth_battery_task(void);
+void bluetooth_wakeup_task(void);
 bool bluetooth_is_connected(void);
 bool bluetooth_is_configured(void);
 void bluetooth_wakeup_once(void);
@@ -28,10 +31,13 @@ void bluetooth_pair(void);
 void bluetooth_clear_buf(void);
 void bluetooth_switch_one(uint8_t device_id);
 uint8_t bluetooth_working_state(void);
-void bluetooth_power_manager(void);
+// void bluetooth_power_manager(void);
 void bluetooth_send_battery_level(void);
 
+bool bluetooth_buffer_op(bool sendbuf, uint8_t op);
+
 void bluetooth_send_keyboard(report_keyboard_t *report);
+uint8_t bluetooth_get_led(void);
 
 #ifdef EXTRAKEY_ENABLE
 void bluetooth_send_extra(uint8_t report_id, uint16_t keycode);

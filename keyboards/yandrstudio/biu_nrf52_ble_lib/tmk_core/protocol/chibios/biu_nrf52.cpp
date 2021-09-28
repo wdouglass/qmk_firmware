@@ -4,20 +4,33 @@
 #include "wait.h"
 #include "uart.h"
 #include "gpio.h"
+#include "matrix.h"
 #include "print.h"
 #include "analog.h"
-#include "keycode.h"
 #include <alloca.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "ring_buffer.hpp"
+#include "keycode.h"
+#include "usb_ble_exchange_data.h"
+
+#include <hal.h>
+#include <ch.h>
+
 
 
 
 // These are the pin assignments for the stm32f401ccu6 boards.
 // You may define them to something else in your config.h
 // if yours is wired up differently.
+
+
+
+// STM32 WakeUp
+#ifndef BIUSTM32WKPin
+#    define BIUSTM32WKPin B0
+#endif
 
 // NRF RESET, WakeUp
 #ifndef BIUNRF52ResetPin
@@ -39,14 +52,17 @@
 #endif
 
 // ADC SETTING
-#define SAMPLE_BATTERY
-#ifndef BATTERY_LEVEL_PIN
-#    define BATTERY_LEVEL_PIN B0 // Adc pin
+// #define SAMPLE_BATTERY
+#ifdef SAMPLE_BATTERY
+#   ifndef BATTERY_LEVEL_PIN
+#       define BATTERY_LEVEL_PIN B0 // Adc pin
+#   endif
+#   ifndef BATTERY_LEVEL_SW_PIN
+#       define BATTERY_LEVEL_SW_PIN B1 // Adc pin
+#   endif
 #endif
-// #ifndef BATTERY_LEVEL_SW_PIN
-// #    define BATTERY_LEVEL_SW_PIN A1 // Adc pin
-// #endif
 
+// Battery
 #ifndef BATTERY_V_HEI
 #    define BATTERY_V_HEI 3750 // 3.75V
 #endif
@@ -59,6 +75,9 @@
 #ifndef BATTERY_ADC_MAX
 #    define BATTERY_ADC_MAX 3080
 #endif
+
+#define CH_CFG_NO_IDLE_THREAD TRUE
+
 
 // TIMEOUT INTERVAL SETTING
 #define BiuNrf52MsgTimeout               150           /* milliseconds  */
@@ -73,7 +92,6 @@
 // #define BiuNrf52SystemOffTimeout         300000         /* 5 minute     */
 #define BatteryUpdateInterval            60000          /* 1 minute     */
 
-#define BiuStm32IdleTimeout              5000           /* 3 second     */
 
 
 enum ble_msg_ht {
@@ -177,6 +195,7 @@ enum ble_state_biu {
   NRF_WORKING    = 1,
   NRF_DISCONNECT = 2,
   NRF_ADVING     = 3,
+  RETURN_CURRENT_LED_STATE = 4,
   NRF_ERROR      = 0xee
 };
 
@@ -194,6 +213,8 @@ static struct {
     uint32_t last_system_off_update;
     uint32_t last_reset_update;
     uint32_t keep_connection_update;
+    uint32_t fast_shale_sleep_update;
+    uint8_t  keyboard_led_state;
     bool has_send_ask;
 } state;
 
@@ -203,6 +224,37 @@ static RingBuffer<queue_item, 129> send_buf;
 // This records the time at which we sent the command for which we
 // are expecting a response.
 static RingBuffer<uint32_t, 8> resp_buf;
+
+
+bool bluetooth_buffer_op(bool sendbuf, uint8_t op) {
+    switch (op) {
+    case 0: // clear
+        if (sendbuf) {
+            send_buf.clear();
+        } else {
+            resp_buf.clear();
+        }
+        break;
+    case 1: // empty
+        if (sendbuf) {
+            if (send_buf.empty()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if (resp_buf.empty()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        break;
+    default:
+        break;
+    }
+    return false;
+}
 
 void bluetooth_clear_buf(void) {
     send_buf.clear();
@@ -281,7 +333,17 @@ static void process_nrf_ack_msg(struct biunrf52_msg * msg) {
         state.is_connected = false;
         state.is_sleeped   = false;
         break;
+    case RETURN_CURRENT_LED_STATE:
+        state.initialized  = true;
+        state.configured   = true;
+        state.is_connected = true;
+        state.is_sleeped   = false;
+        state.keyboard_led_state = msg->payload[0];
+        dprintf("Set the LED state as %d.\n", state.keyboard_led_state);
+        set_usb_led_state(state.keyboard_led_state);
+        break;
     default:
+        dprint("##########GET ERROR RETURN STATE##############\n");
         state.initialized  = false;
         state.is_connected = false;
         state.configured   = false;
@@ -289,34 +351,60 @@ static void process_nrf_ack_msg(struct biunrf52_msg * msg) {
         break;
     }
 }
+
+void bluetooth_set_led(uint8_t extern_led_state) {
+    state.keyboard_led_state = extern_led_state;
+}
+
+uint8_t bluetooth_get_led(void) {
+    return state.keyboard_led_state;
+}
+
+static void check_led_state() {
+    if (uart_available()) {
+        struct biunrf52_msg msg;
+        if (receive_a_pkt(&msg, BiuNrf52MsgTimeout)) {
+            process_nrf_ack_msg(&msg);
+        } else {
+            dprint("LED update state : uart get error state.\n");
+        }
+    } else {
+        dprint("LED update state : uart get buffer is empty.\n");
+    }
+}
+
 static void resp_buf_read_one() {
     uint32_t last_send;
     struct biunrf52_msg msg;
+    bool resp_buf_is_empty = false;
 
     // if empty, then do nothing
     if (!resp_buf.peek(last_send)) {
-        return;
+        resp_buf_is_empty = true;
     }
 
     // determine whether uart_get is possible
     if (uart_available()) {
         if (receive_a_pkt(&msg, BiuNrf52MsgTimeout)) {
-            dprintf("recv latency %dms, resp_buf size %d\n", TIMER_DIFF_32(timer_read32(), last_send), (int)resp_buf.size());
-            resp_buf.get(last_send);
+            if (!resp_buf_is_empty) {
+                dprintf("recv latency %dms, resp_buf size %d\n", TIMER_DIFF_32(timer_read32(), last_send), (int)resp_buf.size());
+                resp_buf.get(last_send);
+            }
             process_nrf_ack_msg(&msg);
         } else {
-            dprintf("Some thing wrong, resp_buf size %d\n", (int)resp_buf.size());
-            // Receive Wrong: consume this entry
-            resp_buf.get(last_send);
-            state.initialized  = false;
-            state.is_connected = false;
-            state.configured   = false;
-            state.is_sleeped   = false;
+            if (!resp_buf_is_empty) {
+                dprintf("Some thing wrong, resp_buf size %d\n", (int)resp_buf.size());
+                // Receive Wrong: consume this entry
+                resp_buf.get(last_send);
+            }
+            dprint("##########UART GET WRONG##############");
         }
     } else {
-        dprintf("Uart get buffer is empty, resp_buf size %d\n", (int)resp_buf.size());
-        // Timed out: consume this entry
-        resp_buf.get(last_send);
+        if (!resp_buf_is_empty) {
+            dprintf("Uart get buffer is empty, resp_buf size %d\n", (int)resp_buf.size());
+            // Timed out: consume this entry
+            resp_buf.get(last_send);
+        }
     }
 }
 
@@ -607,6 +695,8 @@ void bluetooth_send_joystick(joystick_report_t *report) {
 
 void bluetooth_send_battery_level() {
 
+#ifdef SAMPLE_BATTERY
+
     if (bluetooth_send_report_check()) return;
 
 #ifdef BATTERY_LEVEL_SW_PIN
@@ -615,7 +705,7 @@ void bluetooth_send_battery_level() {
 #endif
 
     uint16_t adc_val = analogReadPinAdc(BATTERY_LEVEL_PIN, 0);
-    dprintf("ADC read value:%d \n", adc_val);
+    // dprintf("ADC read value:%d \n", adc_val);
 
 #ifdef BATTERY_LEVEL_SW_PIN
     writePinHigh(BATTERY_LEVEL_SW_PIN);
@@ -635,6 +725,9 @@ void bluetooth_send_battery_level() {
     while (!send_buf.enqueue(item)) {
         send_buf_send_one();
     }
+
+#endif
+
 }
 
 
@@ -721,6 +814,30 @@ uint8_t bluetooth_working_state(void) {
 }
 
 
+
+static int test_aaa = 0;
+void wakeup_stm32_env_by_a0(void *arg) {
+    // chSysLockFromISR();
+    // SCB->SCR &= ~((uint32_t)SCB_SCR_SLEEPDEEP_Msk);
+
+
+    /* we must reinit clocks after waking up ESPECIALLY if use HSE or HSI+PLL */
+    // NVIC_SystemReset();
+
+
+    // halInit();
+    // chSysInit();
+    // stm32_gpio_init();
+    // rccResetAHB1(STM32_GPIO_EN_MASK);
+    // rccEnableAHB1(STM32_GPIO_EN_MASK, true);
+    // halInit();
+    uprintf("test_a is %d\n", test_aaa);
+    // set_exti_off_input_pin();
+    // matrix_init();
+    test_aaa++;
+    // chSysUnlockFromISR();
+}
+
 bool bluetooth_init_pre(void) {
 
     // set the ble state
@@ -739,11 +856,15 @@ bool bluetooth_init_pre(void) {
     palClearLine(BIUNRF52ResetPin);
     wait_ms(200);
     palSetLine(BIUNRF52ResetPin);
-    wait_ms(3000);
+    wait_ms(2000);
     state.last_reset_update        = 0;
+#   ifdef SAMPLE_BATTERY
     state.last_battery_update      = 0;
+#   endif
     state.last_connection_update   = 0;
+    state.fast_shale_sleep_update  = 0;
     state.last_system_off_update   = 0;
+    state.keyboard_led_state       = 0;
 
     // set the adc read sw off
 #   ifdef BATTERY_LEVEL_SW_PIN
@@ -754,6 +875,11 @@ bool bluetooth_init_pre(void) {
     // set wakeup nrf pin
     palSetLineMode(BIUNRF52WKPin, PAL_MODE_OUTPUT_PUSHPULL);
     palSetLine(BIUNRF52WKPin);
+
+    // set wakeup stm32 pin
+    palSetLineMode(BIUSTM32WKPin, PAL_MODE_INPUT_PULLUP);
+    palEnableLineEvent(BIUSTM32WKPin, PAL_EVENT_MODE_FALLING_EDGE);
+    palSetLineCallback(BIUSTM32WKPin, wakeup_stm32_env_by_a0, NULL);
 
     return true;
 }
@@ -791,9 +917,12 @@ void bluetooth_wakeup_once(void) {
     if (state.is_sleeped) {
         if (false == state.start_wakeup) {
             state.last_reset_update        = 0;
+#   ifdef SAMPLE_BATTERY
             state.last_battery_update      = 0;
+#   endif
             state.last_connection_update   = 0;
             state.last_system_off_update   = 0;
+            state.fast_shale_sleep_update  = 0;
             bluetooth_clear_buf();
             state.start_wakeup = true;
         }
@@ -895,9 +1024,11 @@ void inline biu_ble_system_off() {
     state.initialized   = false;
     state.has_send_ask  = false;
     state.is_sleeped    = true;
-
+#   ifdef SAMPLE_BATTERY
     state.last_battery_update    = 0;
+#   endif
     state.last_connection_update = 0;
+    state.fast_shale_sleep_update = 0;
     state.last_system_off_update = 0;
     state.keep_connection_update = 0;
 
@@ -943,41 +1074,67 @@ void inline check_ble_system_off_timer(void) {
     }
 }
 
+// CH_IRQ_HANDLER (Vector9C)  {
+//   CH_IRQ_PROLOGUE();
 
-void bluetooth_power_manager(void) {
+//   /* IRQ handling code, preemptable if the architecture supports it.*/
 
+//   chSysLockFromISR();
+
+//   chSysUnlockFromISR();
+
+//   /* More IRQ handling code, again preemptable.*/
+
+//   CH_IRQ_EPILOGUE();
+// }
+
+
+
+
+void inline check_state(void) {
+    check_ble_system_off_timer();
+    check_ble_connection_state();
+}
+void  bluetooth_send_resive_task(bool force_send_and_resive=false) {
+    if (force_send_and_resive) {
+        resp_buf_read_one();
+        send_buf_send_one(BiuNrf52MsgTimeout);
+    } else if (state.is_connected || biu_ble_connection_check()) {
+        resp_buf_read_one();
+        send_buf_send_one(BiuNrf52MsgTimeout);
+
+    }
+}
+
+void  bluetooth_battery_task() {
+#ifdef SAMPLE_BATTERY
+    if (state.initialized) {
+        if (timer_elapsed32(state.last_battery_update) > BatteryUpdateInterval) {
+            state.last_battery_update = timer_read32();
+            bluetooth_send_battery_level();
+        }
+    }
+#endif
+}
+
+void  bluetooth_wakeup_task() {
+    if (state.start_wakeup) {
+        if (bluetooth_wakeup_helper()) {
+            state.start_wakeup = false;
+            state.is_sleeped   = false;
+        }
+    }
 }
 
 
-bool once_print = false;
 void bluetooth_task(void) {
-    char resbuf[128];
     if (!state.is_sleeped) {
-        if (state.is_connected || biu_ble_connection_check()) {
-            resp_buf_read_one();
-            send_buf_send_one(BiuNrf52MsgTimeout);
-        }
-        check_ble_system_off_timer();
-        check_ble_connection_state();
-#ifdef SAMPLE_BATTERY
-        if (state.initialized) {
-            if (timer_elapsed32(state.last_battery_update) > BatteryUpdateInterval) {
-                state.last_battery_update = timer_read32();
-                bluetooth_send_battery_level();
-            }
-        }
-#endif
+        bluetooth_send_resive_task();
+        bluetooth_battery_task();
+        check_state();
     } else {
-        if (state.start_wakeup) {
-            if (once_print == false) {
-                dprint("Wake Up module!!!!!!!!\n");
-                once_print = true;
-            }
-            if (bluetooth_wakeup_helper()) {
-                state.start_wakeup = false;
-                state.is_sleeped   = false;
-            }
-        }
+        bluetooth_wakeup_task();
         // todo wake up
     }
 }
+
