@@ -6,6 +6,7 @@
 #include "print.h"
 #include "quantum.h"
 #include "matrix.h"
+#include "uart.h"
 #include <string.h>
 #include <hal.h>
 #include <ch.h>
@@ -18,13 +19,12 @@
 #include "74hc595.h"
 #endif
 
-#define BiuStm32IdleTimeout              10000           /* 10 second     */
 
 
 extern keymap_config_t keymap_config;
 extern matrix_row_t matrix[MATRIX_ROWS];      // debounced values
 
-#if NUM_OF_74HC595 == 0
+#ifndef NUM_OF_74HC595
     #ifdef DIRECT_PINS
     #    error invalid DIRECT_PINS for 74hc595 matrix
     #elif (DIODE_DIRECTION == ROW2COL)
@@ -129,11 +129,14 @@ static void inline set_exti_on_input_pin(void) {
 }
 
 static void inline stopMode(void) {
-    palEnableLineEvent(A0, PAL_EVENT_MODE_FALLING_EDGE); /* NC */
+    palEnableLineEvent(BIUSTM32WKPin, PAL_EVENT_MODE_FALLING_EDGE); /* NC */
     set_matrix_hold_on();
+    set_exti_on_input_pin();
+    uprintf("Enter into Sleep model\n");
     usbStop(&USB_DRIVER);
-    SysTick->CTRL &= ~SysTick_CTRL_TICKINT_Msk;
+    // usbDisconnectBus(&USB_DRIVER);
 
+    SysTick->CTRL &= ~SysTick_CTRL_TICKINT_Msk;
     /* debugging */
     // DBGMCU->CR |= DBGMCU_CR_DBG_STOP | DBGMCU_CR_DBG_SLEEP | DBGMCU_CR_DBG_STANDBY;
 
@@ -152,8 +155,6 @@ static void inline stopMode(void) {
     __WFI();
 
     chSysLock();
-    set_exti_on_input_pin();
-    palDisableLineEventI(A0);
 
     SCB->SCR &= ~SCB_SCR_SLEEPDEEP_Msk;
 
@@ -161,65 +162,36 @@ static void inline stopMode(void) {
     PWR->CR |= PWR_CR_CSBF;
 
     stm32_clock_init();
-    // restart_usb_driver(&USB_DRIVER);
     SysTick->CTRL |= SysTick_CTRL_TICKINT_Msk;
-    chSysUnlock();
 
-    usbInit();
-}
+    halInit();
 
-
-static void inline _into_stop_mode(void) {
-    // __disable_irq();
-    SysTick->CTRL &= ~SysTick_CTRL_TICKINT_Msk;
-    // RTC->ISR &= ~(RTC_ISR_ALRBF | RTC_ISR_ALRAF | RTC_ISR_WUTF | RTC_ISR_TAMP1F | RTC_ISR_TSOVF | RTC_ISR_TSF);
-    // chSysLock();
-    // MODIFY_REG(PWR->CR, PWR_CR_PDDS, PWR_CR_LPDS);
-    // SET_BIT(SCB->SCR, ((uint32_t)SCB_SCR_SLEEPDEEP_Msk));
-    // /* clear PDDS and LPDS bits */
-    // PWR->CR &= ~(PWR_CR_PDDS | PWR_CR_LPDS);
-    // /* set LPDS and clear  */
-    // // PWR->CR |= (PWR_CR_LPDS | PWR_CR_CSBF | PWR_CR_CWUF);
-    // PWR->CR |= (PWR_CR_PDDS | PWR_CR_CSBF | PWR_CR_CWUF);
-    // SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
-    // chSysUnlock();
-    // __WFI();
-    // uprintf("Enter into Sleep model\n");
-    // usbStop(&USBD1);
-    // usbDisconnectBus(&USBD1);
-
-    // __enable_irq();
-
-      PWR->CR |= (PWR_CR_LPDS | PWR_CR_CSBF | PWR_CR_CWUF | PWR_CR_DBP);
-      PWR->CR &= ~PWR_CR_PDDS;
-      SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
-    //   __WFI();
-    __SEV();
-    __WFE();
-    __WFE();
-    // __WFI();
-
-
-    // __disable_irq();
-    uprintf("Level out  Sleep model\n");
-    CLEAR_BIT(SCB->SCR, ((uint32_t)SCB_SCR_SLEEPDEEP_Msk));
-
-    chSysLock();
-    stm32_clock_init();
-    chSysUnlock();
-
-    SysTick->CTRL |= SysTick_CTRL_TICKINT_Msk;
+    palDisableLineEvent(BIUSTM32WKPin);
     set_exti_off_input_pin();
-    // __enable_irq();
-    // SCB->SCR &= ~((uint32_t)SCB_SCR_SLEEPDEEP_Msk);
-    // stm32_clock_init();
-    return;
+    // usbInit();
+    restart_usb_driver(&USB_DRIVER);
+    // usbConnectBus(&USB_DRIVER);
+    // uprintf("Level out  Sleep model\n");
+
+    // start the uart data trans
+    uart_init(BIUNRF52UartBaud, true);
+
+    // hang up the reset pin
+    palSetLineMode(BIUNRF52ResetPin, PAL_MODE_OUTPUT_PUSHPULL);
+    palSetLine(BIUNRF52ResetPin);
+    // set the adc read sw off
+#   ifdef BATTERY_LEVEL_SW_PIN
+        setPinOutput(BATTERY_LEVEL_SW_PIN);
+        writePinHigh(BATTERY_LEVEL_SW_PIN);
+#   endif
+
+    // set wakeup nrf pin
+    palSetLineMode(BIUNRF52WKPin, PAL_MODE_OUTPUT_PUSHPULL);
+    palSetLine(BIUNRF52WKPin);
+    chSysUnlock();
 }
-static void inline enter_into_stop_mode(void) {
-    set_matrix_hold_on();
-    set_exti_on_input_pin();
-    _into_stop_mode();
-}
+
+
 
 static void inline bleutooth_clear_keyboard(void) {
     report_keyboard_t * keyboard_report = (report_keyboard_t*)malloc(sizeof(report_keyboard_t));
@@ -268,13 +240,14 @@ static bool inline matrix_is_zero(void) {
 // static uint8_t once_a0 = 0;
 void bluetooth_power_manager(void) {
     if (matrix_is_zero()) {
-        if (timer_elapsed32(state.fast_shale_sleep_update) > BiuStm32IdleTimeout) {
-            state.fast_shale_sleep_update = timer_read32();
+        if (state.fast_shale_sleep_update != 0 && timer_elapsed32(state.fast_shale_sleep_update) > BiuStm32IdleTimeout) {
             if (bluetooth_buffer_op(true, 1)) {
                 bleutooth_clear_keyboard();
-                // enter_into_stop_mode();
                 stopMode();
             }
+            state.fast_shale_sleep_update = timer_read32();
+        } else if (state.fast_shale_sleep_update == 0) {
+            state.fast_shale_sleep_update = timer_read32();
         }
     } else {
         state.fast_shale_sleep_update = timer_read32();
