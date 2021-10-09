@@ -88,4 +88,4 @@ __pycache__
 user_song_list.h
 
 #some prebuild hex bin files
-!*/prebuildfile/*
+!/keyboards/yandrstudio/utils/prebuildfile/uf2/*
