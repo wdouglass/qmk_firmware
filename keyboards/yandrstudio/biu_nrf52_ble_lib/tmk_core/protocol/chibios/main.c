@@ -34,8 +34,8 @@
 #include "print.h"
 
 #ifdef BIU_BLE5_ENABLE
-#   include "biu_ble_common.h"
 #   include "outputselect.h"
+#   include "distributors.h"
 #endif
 
 #ifndef EARLY_INIT_PERFORM_BOOTLOADER_JUMP
@@ -65,6 +65,7 @@
  */
 
 /* declarations */
+// #include "distributors.h"
 uint8_t keyboard_leds(void);
 void    send_keyboard(report_keyboard_t *report);
 void    send_mouse(report_mouse_t *report);
@@ -280,7 +281,11 @@ int main(void) {
         // Run housekeeping
         housekeeping_task(); // jason:should run powwer manager here
 
-        // __WFI();
+#ifdef BIU_BLE5_ENABLE
+        // if (where_to_send() == OUTPUT_BLUETOOTH) {
+            bluetooth_power_manager();
+        // }
+#endif
 
     }
 }

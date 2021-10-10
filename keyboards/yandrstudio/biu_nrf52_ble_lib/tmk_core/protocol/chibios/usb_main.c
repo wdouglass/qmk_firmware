@@ -46,6 +46,7 @@
 #ifdef BIU_BLE5_ENABLE
 #include "outputselect.h"
 #include "biu_ble_common.h"
+#include "usb_ble_exchange_data.h"
 #endif
 
 #ifdef NKRO_ENABLE
@@ -534,6 +535,9 @@ static void    set_led_transfer_cb(USBDriver *usbp) {
     } else {
         keyboard_led_state = set_report_buf[0];
     }
+#ifdef BIU_BLE5_ENABLE
+    bluetooth_set_led(keyboard_led_state);
+#endif
 }
 
 /* Callback for SETUP request on the endpoint 0 (control) */
@@ -779,8 +783,20 @@ static void keyboard_idle_timer_cb(void *arg) {
     osalSysUnlockFromISR();
 }
 
+void set_usb_led_state(uint8_t extern_led_state) {
+    keyboard_led_state = extern_led_state;
+}
+
 /* LED status */
-uint8_t keyboard_leds(void) { return keyboard_led_state; }
+uint8_t keyboard_leds(void) {
+
+#ifdef BIU_BLE5_ENABLE
+    if (where_to_send() == OUTPUT_BLUETOOTH) {
+        return bluetooth_get_led();
+    }
+#endif
+    return keyboard_led_state;
+}
 
 /* prepare and start sending a report IN
  * not callable from ISR or locked state */

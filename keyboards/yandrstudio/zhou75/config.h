@@ -24,7 +24,7 @@
 #define PRODUCT         zhou75
 
 // enable the nkro when using the VIA.
-#define FORCE_NKRO
+// #define FORCE_NKRO
 
 // fix VIA RGB_light
 #define VIA_HAS_BROKEN_KEYCODES
@@ -37,7 +37,7 @@
 
 // #define DEBUG_MATRIX_SCAN_RATE
 
-#define USB_POLLING_INTERVAL_MS 1
-#define QMK_KEYS_PER_SCAN 4
+// #define USB_POLLING_INTERVAL_MS 1
+// #define QMK_KEYS_PER_SCAN 4
 
 #define TAP_CODE_DELAY 15

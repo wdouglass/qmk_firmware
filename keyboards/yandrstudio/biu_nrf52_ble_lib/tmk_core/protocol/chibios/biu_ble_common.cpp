@@ -15,10 +15,12 @@ __attribute__((weak)) void bluetooth_pair(void) {}
 __attribute__((weak)) void bluetooth_clear_buf(void) {}
 __attribute__((weak)) void bluetooth_switch_one(uint8_t device_id) {}
 __attribute__((weak)) uint8_t bluetooth_working_state(void) { return 0; }
-__attribute__((weak)) void bluetooth_power_manager(void) {};
+// __attribute__((weak)) void bluetooth_power_manager(void) {};
 __attribute__((weak)) void bluetooth_send_battery_level(void) { }
 
 __attribute__((weak)) void bluetooth_send_keyboard(report_keyboard_t *report) {}
+__attribute__((weak)) uint8_t bluetooth_get_led(void) { return 0; }
+
 
 #ifdef EXTRAKEY_ENABLE
 __attribute__((weak)) void bluetooth_send_extra(uint8_t report_id, uint16_t keycode) {}

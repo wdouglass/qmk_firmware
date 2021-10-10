@@ -10,8 +10,6 @@ BOOTLOADER = stm32-dfu
 # # project specific file
 CUSTOM_MATRIX = lite    # for using the A9 pin as matrix io
 QUANTUM_SRC += matrix.c
-
-
 ENCODER_ENABLE = yes
 
 
@@ -24,4 +22,4 @@ COMMON_VPATH += patsubst$(%/, %, dir $(mkfile_patch))/eep
 
 
 # Enter lower-power sleep mode when on the ChibiOS idle thread
-OPT_DEFS += -DCORTEX_ENABLE_WFI_IDLE=TRUE
+# OPT_DEFS += -DCORTEX_ENABLE_WFI_IDLE=TRUE
