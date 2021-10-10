@@ -38,14 +38,9 @@ A creative coder.
 | eureka75     | 0xAA96    | 0xAAAA     | F401,ENCODER              | &check;           |
 | boy40ble     | 0xAA96    | 0xAAAB     | BLE 5.0 Dual mode         | &cross;           |
 | boyPad       | 0xAA96    | 0xAAAC     | F401                      | &cross;           |
-<<<<<<< HEAD
 | zhou65       | 0xAA96    | 0xAAAD     | F401                      | &check;           |
 | lh68         | 0xAA96    | 0xAAAE     | F401, RGB                 | &cross;           |
 | nz64         | 0xAA96    | 0xAAAF     | F401, RGB                 | &check;           |
-=======
-| zhou65       | 0xAA96    | 0xAAAD     | F401                      | &cross;           |
-| lh68         | 0xAA96    | 0xAAAE     | F401, RGB                 | &quest;           |
->>>>>>> parent of eb57145a9b (add nz64 and prebuild binary uf2 bl of f401)
 
 
 

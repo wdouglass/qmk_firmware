@@ -19,9 +19,22 @@
 
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0xAA96
+#define PRODUCT_ID      0xAAAF
 #define DEVICE_VER      0x0001
-#define MANUFACTURER    lkaill-Y&R
-#define PRODUCT         zhou75
+#define MANUFACTURER    JasonRen biu
+#define PRODUCT         nz64
+
+/* key matrix size */
+#define MATRIX_ROWS 5
+#define MATRIX_COLS 14
+
+//                         0    1    2    3    4   5    6    7    8   9    10   11  12   13  14
+#define MATRIX_COL_PINS {  A15, B3,  B4,  B6,  B7, B5,  C13, A5,  A4, B14, B15, A8, A9,  A10   }
+#define MATRIX_ROW_PINS {  C14, B13, B12, C15, A3}
+
+/* COL2ROW or ROW2COL */
+#define DIODE_DIRECTION COL2ROW
+
 
 // enable the nkro when using the VIA.
 #define FORCE_NKRO
@@ -35,9 +48,9 @@
 /* Set 0 if debouncing isn't needed */
 #define DEBOUNCE 5
 
-// #define DEBUG_MATRIX_SCAN_RATE
 
-#define USB_POLLING_INTERVAL_MS 1
-#define QMK_KEYS_PER_SCAN 4
+#define  LED_CAPS_LOCK_PIN A5
+#define LED_PIN_ON_STATE 0
 
-#define TAP_CODE_DELAY 15
+
+
