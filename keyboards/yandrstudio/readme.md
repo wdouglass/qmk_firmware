@@ -41,6 +41,9 @@ A creative coder.
 | zhou65       | 0xAA96    | 0xAAAD     | F401                      | &check;           |
 | lh68         | 0xAA96    | 0xAAAE     | F401, RGB                 | &cross;           |
 | nz64         | 0xAA96    | 0xAAAF     | F401, RGB                 | &check;           |
+| ty66ble      | 0xAA96    | 0xAAC0     | BLE 5.0 Dual mode         | &check;           |
+| sci980       | 0xAA96    | 0xAAC1     | 32u4, RGB                 | &check;           |
+
 
 
 
