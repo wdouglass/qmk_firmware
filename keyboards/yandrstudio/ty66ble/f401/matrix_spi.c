@@ -60,7 +60,6 @@ static inline void setPinInputHigh_atomic(pin_t pin) {
 static void select_col(uint8_t col) {
     spi_start(true, 0, 2);
     writePinLow(SPI_74HC595_CS);
-    matrix_io_delay();
     uint8_t i = 0;
 #if (COL_F2L_FOR_595==TRUE)
     for (i = 0; i < NUM_OF_74HC595; ++i) {
@@ -72,20 +71,17 @@ static void select_col(uint8_t col) {
     }
 #endif
     writePinHigh(SPI_74HC595_CS); // output to storge registor
-    matrix_io_delay();
     spi_stop();
 }
 
 static void unselect_cols(void) {
     spi_start(true, 0, 2);
     writePinLow(SPI_74HC595_CS);
-    matrix_io_delay();
     uint8_t i = 0;
     for (i = 0; i < NUM_OF_74HC595; ++i) {
         spi_write(sr_zero);
     }
     writePinHigh(SPI_74HC595_CS); // output to storge registor
-    matrix_io_delay();
     spi_stop();
 }
 
@@ -222,7 +218,7 @@ static bool read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row)
 #endif
 
 void matrix_init_custom(void) {
-    spi_init();
+    spi_init(true);
     // initialize key pins
     init_pins();
 }

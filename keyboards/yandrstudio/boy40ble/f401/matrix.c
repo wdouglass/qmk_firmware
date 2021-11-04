@@ -27,9 +27,6 @@ static const pin_t row_pins[MATRIX_ROWS] = MATRIX_ROW_PINS;
 static const pin_t col_pins[MATRIX_COLS] = MATRIX_COL_PINS;
 #endif
 
-/* matrix state(1:on, 0:off) */
-extern matrix_row_t raw_matrix[MATRIX_ROWS];  // raw values
-extern matrix_row_t matrix[MATRIX_ROWS];      // debounced values
 
 static inline void setPinOutput_writeLow(pin_t pin) {
     ATOMIC_BLOCK_FORCEON {
@@ -98,7 +95,6 @@ static void init_pins(void) {
         palClearLine(col_pins[x]);
     }
 }
-
 static bool read_rows_on_col(matrix_row_t current_matrix[], uint8_t current_col) {
     bool matrix_changed = false;
 
@@ -123,16 +119,15 @@ static bool read_rows_on_col(matrix_row_t current_matrix[], uint8_t current_col)
 
         // Determine if the matrix changed state
         if ((last_row_value != current_row_value)) {
-            matrix_changed |= true;
+            matrix_changed = true;
             current_matrix[row_index] = current_row_value;
         }
     }
 
     // Unselect col
     unselect_col(current_col);
-    if (current_col + 1 < MATRIX_COLS) {
-        matrix_output_unselect_delay();  // wait for col signal to go HIGH
-    }
+    matrix_output_unselect_delay(current_col, matrix_changed);  // wait for all Row signals to go HIGH
+
 
     return matrix_changed;
 }
@@ -179,9 +174,8 @@ static bool read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row)
 
     // Unselect row
     unselect_row(current_row);
-    if (current_row + 1 < MATRIX_ROWS) {
-        matrix_output_unselect_delay();  // wait for row signal to go HIGH
-    }
+    matrix_output_unselect_delay(current_row, current_row_value != 1);  // wait for all Col signals to go HIGH
+
 
     // If the row has changed, store the row and return the changed flag.
     if (current_matrix[current_row] != current_row_value) {
@@ -201,28 +195,21 @@ static bool read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row)
 void matrix_init_custom(void) {
     // initialize key pins
     init_pins();
-
-    // initialize matrix state: all keys off
-    for (uint8_t i = 0; i < MATRIX_ROWS; i++) {
-        raw_matrix[i] = 0;
-        matrix[i]     = 0;
-    }
 }
-
-uint8_t matrix_scan_custom(void) {
+extern bool force_change_matrix;
+uint8_t matrix_scan_custom(matrix_row_t current_matrix[]) {
     bool changed = false;
 
 #if defined(DIRECT_PINS) || (DIODE_DIRECTION == COL2ROW)
     // Set col, read rows
     for (uint8_t current_col = 0; current_col < MATRIX_COLS; current_col++) {
-        changed |= read_rows_on_col(raw_matrix, current_col);
+        changed |= read_rows_on_col(current_matrix, current_col);
     }
 #elif (DIODE_DIRECTION == ROW2COL)
     // Set row, read cols
     for (uint8_t current_row = 0; current_row < MATRIX_ROWS; current_row++) {
-        changed |= read_cols_on_row(raw_matrix, current_row);
+        changed |= read_cols_on_row(current_matrix, current_row);
     }
 #endif
-
     return (uint8_t)changed;
 }

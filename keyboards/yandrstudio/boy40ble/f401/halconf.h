@@ -17,9 +17,6 @@
 #pragma once
 #include_next <halconf.h>
 
-#pragma once
-#include_next <halconf.h>
-
 #undef HAL_USE_SERIAL
 #define HAL_USE_SERIAL TRUE
 
@@ -34,7 +31,7 @@
 #define SERIAL_USB_BUFFERS_SIZE 256
 
 #undef  SERIAL_BUFFERS_SIZE
-#define SERIAL_BUFFERS_SIZE     128
+#define SERIAL_BUFFERS_SIZE     256
 
 #undef  SPI_USE_WAIT
 #define SPI_USE_WAIT TRUE

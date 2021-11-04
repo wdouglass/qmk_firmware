@@ -1,7 +1,7 @@
 {
   "name": "ty66ble_Y&R",
   "vendorId": "0xAA96",
-  "productId": "0xAA21",
+  "productId": "0xAAC0",
    "lighting": {
        "extends": "none",
        "keycodes": "qmk"

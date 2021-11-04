@@ -17,16 +17,11 @@
 #pragma once
 #include_next <halconf.h>
 
-#pragma once
-#include_next <halconf.h>
-
 #undef HAL_USE_SERIAL
 #define HAL_USE_SERIAL TRUE
 
-
 #undef HAL_USE_ADC
 #define HAL_USE_ADC    TRUE
-
 
 #undef  SERIAL_USB_BUFFERS_SIZE
 #define SERIAL_USB_BUFFERS_SIZE 256
@@ -37,5 +32,10 @@
 #undef  SPI_USE_WAIT
 #define SPI_USE_WAIT TRUE
 
+#undef  PAL_USE_CALLBACKS
+#define PAL_USE_CALLBACKS TRUE
+
 #undef  SPI_SELECT_MODE
 #define SPI_SELECT_MODE SPI_SELECT_MODE_PAD
+
+

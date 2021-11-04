@@ -48,6 +48,23 @@
 /* Set 0 if debouncing isn't needed */
 #define DEBOUNCE 5
 
+#define TAP_CODE_DELAY 15
 
+#define USB_POLLING_INTERVAL_MS 1
+#define QMK_KEYS_PER_SCAN 4
 
+// rgb switch
+#define RGB_BLE_SW A6
 
+// USB Power
+// #define USB_PWR_READ
+
+// ADC SETTING
+#define SAMPLE_BATTERY
+
+#define BATTERY_LEVEL_SW_PIN A2
+
+// disable rgb when using ble
+#define RGB_ONLY_ON_WHEN_USB
+
+#define BIUNRF52WKPin A3

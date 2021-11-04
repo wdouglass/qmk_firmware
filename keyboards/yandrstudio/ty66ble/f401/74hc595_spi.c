@@ -18,40 +18,22 @@ extern const uint8_t mask_of_each_595[NUM_OF_74HC595][MATRIX_COLS];
 
 #if (DIODE_DIRECTION == COL2ROW)
 void select_cols(void) {
-    uint8_t i = 0, col = 0;
+    uint8_t i = 0;
     spi_start(true, 0, 2);
     writePinLow(SPI_74HC595_CS);
-    matrix_io_delay();
-    for (col = 0; col < MATRIX_COLS; col++) {
-#   if (COL_F2L_FOR_595 == TRUE)
-        for (i = 0; i < NUM_OF_74HC595; ++i) {
-            spi_write(mask_of_each_595[i][col]);
-        }
-#   else
-        for (i = NUM_OF_74HC595; i >=1 ; --i) {
-            spi_write(mask_of_each_595[i][col]);
-        }
-#   endif
+    for (i = 0; i < NUM_OF_74HC595; ++i) {
+        spi_write(SR_74HC595_ONES_ONEP);
     }
     writePinHigh(SPI_74HC595_CS); // output to storge registor
-    matrix_io_delay();
     spi_stop();
 }
 #else
 void select_rows(void) {
-    uint8_t i = 0, row = 0;
+    uint8_t i = 0;
     spi_start(true, 0, 2);
     writePinLow(SPI_74HC595_CS);
-    for (row = 0; row < MATRIX_ROWS; row++) {
-#   if (COL_F2L_FOR_595 == TRUE)
-       for (i = 0; i < NUM_OF_74HC595; ++i) {
-           spi_write(mask_of_each_595[i][row]);
-       }
-#   else
-       for (i = NUM_OF_74HC595; i >=1 ; --i) {
-           spi_write(mask_of_each_595[i][row]);
-       }
-#   endif
+    for (i = 0; i < NUM_OF_74HC595; ++i) {
+        spi_write(SR_74HC595_ONES_ONEP);
     }
     writePinHigh(SPI_74HC595_CS); // output to storge registor
     spi_stop();

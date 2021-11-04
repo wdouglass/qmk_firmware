@@ -19,9 +19,9 @@
 
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0xAA96
-#define PRODUCT_ID      0xAA21
+#define PRODUCT_ID      0xAAC0
 #define DEVICE_VER      0x0001
-#define MANUFACTURER    Biu_Ikill
+#define MANUFACTURER    Biu_Ikaill
 #define PRODUCT         ty66ble
 
 /* key matrix size */

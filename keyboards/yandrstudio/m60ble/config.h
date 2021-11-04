@@ -49,5 +49,8 @@
 #define DEBOUNCE 5
 
 
+#define SAMPLE_BATTERY
+#define BIUNRF52WKPin A3
+
 
 

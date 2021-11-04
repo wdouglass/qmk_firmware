@@ -16,19 +16,38 @@
 #include QMK_KEYBOARD_H
 #include "outputselect.h"
 #include "biu_ble_common.h"
+#include "distributors.h"
+#include "usb_main.h"
 
 enum keyboard_keycodes {
-    BLE_TOG = SAFE_RANGE, // ble
-    USB_TOG,              // usb
-    BAU_TOG,              // if ble then usb, if usb then ble, Ble And Usb toggle
-    BL_SW_0,              // ble id 0
-    BL_SW_1,
-    BL_SW_2,
-    BL_SW_3,
-    BLE_DEL,              // delete current ble bound
-    BLE_CLR,              // delete all ble bound
+    BLE_TOG_EXT = SAFE_RANGE, // ble
+    USB_TOG_EXT,              // usb
+    BAU_TOG_EXT,              // if ble then usb, if usb then ble
+    BL_SW_0_EXT,              // ble id 0
+    BL_SW_1_EXT,
+    BL_SW_2_EXT,
+    BL_SW_3_EXT,
+    BL_SW_4_EXT,
+    BL_SW_5_EXT,
+    BL_SW_6_EXT,
+    BL_SW_7_EXT,
+    BLE_DEL_EXT,              // delete current ble bound
+    BLE_CLR_EXT,              // delete all ble bound
+    BLE_PWR_OFF_EXT,          // power off
     NEW_SAFE_RANGE  // Important!
 };
+
+#define BLE_TOG     KC_F15
+#define USB_TOG     KC_F16
+#define BAU_TOG     KC_F17
+#define BL_SW_0     KC_F18
+#define BL_SW_1     KC_F19
+#define BL_SW_2     KC_F20
+#define BL_SW_3     KC_F21
+#define BLE_DEL     KC_F22
+#define BLE_CLR     KC_F23
+#define BLE_PWR_OFF KC_F24
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	LAYOUT(
@@ -54,10 +73,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 void keyboard_post_init_user(void) {
-    palSetLineMode(A6, PAL_MODE_OUTPUT_PUSHPULL);
-    palClearLine(A6);
-    // eeconfig_init();
-    // uart_init(115200);
     debug_enable=true;
     //   debug_matrix=true;
     //   debug_keyboard=true;
@@ -66,29 +81,32 @@ void keyboard_post_init_user(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (record->event.pressed) {
-        uprintf("KL: kc: 0x%04X, col: %u, row: %u, pressed: %b, time: %u, interrupt: %b, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
-    }
+    // if (record->event.pressed) {
+    //     uprintf("KL: kc: 0x%04X, col: %u, row: %u, pressed: %b, time: %u, interrupt: %b, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
+    // }
     switch(keycode) {
         case BLE_TOG:
+        case BLE_TOG_EXT:
             if (record->event.pressed) {
                 set_output(OUTPUT_BLUETOOTH);
-                bluetooth_clear_buf();
             }
             return false;
         case USB_TOG:
+        case USB_TOG_EXT:
             if (record->event.pressed) {
+                usb_event_queue_init();
+                init_usb_driver(&USB_DRIVER, false);
                 set_output(OUTPUT_USB);
             }
             return false;
         case BAU_TOG:
+        case BAU_TOG_EXT:
             if (record->event.pressed) {
                 if (where_to_send() == OUTPUT_USB) {
-                    // TODO: restart ble
                     set_output(OUTPUT_BLUETOOTH);
-                    bluetooth_clear_buf();
                 } else {
-                    //ToDO: disconnect ble
+                    usb_event_queue_init();
+                    init_usb_driver(&USB_DRIVER, false);
                     set_output(OUTPUT_USB);
                 }
             }
@@ -97,26 +115,43 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case BL_SW_1:
         case BL_SW_2:
         case BL_SW_3:
-            if (record->event.pressed) {
-                // TODO: restart ble
-                set_output(OUTPUT_BLUETOOTH);
-                bluetooth_clear_buf();
-                bluetooth_switch_one(keycode - BL_SW_0);
+            if (where_to_send() == OUTPUT_BLUETOOTH) {
+                if (record->event.pressed) {
+                    set_output(OUTPUT_BLUETOOTH);
+                    bluetooth_switch_one(keycode - BL_SW_0);
+                }
+            }
+            return false;
+        case BL_SW_0_EXT:
+        case BL_SW_1_EXT:
+        case BL_SW_2_EXT:
+        case BL_SW_3_EXT:
+        case BL_SW_4_EXT:
+        case BL_SW_5_EXT:
+        case BL_SW_6_EXT:
+        case BL_SW_7_EXT:
+            if (where_to_send() == OUTPUT_BLUETOOTH) {
+                if (record->event.pressed) {
+                    set_output(OUTPUT_BLUETOOTH);
+                    bluetooth_switch_one(keycode - BL_SW_0_EXT);
+                }
             }
             return false;
         case BLE_DEL:
+        case BLE_DEL_EXT:
             if (record->event.pressed) {
-                if (where_to_send() == OUTPUT_BLUETOOTH) {
-                    bluetooth_unpair_current();
-                }
+                bluetooth_unpair_current();
             }
             return false;
         case BLE_CLR:
+        case BLE_CLR_EXT:
             if (record->event.pressed) {
-                if (where_to_send() == OUTPUT_BLUETOOTH) {
-                    bluetooth_unpair_all();
-                }
+                bluetooth_unpair_all();
             }
+            return false;
+        case BLE_PWR_OFF:
+        case BLE_PWR_OFF_EXT:
+            stop_one_lilnk(0);
             return false;
         default:
             return true;

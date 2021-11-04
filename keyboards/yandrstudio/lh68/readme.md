@@ -2,7 +2,7 @@ lh68
 ===
 
 A 68 keys keyboard with rgb (keys and underground).
-This keyboard use 16mhz HSE and STM32F401 as MCU.
+This keyboard use 8mhz HSE and STM32F401 as MCU.
 
 Keyboard Maintainer: https://github.com/jiaxin96
 Hardware Supported: lh68

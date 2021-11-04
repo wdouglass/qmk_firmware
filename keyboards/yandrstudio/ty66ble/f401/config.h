@@ -25,11 +25,11 @@
 #    define RGBLED_NUM 65
 #    define DRIVER_LED_TOTAL RGBLED_NUM
 
-#define WS2812_PWM_DRIVER PWMD3  // default: PWMD2
-#define WS2812_PWM_CHANNEL 2  // default: 2
-#define WS2812_PWM_PAL_MODE 2  // Pin "alternate function", see the respective datasheet for the appropriate values for your MCU. default: 2
-#define WS2812_DMA_STREAM STM32_DMA1_STREAM2  // DMA Stream for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
-#define WS2812_DMA_CHANNEL 5  // DMA Channel for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
+#    define WS2812_PWM_DRIVER PWMD3  // default: PWMD2
+#    define WS2812_PWM_CHANNEL 2  // default: 2
+#    define WS2812_PWM_PAL_MODE 2  // Pin "alternate function", see the respective datasheet for the appropriate values for your MCU. default: 2
+#    define WS2812_DMA_STREAM STM32_DMA1_STREAM2  // DMA Stream for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
+#    define WS2812_DMA_CHANNEL 5  // DMA Channel for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
 
 
 #    define RGB_MATRIX_MAXIMUM_BRIGHTNESS 200
@@ -46,24 +46,24 @@
 
 #    define RGB_DI_PIN B5
 #    define RGBLED_NUM 65
-#    define RGBLIGHT_LIMIT_VAL 2000
+#    define RGBLIGHT_LIMIT_VAL 200
 #    define DRIVER_LED_TOTAL RGBLED_NUM
 
 
-#define WS2812_PWM_DRIVER PWMD3  // default: PWMD2
-#define WS2812_PWM_CHANNEL 2  // default: 2
-#define WS2812_PWM_PAL_MODE 2  // Pin "alternate function", see the respective datasheet for the appropriate values for your MCU. default: 2
-#define WS2812_DMA_STREAM STM32_DMA1_STREAM2  // DMA Stream for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
-#define WS2812_DMA_CHANNEL 5  // DMA Channel for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
+#    define WS2812_PWM_DRIVER PWMD3  // default: PWMD2
+#    define WS2812_PWM_CHANNEL 2  // default: 2
+#    define WS2812_PWM_PAL_MODE 2  // Pin "alternate function", see the respective datasheet for the appropriate values for your MCU. default: 2
+#    define WS2812_DMA_STREAM STM32_DMA1_STREAM2  // DMA Stream for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
+#    define WS2812_DMA_CHANNEL 5  // DMA Channel for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
 
 #endif
 
 #ifdef ENCODER_ENABLE
 
-#define ENCODERS_PAD_A { C13 }
-#define ENCODERS_PAD_B { C14 }
+#    define ENCODERS_PAD_A { C13 }
+#    define ENCODERS_PAD_B { C14 }
 
-#define ENCODER_RESOLUTIONS { 2 }
+#    define ENCODER_RESOLUTIONS { 2 }
 
 #endif
 
@@ -72,6 +72,8 @@
 
 
 #define SR_74HC595_ZERO_ONEP 0x00
+#define SR_74HC595_ONES_ONEP 0xFF
+
 
 //                         0   1    2    3    4    5    6    7    8   9   10  11  12  13  14
 #define MATRIX_COL_PINS {}
