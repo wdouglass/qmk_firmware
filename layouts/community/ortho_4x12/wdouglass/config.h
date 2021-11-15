@@ -29,4 +29,6 @@
 
 //#define UNICODE_SELECTED_MODES UC_LNX
 
+#define MASTER_RIGHT
+
 #endif
