@@ -49,10 +49,12 @@ led_config_t g_led_config = {
 
 #endif
 
+#ifdef Z_ALICE_REV1
+void keyboard_pre_init_kb(void) {
+    palSetLineMode(B5, PAL_MODE_INPUT_PULLDOWN);
+}
+#endif
 
 void keyboard_post_init_kb(void) {
     debug_enable=true;
-    // palSetLineMode(RGB_BLE_SW, PAL_MODE_OUTPUT_PUSHPULL);
-    // palSetLine(RGB_BLE_SW);
-    // palClearLine(RGB_BLE_SW);
 }

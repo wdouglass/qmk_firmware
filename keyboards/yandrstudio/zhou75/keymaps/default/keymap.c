@@ -101,22 +101,42 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     switch (index) {
         case 0:
             if (clockwise) {
-				tap_code16(KC_VOLU);
+                uint16_t keycode = dynamic_keymap_get_keycode(biton32(layer_state), 5, 7);
+                if (keycode >= MACRO00 && keycode <= MACRO15) {
+                    dynamic_keymap_macro_send(keycode - MACRO00);
+                } else {
+                    tap_code16(keycode);
+                }
             } else {
-				tap_code16(KC_VOLD);
+                uint16_t keycode = dynamic_keymap_get_keycode(biton32(layer_state), 5, 8);
+                if (keycode >= MACRO00 && keycode <= MACRO15) {
+                    dynamic_keymap_macro_send(keycode - MACRO00);
+                } else {
+                    tap_code(keycode);
+                }
             }
             break;
-
         case 1:
             if (clockwise) {
-				tap_code16(KC_PGUP);
+                uint16_t keycode = dynamic_keymap_get_keycode(biton32(layer_state), 5, 4);
+                if (keycode >= MACRO00 && keycode <= MACRO15) {
+                    dynamic_keymap_macro_send(keycode - MACRO00);
+                } else {
+                    tap_code16(keycode);
+                }
             } else {
-				tap_code16(KC_PGDOWN);
+                uint16_t keycode = dynamic_keymap_get_keycode(biton32(layer_state), 5, 5);
+                if (keycode >= MACRO00 && keycode <= MACRO15) {
+                    dynamic_keymap_macro_send(keycode - MACRO00);
+                } else {
+                    tap_code16(keycode);
+                }
             }
             break;
         default:
             break;
     }
+
     return false;
 }
 

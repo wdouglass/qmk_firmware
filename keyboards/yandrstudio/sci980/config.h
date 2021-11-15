@@ -20,7 +20,6 @@
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0xAA96
 #define PRODUCT_ID      0xAAC1
-#define DEVICE_VER      0x0001
 #define MANUFACTURER    yr_sci
 #define PRODUCT         sci980
 
@@ -41,10 +40,10 @@
 #define DEBOUNCE 5
 
 
-#define RGB_DI_PIN E2
+#define RGB_DI_PIN B7
 #ifdef RGB_DI_PIN
 #define RGBLIGHT_ANIMATIONS
-#define RGBLED_NUM (98+16)
+#define RGBLED_NUM (114)
 #define RGBLIGHT_HUE_STEP 8
 #define RGBLIGHT_SAT_STEP 8
 #define RGBLIGHT_VAL_STEP 8

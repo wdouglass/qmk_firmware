@@ -47,6 +47,7 @@
 #    define RGBLED_NUM 69
 #    define RGBLIGHT_LIMIT_VAL 200
 #    define DRIVER_LED_TOTAL RGBLED_NUM
+#    define RGBLIGHT_ANIMATIONS
 
 
 #    define WS2812_PWM_DRIVER PWMD3  // default: PWMD2
@@ -68,7 +69,7 @@
 
 //                         0   1    2    3    4    5    6    7    8   9   10  11  12  13  14
 #define MATRIX_COL_PINS {}
-#define MATRIX_ROW_PINS { B5,  A5,  A4,  B8,  B9 }
+#define MATRIX_ROW_PINS { B6, A5,  A4,  B8,  B9 }
 
 #if (COL_F2L_FOR_595==TRUE)
                                  // a    b     c     d     e      f     g    h

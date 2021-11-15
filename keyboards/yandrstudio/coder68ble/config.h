@@ -20,7 +20,7 @@
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0xAA96
 #define DEVICE_VER      0x0001
-#define MANUFACTURER    Biu_Ikaill
+#define MANUFACTURER    DeskTop_YR
 #define PRODUCT         Coder
 
 /* key matrix size */
