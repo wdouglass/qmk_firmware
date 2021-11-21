@@ -200,3 +200,169 @@ cal_a_row_rgb = function gen_rgb_matrix_5(row, rownum, colnum, reverse) {
 
     return row_rgb_text
 }
+
+
+
+cal_a_row_rgb_with_skip = function gen_rgb_matrix_6(row, rownum, colnum, reverse, skip_col) {
+    function get_x(col, colnum){
+        var x = 224 / (colnum - 1) * col;
+        return Math.round(x);
+    }
+    function get_y(row, rownum) {
+        var y =  64 / (rownum - 1) * row;
+        return Math.round(y);
+    }
+    function is_in(jj, skip) {
+        for (var i = 0; i < skip.length; ++i) {
+            if (jj == skip[i]) {
+                return true
+            }
+        }
+        return false
+    }
+    var row_rgb_text = new String();
+    var yy = get_y(row, rownum).toString();
+
+    if (reverse) {
+        for (var j = colnum-1; j >= 0; j--) {
+            var xx = get_x(j, colnum).toString();
+            if (is_in(j,skip_col)) {
+                row_rgb_text += '       '
+            } else {
+                row_rgb_text += '{' + xx + ',' + yy + '},'
+            }
+        }
+    } else {
+        for (var j = 0; j < colnum; j++) {
+            var xx = get_x(j, colnum).toString();
+            if (is_in(j,skip_col)) {
+                row_rgb_text += '       '
+            } else {
+                row_rgb_text += '{' + xx + ',' + yy + '},'
+            }
+        }
+    }
+    return row_rgb_text
+}
+
+
+cal_a_row_rgb_index_with_skip = function gen_rgb_index_6(start_num, col_num, reverse, skip_col) {
+    var row_rgb_text = new String();
+    function is_in(jj, skip) {
+        for (var i = 0; i < skip.length; ++i) {
+            if (jj == skip[i]) {
+                return true
+            }
+        }
+        return false
+    }
+    if (reverse) {
+        for (var j = col_num-1; j >= 0; j--) {
+            var xx = start_num.toString();
+            if (is_in(j,skip_col)) {
+                row_rgb_text = ' NO_LED,  ' + row_rgb_text
+            } else {
+                row_rgb_text = xx + ',  ' + row_rgb_text
+                start_num += 1
+            }
+        }
+    } else {
+        for (var j = 0; j < col_num; j++) {
+            var xx = start_num.toString();
+            if (is_in(j, skip_col)) {
+                row_rgb_text += ' NO_LED,  '
+            } else {
+                row_rgb_text += xx + ',  '
+                start_num += 1
+            }
+        }
+    }
+    return [row_rgb_text, start_num]
+}
+
+cal_rgb_index_all = function (row_num, col_num, reverse, skip_pair, is_z, last_start) {
+    var rgb_index = new String();
+    var start_rgb_index = 0;
+    if (is_z) {
+        if (last_start) {
+            for (var i = row_num-1; i >= 0; --i) {
+                var rgb_index_row = new String()
+                var t = cal_a_row_rgb_index_with_skip(start_rgb_index, col_num, reverse, skip_pair[i])
+                rgb_index_row = t[0]
+                start_rgb_index = t[1]
+                rgb_index = rgb_index_row + '\n' + rgb_index
+            }
+        } else {
+            for (var i = 0; i < row_num; ++i) {
+                var rgb_index_row = new String()
+                var t = cal_a_row_rgb_index_with_skip(start_rgb_index, col_num, reverse, skip_pair[i])
+                rgb_index_row = t[0]
+                start_rgb_index = t[1]
+                rgb_index += rgb_index_row + '\n'
+            }
+        }
+    } else {
+        if (last_start) {
+            for (var i = row_num-1; i >= 0; --i) {
+                var rgb_index_row = new String()
+                var t = cal_a_row_rgb_index_with_skip(start_rgb_index, col_num, reverse, skip_pair[i])
+                reverse = ~reverse
+                rgb_index_row = t[0]
+                start_rgb_index = t[1]
+                rgb_index = rgb_index_row + '\n' + rgb_index
+            }
+        } else {
+            for (var i = 0; i < row_num; ++i) {
+                var rgb_index_row = new String()
+                var t = cal_a_row_rgb_index_with_skip(start_rgb_index, col_num, reverse, skip_pair[i])
+                reverse = ~reverse
+                rgb_index_row = t[0]
+                start_rgb_index = t[1]
+                rgb_index += rgb_index_row + '\n'
+            }
+        }
+    }
+    return rgb_index
+}
+
+
+cal_rgb_matrix_all = function (row_num, col_num, reverse, skip_pair, is_z, last_start) {
+    var rgb_position = new String();
+    var start_rgb_index = 0;
+    if (is_z) {
+        if (last_start) {
+            for (var i = row_num-1; i >= 0; --i) {
+                var rgb_position_row = new String()
+                var t = cal_a_row_rgb_with_skip(i, row_num, col_num, reverse, skip_pair[i])
+                rgb_position_row = t
+                rgb_position += rgb_position_row + '\n'
+            }
+        } else {
+            for (var i = 0; i < row_num; ++i) {
+                var rgb_position_row = new String()
+                var t = cal_a_row_rgb_with_skip(i, row_num, col_num, reverse, skip_pair[i])
+                rgb_position_row = t
+                rgb_position += rgb_position_row + '\n'
+            }
+        }
+    } else {
+        if (last_start) {
+            for (var i = row_num-1; i >= 0; --i) {
+                var rgb_position_row = new String()
+                var t = cal_a_row_rgb_with_skip(i, row_num, col_num, reverse, skip_pair[i])
+                reverse = ~reverse
+                rgb_position_row = t
+                rgb_position += rgb_position_row + '\n'
+            }
+        } else {
+            for (var i = 0; i < row_num; ++i) {
+                var rgb_position_row = new String()
+                var t = cal_a_row_rgb_with_skip(i, row_num, col_num, reverse, skip_pair[i])
+                reverse = ~reverse
+                rgb_position_row = t
+                rgb_position += rgb_position_row + '\n'
+            }
+        }
+    }
+    return rgb_position
+}
