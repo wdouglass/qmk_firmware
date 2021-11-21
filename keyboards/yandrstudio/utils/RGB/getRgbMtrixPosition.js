@@ -277,6 +277,7 @@ cal_a_row_rgb_index_with_skip = function gen_rgb_index_6(start_num, col_num, rev
             }
         }
     }
+    row_rgb_text = row_rgb_text.substring(0,row_rgb_text.length-3)
     return [row_rgb_text, start_num]
 }
 
@@ -290,7 +291,7 @@ cal_rgb_index_all = function (row_num, col_num, reverse, skip_pair, is_z, last_s
                 var t = cal_a_row_rgb_index_with_skip(start_rgb_index, col_num, reverse, skip_pair[i])
                 rgb_index_row = t[0]
                 start_rgb_index = t[1]
-                rgb_index = rgb_index_row + '\n' + rgb_index
+                rgb_index = '{' + rgb_index_row + '},' + '\n' + rgb_index
             }
         } else {
             for (var i = 0; i < row_num; ++i) {
@@ -298,7 +299,7 @@ cal_rgb_index_all = function (row_num, col_num, reverse, skip_pair, is_z, last_s
                 var t = cal_a_row_rgb_index_with_skip(start_rgb_index, col_num, reverse, skip_pair[i])
                 rgb_index_row = t[0]
                 start_rgb_index = t[1]
-                rgb_index += rgb_index_row + '\n'
+                rgb_index += '{' + rgb_index_row + '}, \n'
             }
         }
     } else {
@@ -309,7 +310,7 @@ cal_rgb_index_all = function (row_num, col_num, reverse, skip_pair, is_z, last_s
                 reverse = ~reverse
                 rgb_index_row = t[0]
                 start_rgb_index = t[1]
-                rgb_index = rgb_index_row + '\n' + rgb_index
+                rgb_index = '{' + rgb_index_row + '},' + '\n' + rgb_index
             }
         } else {
             for (var i = 0; i < row_num; ++i) {
@@ -318,7 +319,7 @@ cal_rgb_index_all = function (row_num, col_num, reverse, skip_pair, is_z, last_s
                 reverse = ~reverse
                 rgb_index_row = t[0]
                 start_rgb_index = t[1]
-                rgb_index += rgb_index_row + '\n'
+                rgb_index += '{' + rgb_index_row + '}, \n'
             }
         }
     }
@@ -365,4 +366,12 @@ cal_rgb_matrix_all = function (row_num, col_num, reverse, skip_pair, is_z, last_
         }
     }
     return rgb_position
+}
+
+
+cal_rgb_all = function (row_num, col_num, reverse, skip_pair, is_z, last_start) {
+    var str_index = cal_rgb_index_all(row_num, col_num, reverse, skip_pair, is_z, last_start)
+    var str_position = cal_rgb_matrix_all(row_num, col_num, reverse, skip_pair, is_z, last_start)
+    console.log(str_index)
+    console.log(str_position)
 }

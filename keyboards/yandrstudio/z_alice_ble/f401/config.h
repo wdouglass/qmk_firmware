@@ -58,18 +58,16 @@
 
 #endif
 
+//                         0   1    2    3    4    5    6    7    8   9   10  11  12  13  14
+#define MATRIX_COL_PINS {}
+#define MATRIX_ROW_PINS { B6, A5,  A4,  B8,  B9 }
+
 
 #define NUM_OF_74HC595 2
 #define COL_F2L_FOR_595 TRUE
 
-
 #define SR_74HC595_ZERO_ONEP 0x00
 #define SR_74HC595_ONES_ONEP 0xFF
-
-
-//                         0   1    2    3    4    5    6    7    8   9   10  11  12  13  14
-#define MATRIX_COL_PINS {}
-#define MATRIX_ROW_PINS { B6, A5,  A4,  B8,  B9 }
 
 #if (COL_F2L_FOR_595==TRUE)
                                  // a    b     c     d     e      f     g    h

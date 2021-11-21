@@ -34,7 +34,7 @@ enum keyboard_keycodes {
     BL_SW_7_EXT,
     BLE_DEL_EXT,              // delete current ble bound
     BLE_CLR_EXT,              // delete all ble bound
-    BLE_PWR_OFF_EXT,          // power off
+    BLE_OFF_EXT,          // power off
     NEW_SAFE_RANGE  // Important!
 };
 
@@ -47,13 +47,13 @@ enum keyboard_keycodes {
 #define BL_SW_3     KC_F21  // 开启蓝牙通道3（需要打开蓝牙的条件下才行）
 #define BLE_DEL     KC_F22  // 删除当前蓝牙绑定
 #define BLE_CLR     KC_F23  // 清空所有蓝牙绑定
-#define BLE_PWR_OFF KC_F24  // 关闭蓝牙连接
+#define BLE_OFF KC_F24  // 关闭蓝牙连接
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // 0        1        2         3           4           5          6           7        8          9          10         11          12          13       14
     LAYOUT(
 		KC_ESC,  KC_1,    KC_2,     KC_3,       KC_4,      KC_5,      KC_6,      KC_7,     KC_8,      KC_9,      KC_0,       KC_MINS,    KC_EQL,    KC_BSPC,   KC_MUTE,
-		KC_TAB,  BL_SW_0,    BL_SW_1,     BLE_PWR_OFF,       BL_SW_3,      KC_T,      KC_Y,      KC_U,     KC_I,      KC_O,      KC_P,       KC_LBRC,    KC_RBRC,   KC_BSLS,   KC_DEL,
+		KC_TAB,  BL_SW_0,    BL_SW_1,     BLE_OFF,       BL_SW_3,      KC_T,      KC_Y,      KC_U,     KC_I,      KC_O,      KC_P,       KC_LBRC,    KC_RBRC,   KC_BSLS,   KC_DEL,
 		KC_CAPS, BLE_TOG,    USB_TOG,     BLE_DEL,       BLE_CLR,      KC_G,      KC_H,      KC_J,     KC_K,      KC_L,      KC_SCLN,    KC_QUOT,    KC_ENT,               KC_PGUP,
 		KC_LSFT, RGB_TOG,    RGB_MOD,     RGB_MODE_REVERSE,       KC_V,      KC_B,      KC_N,      KC_M,     KC_COMM,   KC_DOT,    KC_SLSH,                KC_RSFT,   KC_UP,
 		KC_LCTL, KC_LGUI, KC_LALT,  KC_VOLU,    KC_VOLD,   KC_SPC,                                    KC_RALT,   MO(1),      KC_RCTL,    KC_LEFT,   KC_DOWN,   KC_RGHT),
@@ -185,8 +185,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 bluetooth_unpair_all();
             }
             return false;
-        case BLE_PWR_OFF:
-        case BLE_PWR_OFF_EXT:
+        case BLE_OFF:
+        case BLE_OFF_EXT:
             stop_one_lilnk(0);
             return false;
         default:

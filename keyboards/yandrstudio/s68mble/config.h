@@ -20,7 +20,8 @@
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0xAA96
 #define PRODUCT_ID      0xAAC5
-#define MANUFACTURER    lkaill-Y&R
+#define DEVICE_VER      0x0001
+#define MANUFACTURER    SAM_Y&R
 #define PRODUCT         s68mble
 
 // enable the nkro when using the VIA.
@@ -36,6 +37,31 @@
 #define DEBOUNCE 3
 
 // #define DEBUG_MATRIX_SCAN_RATE
+#define TAP_CODE_DELAY 15
 
 #define USB_POLLING_INTERVAL_MS 1
 #define QMK_KEYS_PER_SCAN 4
+
+
+
+// for ble
+#define S68M_REV1
+// rgb switch
+#ifdef S68M_REV1
+
+#   define BIUNRF52ResetPin A1
+#   define BIUNRF52WKPin A0
+#   define BIUSTM32WKPin A2
+
+// USB Power
+#   define USB_PWR_READ
+#   define USB_PWR_READ_PIN B13
+
+// ADC SETTING
+#   define SAMPLE_BATTERY
+#   define BATTERY_LEVEL_SW_PIN B1 // Adc pin
+#   define BATTERY_LEVEL_SW_PIN_ON_LOW
+
+#   define SLEEP_IN_STOP_MATRIX_LOW
+
+#endif

@@ -57,5 +57,5 @@
 
 #endif
 
-
-
+// for ble
+#   define SLEEP_IN_STOP_MATRIX_LOW

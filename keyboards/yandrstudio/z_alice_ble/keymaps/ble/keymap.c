@@ -34,7 +34,7 @@ enum keyboard_keycodes {
     BL_SW_7_EXT,
     BLE_DEL_EXT,              // delete current ble bound
     BLE_CLR_EXT,              // delete all ble bound
-    BLE_PWR_OFF_EXT,          // power off
+    BLE_OFF_EXT,          // power off
     NEW_SAFE_RANGE  // Important!
 };
 
@@ -48,7 +48,7 @@ enum keyboard_keycodes {
 #define BL_SW_3     KC_F21  // 开启蓝牙通道3（需要打开蓝牙的条件下才行）
 #define BLE_DEL     KC_F22  // 删除当前蓝牙绑定
 #define BLE_CLR     KC_F23  // 清空所有蓝牙绑定
-#define BLE_PWR_OFF KC_F24  // 关闭蓝牙连接
+#define BLE_OFF KC_F24  // 关闭蓝牙连接
 
 #ifdef TAP_DANCE_ENABLE
 // Tap Dance declarations
@@ -62,7 +62,7 @@ enum {
     TD_FN_BLE_SW_3,
     TD_FN_BLE_DEL,
     TD_FN_BLE_CLR,
-    TD_FN_BLE_PWR_OFF
+    TD_FN_BLE_OFF
 };
 
 typedef struct {
@@ -113,7 +113,7 @@ void dance_tab_ble_on_finished(qk_tap_dance_state_t *state, void *user_data) {
                 bluetooth_unpair_all();
             }
             break;
-        case BLE_PWR_OFF:
+        case BLE_OFF:
             stop_one_lilnk(0);
             break;
         default:
@@ -136,7 +136,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_FN_BLE_SW_3] = ACTION_TAP_DANCE_FN_ADVANCED_BLE(BL_SW_3, dance_tab_ble_on_finished),
     [TD_FN_BLE_DEL] = ACTION_TAP_DANCE_FN_ADVANCED_BLE(BLE_DEL, dance_tab_ble_on_finished),
     [TD_FN_BLE_CLR] = ACTION_TAP_DANCE_FN_ADVANCED_BLE(BLE_CLR, dance_tab_ble_on_finished),
-    [TD_FN_BLE_PWR_OFF] = ACTION_TAP_DANCE_FN_ADVANCED_BLE(BLE_PWR_OFF, dance_tab_ble_on_finished),
+    [TD_FN_BLE_OFF] = ACTION_TAP_DANCE_FN_ADVANCED_BLE(BLE_OFF, dance_tab_ble_on_finished),
 };
 
 
@@ -153,7 +153,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return  1500;
         case TD(TD_FN_BLE_DEL):
         case TD(TD_FN_BLE_CLR):
-        case TD(TD_FN_BLE_PWR_OFF):
+        case TD(TD_FN_BLE_OFF):
             return 2000;
         default:
             return TAPPING_TERM;
@@ -175,7 +175,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	LAYOUT(
 		KC_TRNS, KC_GRV,  KC_F1,    KC_F2,    KC_F3,    KC_F4,     KC_F5,      KC_F6,  KC_F7,    KC_F8,     KC_F9,   KC_F10,  KC_F11,   KC_F12,    KC_DEL,  KC_TRNS,
 		KC_TRNS, KC_TRNS, BL_SW_0,  BL_SW_1,  BL_SW_2,  BL_SW_3,   BAU_TOG,    KC_TRNS,KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,   KC_TRNS,
-		KC_TRNS, KC_TRNS, BLE_TOG,  USB_TOG,  BLE_DEL,  BLE_CLR,   BLE_PWR_OFF,KC_TRNS,KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS,
+		KC_TRNS, KC_TRNS, BLE_TOG,  USB_TOG,  BLE_DEL,  BLE_CLR,   BLE_OFF,KC_TRNS,KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS,
 		         KC_TRNS, RGB_TOG,  RGB_MOD,  RGB_RMOD, RGB_VAI,   RGB_VAD,    KC_TRNS,KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,   KC_TRNS,
 		         KC_TRNS,           KC_TRNS,            KC_TRNS,   KC_TRNS,            KC_TRNS,             KC_TRNS,          KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS),
 	LAYOUT(
@@ -264,8 +264,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-        case BLE_PWR_OFF:
-        case BLE_PWR_OFF_EXT:
+        case BLE_OFF:
+        case BLE_OFF_EXT:
             stop_one_lilnk(0);
             return false;
         default:

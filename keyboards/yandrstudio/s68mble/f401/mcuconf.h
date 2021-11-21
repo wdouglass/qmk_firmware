@@ -18,6 +18,12 @@
 
 #include_next <mcuconf.h>
 
+#undef STM32_SERIAL_USE_USART1
+#define STM32_SERIAL_USE_USART1 TRUE
+
+#undef  STM32_ADC_USE_ADC1
+#define STM32_ADC_USE_ADC1 TRUE
+
 #undef STM32_NO_INIT
 #undef STM32_HSI_ENABLED
 #undef STM32_LSI_ENABLED
@@ -54,7 +60,7 @@
 #define STM32_CLOCK48_REQUIRED              TRUE
 #define STM32_SW                            STM32_SW_PLL
 #define STM32_PLLSRC                        STM32_PLLSRC_HSE
-#define STM32_PLLM_VALUE                    16
+#define STM32_PLLM_VALUE                    (STM32_HSECLK/1000000)
 #define STM32_PLLN_VALUE                    192
 #define STM32_PLLP_VALUE                    4
 #define STM32_PLLQ_VALUE                    4

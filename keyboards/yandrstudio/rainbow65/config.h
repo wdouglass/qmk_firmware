@@ -23,8 +23,7 @@
 #define VENDOR_ID 0xAA96
 #define PRODUCT_ID 0xAA00
 #define DEVICE_VER 0x0001
-#define RAW_USAGE_PAGE 0xFF60
-#define MANUFACTURER YandR studio and Magic Mvp
+#define MANUFACTURER Y&R_Magic Mvp
 #define PRODUCT rainbow65
 
 /* key matrix set */
@@ -81,28 +80,18 @@
 #    define ENCODERS_PAD_A { A15 }
 #    define ENCODERS_PAD_B { B3 }
 #    define ENCODER_RESOLUTION 4
-//#    define ENCODER_DIRECTION_FLIP
 #endif
-
-/* MOUSEKEY */
-#ifdef MOUSEKEY_ENABLE
-#    define MOUSEKEY_DELAY 0
-#    define MOUSEKEY_INTERVAL 17
-#    define MK_3_SPEED
-#    define MK_MOMENTARY_ACCEL
-#    define MK_C_OFFSET_UNMOD 64
-#    define MK_C_INTERVAL_UNMOD 17
-#endif
-
 
 
 /* Others */
 #define TAP_HOLD_CAPS_DELAY 20
 #define TAP_CODE_DELAY 10
 
-#ifdef CONSOLE_ENABLE
-#    define DEBUG_MATRIX_SCAN_RATE
-#endif
+
+#define BIND_SPACE_RGB_WITH_OTHER
+#define BIND_SPACE_RGB_INDEX 59
+#define BIND_WITH_SPACE_INDEXS { 57, 58, 60, 61 }
+#define BIND_SPACE_RGB_NUM 4
 
 #endif
 

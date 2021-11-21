@@ -33,20 +33,20 @@ enum keyboard_keycodes {
     BL_SW_7_EXT,
     BLE_DEL_EXT,              // delete current ble bound
     BLE_CLR_EXT,              // delete all ble bound
-    BLE_PWR_OFF_EXT,          // power off
+    BLE_OFF_EXT,          // power off
     NEW_SAFE_RANGE  // Important!
 };
 
-#define BLE_TOG     KC_F15
-#define USB_TOG     KC_F16
-#define BAU_TOG     KC_F17
-#define BL_SW_0     KC_F18
-#define BL_SW_1     KC_F19
-#define BL_SW_2     KC_F20
-#define BL_SW_3     KC_F21
-#define BLE_DEL     KC_F22
-#define BLE_CLR     KC_F23
-#define BLE_PWR_OFF KC_F24
+#define BLE_TOG     KC_F15  // 打开蓝牙
+#define USB_TOG     KC_F16  // 打开USB
+#define BAU_TOG     KC_F17  // 蓝牙和USB之间切换
+#define BL_SW_0     KC_F18  // 开启蓝牙通道0（需要打开蓝牙的条件下才行）
+#define BL_SW_1     KC_F19  // 开启蓝牙通道1（需要打开蓝牙的条件下才行）
+#define BL_SW_2     KC_F20  // 开启蓝牙通道2（需要打开蓝牙的条件下才行）
+#define BL_SW_3     KC_F21  // 开启蓝牙通道3（需要打开蓝牙的条件下才行）
+#define BLE_DEL     KC_F22  // 删除当前蓝牙绑定
+#define BLE_CLR     KC_F23  // 清空所有蓝牙绑定
+#define BLE_OFF KC_F24  // 关闭蓝牙连接
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -81,9 +81,7 @@ void keyboard_post_init_user(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    // if (record->event.pressed) {
-    //     uprintf("KL: kc: 0x%04X, col: %u, row: %u, pressed: %b, time: %u, interrupt: %b, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
-    // }
+#ifndef CUSTOM_DELAY_KEYCODE
     switch(keycode) {
         case BLE_TOG:
         case BLE_TOG_EXT:
@@ -140,21 +138,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case BLE_DEL:
         case BLE_DEL_EXT:
             if (record->event.pressed) {
-                bluetooth_unpair_current();
+                if (where_to_send() == OUTPUT_BLUETOOTH) {
+                    bluetooth_unpair_current();
+                }
             }
             return false;
         case BLE_CLR:
         case BLE_CLR_EXT:
             if (record->event.pressed) {
-                bluetooth_unpair_all();
+                if (where_to_send() == OUTPUT_BLUETOOTH) {
+                    bluetooth_unpair_all();
+                }
             }
             return false;
-        case BLE_PWR_OFF:
-        case BLE_PWR_OFF_EXT:
+        case BLE_OFF:
+        case BLE_OFF_EXT:
             stop_one_lilnk(0);
             return false;
         default:
             return true;
     }
+#endif
     return true;
 }

@@ -33,7 +33,7 @@
 #define MATRIX_ROW_PINS { B10, A8, A5, C14}
 
 /* COL2ROW or ROW2COL */
-#define DIODE_DIRECTION ROW2COL
+#define DIODE_DIRECTION COL2ROW
 
 
 // enable the nkro when using the VIA.

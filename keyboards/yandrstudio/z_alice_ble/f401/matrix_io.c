@@ -25,9 +25,15 @@
 #ifdef DIRECT_PINS
 #    error invalid DIRECT_PINS for 74hc595 matrix
 #elif (DIODE_DIRECTION == ROW2COL)
+#   ifdef USE_BOTH_595_AND_GPIO
+const pin_t row_pins[MATRIX_ROWS] = MATRIX_ROW_PINS;
+#   endif
 const pin_t col_pins[MATRIX_COLS] = MATRIX_COL_PINS;
 const uint8_t mask_of_each_595[NUM_OF_74HC595][MATRIX_ROWS] = MATRIX_OF_74HC595;
 #elif (DIODE_DIRECTION == COL2ROW)
+#   ifdef USE_BOTH_595_AND_GPIO
+const pin_t col_pins[MATRIX_COLS] = MATRIX_COL_PINS;
+#   endif
 const pin_t row_pins[MATRIX_ROWS] = MATRIX_ROW_PINS;
 const uint8_t mask_of_each_595[NUM_OF_74HC595][MATRIX_COLS] = MATRIX_OF_74HC595;
 #else
@@ -73,6 +79,13 @@ static void shift_out_single(uint8_t value) {
 
 static void select_col(uint8_t col) {
     uint8_t i = 0;
+#   ifdef USE_BOTH_595_AND_GPIO
+    if (col_pins[col] != NO_PIN) {
+        writePinHigh(col_pins[col]);
+        return;
+    }
+#   endif
+
     writePinLow(SPI_74HC595_CS);
 #if (COL_F2L_FOR_595==TRUE)
     for (i = 0; i < NUM_OF_74HC595; ++i) {
@@ -88,6 +101,14 @@ static void select_col(uint8_t col) {
 
 static void unselect_cols(void) {
     uint8_t i = 0;
+#   ifdef USE_BOTH_595_AND_GPIO
+    for (i = 0; i < MATRIX_COLS; ++i) {
+        if (col_pins[i] != NO_PIN) {
+            writePinLow(col_pins[i]);
+        }
+    }
+#   endif
+
     writePinLow(SPI_74HC595_CS);
     for (i = 0; i < NUM_OF_74HC595; ++i) {
         shift_out_single(sr_zero);
@@ -153,6 +174,13 @@ static bool read_rows_on_col(matrix_row_t current_matrix[], uint8_t current_col)
 
 static void select_row(uint8_t row) {
     uint8_t i = 0;
+#   ifdef USE_BOTH_595_AND_GPIO
+    if (row_pins[row] != NO_PIN) {
+        writePinHigh(row_pins[row]);
+        return;
+    }
+#   endif
+
     writePinLow(SPI_74HC595_CS);
 #if (COL_F2L_FOR_595==TRUE)
     for (i = 0; i < NUM_OF_74HC595; ++i) {
@@ -168,6 +196,14 @@ static void select_row(uint8_t row) {
 
 static void unselect_rows(void) {
     uint8_t i = 0;
+#   ifdef USE_BOTH_595_AND_GPIO
+    for (i = 0; i < MATRIX_ROWS; ++i) {
+        if (row_pins[i] != NO_PIN) {
+            writePinLow(row_pins[i]);
+        }
+    }
+#   endif
+
     writePinLow(SPI_74HC595_CS);
     for (i = 0; i < NUM_OF_74HC595; ++i) {
         shift_out_single(sr_zero);

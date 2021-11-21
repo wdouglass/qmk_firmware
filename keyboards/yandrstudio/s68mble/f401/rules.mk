@@ -1,15 +1,17 @@
 # MCU name
 MCU = STM32F401
 
-# Address of the bootloader in system memory
-STM32_BOOTLOADER_ADDRESS = 0x1FFF0000
-
 # Bootloader selection
 BOOTLOADER = stm32-dfu
-# ENCODER_ENABLE = yes
-# # project specific file
+
+# Bootloader selection
+# MCU_LDSCRIPT = STM32F401xC_tinyuf2
+# BOOTLOADER = tinyuf2
+# FIRMWARE_FORMAT = uf2
+
 CUSTOM_MATRIX = lite    # for using the A9 pin as matrix io
-QUANTUM_SRC += matrix.c
+# QUANTUM_SRC += matrix_io.c 74hc595_io.c
+QUANTUM_SRC += matrix_io_inv.c 74hc595_io_inv.c
 
 EEPROM_DRIVER = custom
 SRC += eep/eeprom_stm32.c
