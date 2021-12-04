@@ -30,3 +30,11 @@
 	{ K300,  K301,  K302,  K303,  K304,  K305,  K306,  K307,  K308,  K309,  K310,  K311,  K312,  K313 }, \
 	{ K400,  K401,  K402,  KC_NO, KC_NO, K405,  KC_NO, KC_NO, KC_NO, K409,  K410,  K411,  K412,  K413 }  \
 }
+
+
+
+#ifdef RGB_MATRIX_ENABLE
+#define UNDERRGB_TOG_K KC_F24
+#else
+#define UNDERRGB_TOG_K KC_TRNS
+#endif
