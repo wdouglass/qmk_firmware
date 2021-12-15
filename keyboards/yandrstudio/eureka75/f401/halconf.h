@@ -19,13 +19,13 @@
 #include_next <halconf.h>
 
 #undef HAL_USE_PWM
-#define HAL_USE_PWM    TRUE
+#define HAL_USE_PWM TRUE
 
 #undef  SERIAL_USB_BUFFERS_SIZE
 #define SERIAL_USB_BUFFERS_SIZE 256
 
 #undef  SERIAL_BUFFERS_SIZE
-#define SERIAL_BUFFERS_SIZE     128
+#define SERIAL_BUFFERS_SIZE 128
 
 #undef  SPI_USE_WAIT
 #define SPI_USE_WAIT TRUE

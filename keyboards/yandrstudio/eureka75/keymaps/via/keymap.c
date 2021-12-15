@@ -54,38 +54,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 #ifdef ENCODER_ENABLE
-
-
 bool encoder_update_user(uint8_t index, bool clockwise) {
-
+    uint16_t keycode = 0;
     if (clockwise) {
-        uint16_t keycode = dynamic_keymap_get_keycode(biton32(layer_state), 5, 3);
-        if (keycode >= MACRO00 && keycode <= MACRO15) {
-            dynamic_keymap_macro_send(keycode - MACRO00);
-        } else {
-            tap_code16(keycode);
-        }
+        keycode = dynamic_keymap_get_keycode(biton32(layer_state), 5, 3);
     } else {
-        uint16_t keycode = dynamic_keymap_get_keycode(biton32(layer_state), 5, 4);
-        if (keycode >= MACRO00 && keycode <= MACRO15) {
-            dynamic_keymap_macro_send(keycode - MACRO00);
-        } else {
-            tap_code16(keycode);
-        }
+        keycode = dynamic_keymap_get_keycode(biton32(layer_state), 5, 4);
     }
-
+    if (keycode >= MACRO00 && keycode <= MACRO15) {
+        dynamic_keymap_macro_send(keycode - MACRO00);
+    } else {
+        tap_code16(keycode);
+    }
     return false;
 }
-
-
 #endif
-
-
-void keyboard_post_init_user(void) {
-    // eeconfig_init();
-    // Customise these values to desired behaviour
-    // debug_enable=true;
-    // debug_matrix=false;
-    // debug_keyboard=true;
-    //debug_mouse=true;
-}
