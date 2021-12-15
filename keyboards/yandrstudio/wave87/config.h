@@ -22,7 +22,7 @@
 #define VENDOR_ID  0xAA96
 #define PRODUCT_ID 0xAAA5
 #define DEVICE_VER 0x0001
-#define MANUFACTURER    YR_ZYG_IKAILL_BIU
+#define MANUFACTURER    WAVE_Y&R
 #define PRODUCT         wave87
 
 // enable the nkro when using the VIA.

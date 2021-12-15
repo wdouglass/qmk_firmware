@@ -1,4 +1,4 @@
-/* Copyright 2021 JasonRen(biu)
+/* Copyright 2020 QMK
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,23 +13,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "zpadble.h"
 
-#ifdef RGB_MATRIX_ENABLE
-led_config_t g_led_config = {
-    {
-        {0,  1,  3,  4,  6,  7,  9,  10,  12,  13,  15,  16},
-    },
-    {
-      // LED Index to Physical Position
+#pragma once
 
-    },
-    {
-      // LED Index to Flag
-      2,2,2,2,2, 2,2,2,2,2,
-      2,2,2,2,2, 2,2,2,2,2
-    }
-};
+#define CH_CFG_ST_FREQUENCY 10000
 
+#define CH_CFG_ST_TIMEDELTA 0
 
-#endif
+#define CH_CFG_USE_CONDVARS_TIMEOUT FALSE
+
+#define CH_CFG_FACTORY_OBJECTS_REGISTRY TRUE
+
+#define CH_CFG_FACTORY_GENERIC_BUFFERS TRUE
+
+#define CH_CFG_FACTORY_SEMAPHORES TRUE
+
+#define CH_CFG_FACTORY_MAILBOXES TRUE
+
+#define CH_CFG_FACTORY_OBJ_FIFOS TRUE
+
+#define CH_CFG_FACTORY_PIPES TRUE
+
+#include_next <chconf.h>
+

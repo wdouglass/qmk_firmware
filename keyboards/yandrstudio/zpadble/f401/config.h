@@ -23,7 +23,7 @@
 #ifdef RGB_MATRIX_ENABLE
 
 #    define RGB_DI_PIN A7
-#    define RGBLED_NUM 52
+#    define RGBLED_NUM 16
 #    define DRIVER_LED_TOTAL RGBLED_NUM
 
 #define WS2812_PWM_DRIVER PWMD3  // default: PWMD2
@@ -46,7 +46,7 @@
 #ifdef RGBLIGHT_ENABLE
 
 #    define RGB_DI_PIN A7
-#    define RGBLED_NUM 52
+#    define RGBLED_NUM 16
 #    define RGBLIGHT_ANIMATIONS
 #    define DRIVER_LED_TOTAL RGBLED_NUM
 
@@ -58,23 +58,32 @@
 
 #endif
 
-#define NUM_OF_74HC595 1
+#ifdef ENCODER_ENABLE
+
+#    define ENCODERS_PAD_A { A5 }
+#    define ENCODERS_PAD_B { B12 }
+
+#    define ENCODER_RESOLUTIONS { 2 }
+
+#endif
+
+#define NUM_OF_74HC595 3
 #define COL_F2L_FOR_595 TRUE
 
 #define SR_74HC595_ZERO_ONEP 0x00
 #define SR_74HC595_ONES_ONEP 0xFF
 
 //                        0       1       2       3       4       5       6       7       8       9       10      11
-#define MATRIX_COL_PINS { NO_PIN, NO_PIN, NO_PIN, NO_PIN, NO_PIN, NO_PIN, NO_PIN, A4,     NO_PIN, A5,     A6,     A15 }
-#define MATRIX_ROW_PINS { C13,    C14,    C15,    B9 }
-
-#define USE_BOTH_595_AND_GPIO
+#define MATRIX_COL_PINS { }
+#define MATRIX_ROW_PINS { B13 }
 
 #if (COL_F2L_FOR_595==TRUE)
                                  // a    b     c     d     e      f     g    h
 #   define SR_74HC595_LINE_MASK { 0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01 }
-//                               c0    c1    c2    c3    c4    c5    c6    c7    c8    c9    c10,  c11
-#   define MATRIX_OF_74HC595 {{ 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01, 0x00, 0x80, 0x00, 0x00, 0x00 }}
+//                               c0    c1    c2    c3    c4    c5    c6    c7    c8    c9    c10   c11  c12    c13  c14   c15   c16   c17   c18   c19   c20
+#   define MATRIX_OF_74HC595 {{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x10, 0x20, 0x40, 0x00, 0x00, 0x00},\
+                              { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x02, 0x04, 0x08, 0x80, 0x20, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},\
+                              { 0x20, 0x10, 0x80, 0x40, 0x01, 0x08, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00}}
 #else
                                  // a    b     c     d     e      f     g    h
 #   define SR_74HC595_LINE_MASK { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 }
@@ -82,6 +91,6 @@
 #endif
 
 
-#define SPI_SCK_PIN_OF_595 B12
-#define SPI_MOSI_PIN_OF_595 B14
-#define SPI_74HC595_CS B13
+#define SPI_SCK_PIN_OF_595 B15
+#define SPI_MOSI_PIN_OF_595 A8
+#define SPI_74HC595_CS B14

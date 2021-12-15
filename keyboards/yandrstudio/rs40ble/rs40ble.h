@@ -28,3 +28,11 @@
 	{ K200,  K201,  K202,  K203,  K204,  K205,  K206,  K207,  K208,  K209,  KC_NO, K211 }, \
 	{ K300,  K301,  K302,  K303,  KC_NO, K305,  K306,  KC_NO, K308,  K309,  KC_NO, K311 }  \
 }
+
+
+
+#ifdef RGB_MATRIX_ENABLE
+#define UNDERRGB_TOG_K KC_F13
+#else
+#define UNDERRGB_TOG_K KC_TRNS
+#endif
