@@ -15,6 +15,10 @@
  */
 #include "m93ble.h"
 
+#ifdef BIU_BLE5_ENABLE
+#include "biu_ble_common.h"
+#endif
+
 #ifdef RGB_MATRIX_ENABLE
 
 led_config_t g_led_config = {
@@ -49,10 +53,39 @@ led_config_t g_led_config = {
       4,4,4,4
     }
 };
-
-
 #endif
 
-void keyboard_post_init_kb(void) {
-    // debug_enable = true;
+void keyboard_pre_init_kb(void) {
+#ifdef LED_BAT_LOW_PIN
+    setPinOutput(LED_BAT_LOW_PIN);
+    writePin(LED_BAT_LOW_PIN, 0);
+#endif
+}
+
+bool led_update_kb(led_t led_state) {
+    bool res = led_update_user(led_state);
+    if (res) {
+#if defined(LED_NUM_LOCK_PIN) || defined(LED_CAPS_LOCK_PIN) || defined(LED_SCROLL_LOCK_PIN) || defined(LED_COMPOSE_PIN) || defined(LED_KANA_PIN)
+#    if LED_PIN_ON_STATE == 0
+        // invert the whole thing to avoid having to conditionally !led_state.x later
+        led_state.raw = ~led_state.raw;
+#    endif
+
+#    ifdef LED_NUM_LOCK_PIN
+        writePin(LED_NUM_LOCK_PIN, led_state.num_lock);
+#    endif
+#    ifdef LED_CAPS_LOCK_PIN
+        writePin(LED_CAPS_LOCK_PIN, led_state.caps_lock);
+#    endif
+#   if defined(LED_BAT_LOW_PIN) && defined(BIU_BLE5_ENABLE)
+        if (get_bat_level() < 10) {
+            writePin(LED_BAT_LOW_PIN, 1);
+        } else {
+            writePin(LED_BAT_LOW_PIN, 0);
+        }
+
+#   endif
+#endif
+    }
+    return res;
 }

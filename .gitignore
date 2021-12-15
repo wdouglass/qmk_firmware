@@ -89,3 +89,7 @@ user_song_list.h
 
 #some prebuild hex bin files
 !/keyboards/yandrstudio/utils/prebuildfile/uf2/*
+# clangd
+compile_commands.json
+.clangd/
+.cache/

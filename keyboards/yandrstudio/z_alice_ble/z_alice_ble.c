@@ -56,5 +56,5 @@ void keyboard_pre_init_kb(void) {
 #endif
 
 void keyboard_post_init_kb(void) {
-    debug_enable = true;
+    // debug_enable = true;
 }

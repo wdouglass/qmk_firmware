@@ -21,7 +21,7 @@
 #define VENDOR_ID       0xAA96
 #define PRODUCT_ID      0xAAC7
 #define DEVICE_VER      0x0001
-#define MANUFACTURER    YR_ZYG_IKAILL
+#define MANUFACTURER    JOJO_Y&R
 #define PRODUCT         M93I
 
 /* key matrix size */
@@ -40,9 +40,6 @@
 // fix VIA RGB_light
 #define VIA_HAS_BROKEN_KEYCODES
 
-/* define if matrix has ghost */
-//#define MATRIX_HAS_GHOST
-
 /* Set 0 if debouncing isn't needed */
 #define DEBOUNCE 5
 
@@ -51,28 +48,28 @@
 #define USB_POLLING_INTERVAL_MS 1
 #define QMK_KEYS_PER_SCAN 4
 
+#define LED_NUM_LOCK_PIN     A3
+#define LED_CAPS_LOCK_PIN    A4
+#define LED_BAT_LOW_PIN      A5
+#define LED_PIN_ON_STATE     1
 
+
+#define DISABLE_MAGIC_BOOTLOADER
+#define DISABLE_EEPROM_CLEAR
 
 // for ble
+// disable rgb when using ble
+#define RGB_ONLY_ON_WHEN_USB
 // rgb switch
 #define RGB_BLE_SW A6
-
+// wk pin
 #define BIUSTM32WKPin    A0
 #define BIUNRF52ResetPin A1
 #define BIUNRF52WKPin    A2
-
-
 // USB Power
 #define USB_PWR_READ
-
+#define USB_PWR_READ_PIN B10
 // ADC SETTING
 #define SAMPLE_BATTERY
 #define BATTERY_LEVEL_SW_PIN B1 // Adc pin
 
-// disable rgb when using ble
-#define RGB_ONLY_ON_WHEN_USB
-
-#define LED_CAPS_LOCK_PIN    A3
-#define LED_NUM_LOCK_PIN     A4
-#define LED_SCROLL_LOCK_PIN  A5
-#define LED_PIN_ON_STATE     1

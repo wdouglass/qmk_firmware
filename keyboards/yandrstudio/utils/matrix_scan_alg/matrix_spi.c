@@ -115,6 +115,14 @@ static void unselect_rows(void) {
 static void init_pins(void) {
     setPinOutput(SPI_74HC595_CS);
     writePinLow(SPI_74HC595_CS);
+#   ifdef USE_BOTH_595_AND_GPIO
+    uint8_t i = 0;
+    for (i = 0; i < MATRIX_COLS; ++i) {
+        if (col_pins[i] != NO_PIN) {
+            setPinOutput(col_pins[i]);
+        }
+    }
+#   endif
     unselect_rows();
     unselect_cols();
 }
@@ -211,6 +219,14 @@ static void unselect_cols(void) {
 
 static void init_pins(void) {
     writePinLow(SPI_74HC595_CS);
+#   ifdef USE_BOTH_595_AND_GPIO
+    uint8_t i = 0;
+    for (i = 0; i < MATRIX_ROWS; ++i) {
+        if (row_pins[i] != NO_PIN) {
+            setPinOutput(row_pins[i]);
+        }
+    }
+#   endif
     unselect_cols();
     unselect_rows();
 }

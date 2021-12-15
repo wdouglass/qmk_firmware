@@ -21,15 +21,15 @@
 #define VENDOR_ID       0xAA96
 #define PRODUCT_ID      0xAAC2
 #define DEVICE_VER      0x0001
-#define MANUFACTURER    Biu_Ikaill
-#define PRODUCT         Z Alice Ble
+#define MANUFACTURER    Zuoer_Y&R
+#define PRODUCT         Z_Alice_Ble
 
 /* key matrix size */
 #define MATRIX_ROWS 5
 #define MATRIX_COLS 16
 
 #define BOOTMAGIC_LITE_COLUMN 0
-#define BOOTMAGIC_LITE_ROW 2
+#define BOOTMAGIC_LITE_ROW 0
 
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
@@ -54,10 +54,15 @@
 
 
 // for ble
-#define Z_ALICE_REV1
+// #define Z_ALICE_REV1
 // rgb switch
 #ifdef Z_ALICE_REV1
 
+#   define DISABLE_MAGIC_BOOTLOADER
+#   define DISABLE_EEPROM_CLEAR
+
+// disable rgb when using ble
+#   define RGB_ONLY_ON_WHEN_USB
 #   define RGB_BLE_SW A6
 
 #   define BIUNRF52ResetPin A0
@@ -67,31 +72,33 @@
 
 // USB Power
 #   define USB_PWR_READ
+#   define USB_PWR_READ_PIN A8
 
 // ADC SETTING
 #   define SAMPLE_BATTERY
 #   define BATTERY_LEVEL_SW_PIN A2 // Adc pin
 
-// disable rgb when using ble
-#   define RGB_ONLY_ON_WHEN_USB
 
 #else
 
+#   define DISABLE_MAGIC_BOOTLOADER
+#   define DISABLE_EEPROM_CLEAR
+
+// disable rgb when using ble
+#   define RGB_ONLY_ON_WHEN_USB
 #   define RGB_BLE_SW A6
 
-#   define BIUNRF52ResetPin A0
-#   define BIUNRF52WKPin A1
-#   define BIUSTM32WKPin A3
+#   define BIUSTM32WKPin A0
+#   define BIUNRF52ResetPin A1
+#   define BIUNRF52WKPin A3
 
 
 // USB Power
 #   define USB_PWR_READ
-
+#   define USB_PWR_READ_PIN A8
 // ADC SETTING
 #   define SAMPLE_BATTERY
 #   define BATTERY_LEVEL_SW_PIN A2 // Adc pin
 
-// disable rgb when using ble
-#   define RGB_ONLY_ON_WHEN_USB
 
 #endif

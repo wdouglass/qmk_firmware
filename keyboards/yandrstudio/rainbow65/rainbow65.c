@@ -77,6 +77,17 @@ led_config_t g_led_config = {
 //   }
 // }
 
+
+// void keyboard_post_init_user() {
+//     if (rgb_matrix_config.enable == 1) {
+//       rgb_matrix_mode_noeeprom(rgb_matrix_config.mode);
+//       rgb_matrix_enable_noeeprom();
+//     } else {
+//       rgb_matrix_disable_noeeprom();
+//     }
+//     rgb_matrix_driver.flush();
+// }
+
 #endif
 
 #ifdef RGB_DISABLE_WHEN_USB_SUSPENDED

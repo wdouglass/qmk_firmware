@@ -45,9 +45,12 @@
 
 
 // for ble
-#define S68M_REV1
+// #define S68M_REV1
 // rgb switch
-#ifdef S68M_REV1
+// #ifdef S68M_REV1
+
+#define DISABLE_MAGIC_BOOTLOADER
+#define DISABLE_EEPROM_CLEAR
 
 #   define BIUNRF52ResetPin A1
 #   define BIUNRF52WKPin A0
@@ -60,8 +63,7 @@
 // ADC SETTING
 #   define SAMPLE_BATTERY
 #   define BATTERY_LEVEL_SW_PIN B1 // Adc pin
-#   define BATTERY_LEVEL_SW_PIN_ON_LOW
 
 #   define SLEEP_IN_STOP_MATRIX_LOW
 
-#endif
+// #endif

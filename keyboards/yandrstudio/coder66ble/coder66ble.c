@@ -14,7 +14,3 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "coder66ble.h"
-
-void keyboard_post_init_kb(void) {
-    debug_enable=true;
-}

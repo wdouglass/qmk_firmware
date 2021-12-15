@@ -34,7 +34,7 @@ enum keyboard_keycodes {
     BL_SW_7_EXT,
     BLE_DEL_EXT,              // delete current ble bound
     BLE_CLR_EXT,              // delete all ble bound
-    BLE_OFF_EXT,          // power off
+    BLE_OFF_EXT,             // power off
     NEW_SAFE_RANGE  // Important!
 };
 
@@ -48,7 +48,7 @@ enum keyboard_keycodes {
 #define BL_SW_3     KC_F21  // 开启蓝牙通道3（需要打开蓝牙的条件下才行）
 #define BLE_DEL     KC_F22  // 删除当前蓝牙绑定
 #define BLE_CLR     KC_F23  // 清空所有蓝牙绑定
-#define BLE_OFF KC_F24  // 关闭蓝牙连接
+#define BLE_OFF     KC_F24  // 关闭蓝牙连接
 
 #ifdef TAP_DANCE_ENABLE
 // Tap Dance declarations
@@ -145,12 +145,12 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_FN_BLE_TOG):
         case TD(TD_FN_USB_TOG):
         case TD(TD_FN_BAU_TOG):
-            return 1000;
+            return 500;
         case TD(TD_FN_BLE_SW_0):
         case TD(TD_FN_BLE_SW_1):
         case TD(TD_FN_BLE_SW_2):
         case TD(TD_FN_BLE_SW_3):
-            return  1500;
+            return  500;
         case TD(TD_FN_BLE_DEL):
         case TD(TD_FN_BLE_CLR):
         case TD(TD_FN_BLE_OFF):
@@ -175,7 +175,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	LAYOUT(
 		KC_TRNS, KC_GRV,  KC_F1,    KC_F2,    KC_F3,    KC_F4,     KC_F5,      KC_F6,  KC_F7,    KC_F8,     KC_F9,   KC_F10,  KC_F11,   KC_F12,    KC_DEL,  KC_TRNS,
 		KC_TRNS, KC_TRNS, BL_SW_0,  BL_SW_1,  BL_SW_2,  BL_SW_3,   BAU_TOG,    KC_TRNS,KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,   KC_TRNS,
-		KC_TRNS, KC_TRNS, BLE_TOG,  USB_TOG,  BLE_DEL,  BLE_CLR,   BLE_OFF,KC_TRNS,KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS,
+		KC_TRNS, KC_TRNS, BLE_TOG,  USB_TOG,  BLE_DEL,  BLE_CLR,   BLE_OFF,    KC_TRNS,KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS,
 		         KC_TRNS, RGB_TOG,  RGB_MOD,  RGB_RMOD, RGB_VAI,   RGB_VAD,    KC_TRNS,KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,   KC_TRNS,
 		         KC_TRNS,           KC_TRNS,            KC_TRNS,   KC_TRNS,            KC_TRNS,             KC_TRNS,          KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS),
 	LAYOUT(
@@ -194,8 +194,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-#ifndef CUSTOM_DELAY_KEYCODE
     switch(keycode) {
+#ifndef CUSTOM_DELAY_KEYCODE
         case BLE_TOG:
         case BLE_TOG_EXT:
             if (record->event.pressed) {
@@ -268,9 +268,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case BLE_OFF_EXT:
             stop_one_lilnk(0);
             return false;
+#endif
         default:
             return true;
     }
-#endif
     return true;
 }
