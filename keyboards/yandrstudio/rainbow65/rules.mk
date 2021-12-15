@@ -11,6 +11,6 @@ NKRO_ENABLE       = yes      # USB Nkey Rollover
 # RGBLIGHT_ENABLE   = yes
 RGB_MATRIX_ENABLE = yes
 RGB_MATRIX_DRIVER = WS2812
-WS2812_DRIVER     = spi
+#WS2812_DRIVER     = spi
 WPM_ENABLE        = yes      # Show APM.
 ENCODER_ENABLE    = yes

@@ -134,17 +134,17 @@ void keyboard_post_init_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
-        uart_putchar(0xff);
-        uart_putchar(keycode >> 8);
-        uart_putchar(keycode & 0xff);
-        uart_putchar(0xfe);
+        uart_write(0xff);
+        uart_write(keycode >> 8);
+        uart_write(keycode & 0xff);
+        uart_write(0xfe);
         uprintf("KL: kc: 0x%04X, col: %u, row: %u, pressed: %b, time: %u, interrupt: %b, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
     }
     return true;
     // switch (keycode) {
     //     case KC_N:
     //         if (record->event.pressed) {
-    //             uart_putchar('#');
+    //             uart_write('#');
     //         } else {
     //             // Do something else when release
     //         }

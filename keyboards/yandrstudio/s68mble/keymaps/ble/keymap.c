@@ -34,8 +34,8 @@ enum keyboard_keycodes {
     BL_SW_7_EXT,
     BLE_DEL_EXT,              // delete current ble bound
     BLE_CLR_EXT,              // delete all ble bound
-    BLE_OFF_EXT,          // power off
-    NEW_SAFE_RANGE  // Important!
+    BLE_OFF_EXT,              // power off
+    NEW_SAFE_RANGE            // Important!
 };
 
 
@@ -48,7 +48,7 @@ enum keyboard_keycodes {
 #define BL_SW_3     KC_F21  // 开启蓝牙通道3（需要打开蓝牙的条件下才行）
 #define BLE_DEL     KC_F22  // 删除当前蓝牙绑定
 #define BLE_CLR     KC_F23  // 清空所有蓝牙绑定
-#define BLE_OFF KC_F24  // 关闭蓝牙连接
+#define BLE_OFF     KC_F24  // 关闭蓝牙连接
 
 #ifdef TAP_DANCE_ENABLE
 // Tap Dance declarations
@@ -68,8 +68,6 @@ enum {
 typedef struct {
     uint16_t kc;
 } qk_kc;
-
-
 
 
 void dance_tab_ble_on_finished(qk_tap_dance_state_t *state, void *user_data) {
@@ -145,12 +143,12 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_FN_BLE_TOG):
         case TD(TD_FN_USB_TOG):
         case TD(TD_FN_BAU_TOG):
-            return 1000;
+            return 500;
         case TD(TD_FN_BLE_SW_0):
         case TD(TD_FN_BLE_SW_1):
         case TD(TD_FN_BLE_SW_2):
         case TD(TD_FN_BLE_SW_3):
-            return  1500;
+            return  500;
         case TD(TD_FN_BLE_DEL):
         case TD(TD_FN_BLE_CLR):
         case TD(TD_FN_BLE_OFF):
@@ -193,87 +191,3 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS,
 		KC_TRNS, KC_TRNS,          KC_TRNS,                   KC_TRNS,                            KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS)
 };
-
-
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-#ifndef CUSTOM_DELAY_KEYCODE
-    switch(keycode) {
-        case BLE_TOG:
-        case BLE_TOG_EXT:
-            if (record->event.pressed) {
-                set_output(OUTPUT_BLUETOOTH);
-            }
-            return false;
-        case USB_TOG:
-        case USB_TOG_EXT:
-            if (record->event.pressed) {
-                usb_event_queue_init();
-                init_usb_driver(&USB_DRIVER, false);
-                set_output(OUTPUT_USB);
-            }
-            return false;
-        case BAU_TOG:
-        case BAU_TOG_EXT:
-            if (record->event.pressed) {
-                if (where_to_send() == OUTPUT_USB) {
-                    set_output(OUTPUT_BLUETOOTH);
-                } else {
-                    usb_event_queue_init();
-                    init_usb_driver(&USB_DRIVER, false);
-                    set_output(OUTPUT_USB);
-                }
-            }
-            return false;
-        case BL_SW_0:
-        case BL_SW_1:
-        case BL_SW_2:
-        case BL_SW_3:
-            if (where_to_send() == OUTPUT_BLUETOOTH) {
-                if (record->event.pressed) {
-                    set_output(OUTPUT_BLUETOOTH);
-                    bluetooth_switch_one(keycode - BL_SW_0);
-                }
-            }
-            return false;
-        case BL_SW_0_EXT:
-        case BL_SW_1_EXT:
-        case BL_SW_2_EXT:
-        case BL_SW_3_EXT:
-        case BL_SW_4_EXT:
-        case BL_SW_5_EXT:
-        case BL_SW_6_EXT:
-        case BL_SW_7_EXT:
-            if (where_to_send() == OUTPUT_BLUETOOTH) {
-                if (record->event.pressed) {
-                    set_output(OUTPUT_BLUETOOTH);
-                    bluetooth_switch_one(keycode - BL_SW_0_EXT);
-                }
-            }
-            return false;
-        case BLE_DEL:
-        case BLE_DEL_EXT:
-            if (record->event.pressed) {
-                if (where_to_send() == OUTPUT_BLUETOOTH) {
-                    bluetooth_unpair_current();
-                }
-            }
-            return false;
-        case BLE_CLR:
-        case BLE_CLR_EXT:
-            if (record->event.pressed) {
-                if (where_to_send() == OUTPUT_BLUETOOTH) {
-                    bluetooth_unpair_all();
-                }
-            }
-            return false;
-        case BLE_OFF:
-        case BLE_OFF_EXT:
-            stop_one_lilnk(0);
-            return false;
-        default:
-            return true;
-    }
-#endif
-    return true;
-}

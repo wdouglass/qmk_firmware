@@ -94,5 +94,3 @@
 #define BIND_SPACE_RGB_NUM 4
 
 #endif
-
-

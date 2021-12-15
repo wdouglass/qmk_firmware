@@ -129,6 +129,14 @@ static void init_pins(void) {
     writePinHigh(SPI_SCK_PIN_OF_595);
     writePinHigh(SPI_MOSI_PIN_OF_595);
     writePinHigh(SPI_74HC595_CS);
+#   ifdef USE_BOTH_595_AND_GPIO
+    uint8_t i = 0;
+    for (i = 0; i < MATRIX_COLS; ++i) {
+        if (col_pins[i] != NO_PIN) {
+            setPinOutput(col_pins[i]);
+        }
+    }
+#   endif
     unselect_rows();
     unselect_cols();
 }
@@ -224,6 +232,14 @@ static void init_pins(void) {
     writePinHigh(SPI_SCK_PIN_OF_595);
     writePinHigh(SPI_MOSI_PIN_OF_595);
     writePinHigh(SPI_74HC595_CS);
+#   ifdef USE_BOTH_595_AND_GPIO
+    uint8_t i = 0;
+    for (i = 0; i < MATRIX_ROWS; ++i) {
+        if (row_pins[i] != NO_PIN) {
+            setPinOutput(row_pins[i]);
+        }
+    }
+#   endif
     unselect_cols();
     unselect_rows();
 }

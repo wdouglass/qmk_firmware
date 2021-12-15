@@ -45,15 +45,16 @@
 #define QMK_KEYS_PER_SCAN 4
 
 
-
 // for ble
-
+#define DISABLE_MAGIC_BOOTLOADER
+#define DISABLE_EEPROM_CLEAR
 // USB Power
 #define USB_PWR_READ
-
+#define USB_PWR_READ_PIN B10
 // ADC SETTING
 #define SAMPLE_BATTERY
-
-#define BATTERY_LEVEL_SW_PIN B1
-
-#define BIUNRF52WKPin A2
+#define BATTERY_LEVEL_SW_PIN  B1
+// wake pin
+#define BIUSTM32WKPin         A0
+#define BIUNRF52ResetPin      A1
+#define BIUNRF52WKPin         A2

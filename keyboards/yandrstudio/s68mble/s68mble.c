@@ -16,14 +16,9 @@
 #include "s68mble.h"
 
 
-#ifdef S68M_REV1
-void keyboard_pre_init_kb(void) {
-    palSetLineMode(C14, PAL_MODE_INPUT_PULLUP);
-    palSetLineMode(C15, PAL_MODE_INPUT_PULLUP);
-}
-#endif
-
-
-void keyboard_post_init_kb(void) {
-    debug_enable=true;
-}
+// #ifdef S68M_REV1
+// void keyboard_pre_init_kb(void) {
+//     palSetLineMode(C14, PAL_MODE_INPUT_PULLUP);
+//     palSetLineMode(C15, PAL_MODE_INPUT_PULLUP);
+// }
+// #endif

@@ -1,4 +1,4 @@
-M93I
+M93-Internal version
 ===
 
 A M93I keyboard with rgb (keys).
