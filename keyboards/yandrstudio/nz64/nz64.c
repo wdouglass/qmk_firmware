@@ -21,7 +21,11 @@
 #ifdef RGB_MATRIX_ENABLE
 
 // globol
-uint8_t underground_rgb_sw;
+typedef union {
+  uint32_t raw;
+uint8_t underground_rgb_sw :8;
+} user_config_t;
+user_config_t user_config;
 
 led_config_t g_led_config = {
     {
@@ -59,13 +63,13 @@ led_config_t g_led_config = {
 
 void rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
     if (rgb_matrix_is_enabled()) {
-        if (underground_rgb_sw == 0) {
+        if (user_config.underground_rgb_sw == 0) {
             for (uint8_t i = led_min; i < led_max; ++i) {
                 if ((g_led_config.flags[i] == 4)) {
                     rgb_matrix_set_color(i, 0, 0, 0);
                 }
             }
-        } else if (underground_rgb_sw == 1) {
+        } else if (user_config.underground_rgb_sw == 1) {
             for (uint8_t i = led_min; i < led_max; ++i) {
                 if ((g_led_config.flags[i] == 2)) {
                     rgb_matrix_set_color(i, 0, 0, 0);
@@ -78,26 +82,28 @@ void rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
 }
 
 
+void keyboard_post_init_kb(void) {
+    user_config.underground_rgb_sw = eeconfig_read_user();
+}
+
+#endif
+
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     switch(keycode) {
+#ifdef RGB_MATRIX_ENABLE
         case UNDERRGB_TOG_K:
             if (rgb_matrix_config.enable && record->event.pressed) {
-                underground_rgb_sw += 1;
-                underground_rgb_sw %= 3;
+                user_config.underground_rgb_sw += 1;
+                user_config.underground_rgb_sw %= 3;
             }
+            eeconfig_update_user(user_config.raw);
+            return false;
+#endif
+        case LOCK_GUI:
+            process_magic(GUI_TOG, record);
             return false;
         default:
             return true;
     }
     return true;
 }
-
-void keyboard_post_init_kb(void) {
-    if (rgb_matrix_is_enabled()) {
-        underground_rgb_sw = 2;
-    } else {
-        underground_rgb_sw = 0;
-    }
-}
-
-#endif
