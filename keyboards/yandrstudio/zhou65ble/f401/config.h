@@ -31,4 +31,3 @@
 #define LED_CAPS_LOCK_PIN A15
 #define LED_PIN_ON_STATE    1
 
-#define SLEEP_IN_STOP_MATRIX_LOW

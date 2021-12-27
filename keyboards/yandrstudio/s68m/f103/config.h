@@ -1,4 +1,4 @@
-/* Copyright 2020 QMK
+/* Copyright 2021 JasonRen(biu)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,15 +13,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 #pragma once
 
-#include_next <mcuconf.h>
+#include "config_common.h"
 
-#undef STM32_PWM_USE_TIM3
-#define STM32_PWM_USE_TIM3 TRUE
+/* key matrix size */
+#define MATRIX_ROWS 5
+#define MATRIX_COLS 16
 
-#undef STM32_PLLXTPRE
-#define STM32_PLLXTPRE STM32_PLLXTPRE_DIV2
+//                        0    1    2    3    4    5    6    7    8    9    10   11   12   13    14   15
+#define MATRIX_COL_PINS { C14, B11, B10, B2,  B1,  B0,  A7,  A6,  A5,  A4,  B5,  B4,  B3,  A15,  A3,  A2 }
+#define MATRIX_ROW_PINS { A1,  A0,  B6,  B8,  B9}
 
+/* COL2ROW or ROW2COL */
+#define DIODE_DIRECTION ROW2COL
 
+#define LED_CAPS_LOCK_PIN B7
+#define LED_PIN_ON_STATE  1

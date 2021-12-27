@@ -14,14 +14,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 #pragma once
+#include_next <halconf.h>
 
-#include_next <mcuconf.h>
+#undef  SERIAL_USB_BUFFERS_SIZE
+#define SERIAL_USB_BUFFERS_SIZE 256
 
-#undef STM32_PWM_USE_TIM3
-#define STM32_PWM_USE_TIM3 TRUE
+#undef  SERIAL_BUFFERS_SIZE
+#define SERIAL_BUFFERS_SIZE 256
 
-#undef STM32_PLLXTPRE
-#define STM32_PLLXTPRE STM32_PLLXTPRE_DIV2
+#undef  SPI_USE_WAIT
+#define SPI_USE_WAIT TRUE
 
+#undef  SPI_SELECT_MODE
+#define SPI_SELECT_MODE SPI_SELECT_MODE_PAD
 

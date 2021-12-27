@@ -22,8 +22,8 @@
 
 // globol
 typedef union {
-  uint32_t raw;
-uint8_t underground_rgb_sw :8;
+    uint32_t raw;
+    uint8_t underground_rgb_sw :8;
 } user_config_t;
 user_config_t user_config;
 

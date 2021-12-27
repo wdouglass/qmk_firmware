@@ -21,15 +21,12 @@
 #define VENDOR_ID       0xAA96
 #define PRODUCT_ID      0xAAC2
 #define DEVICE_VER      0x0001
-#define MANUFACTURER    Zuoer_Y&R
+#define MANUFACTURER    ZUOER_Y&R
 #define PRODUCT         Z_Alice_Ble
 
 /* key matrix size */
 #define MATRIX_ROWS 5
 #define MATRIX_COLS 16
-
-#define BOOTMAGIC_LITE_COLUMN 0
-#define BOOTMAGIC_LITE_ROW 0
 
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
@@ -99,6 +96,4 @@
 // ADC SETTING
 #   define SAMPLE_BATTERY
 #   define BATTERY_LEVEL_SW_PIN A2 // Adc pin
-
-
 #endif
