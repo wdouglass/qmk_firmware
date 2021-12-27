@@ -14,3 +14,65 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "wave87.h"
+
+
+#ifdef RGBLIGHT_ENABLE
+// globol
+typedef union {
+  uint32_t raw;
+  bool rgb_sw[3];
+} kb_cums_config_t;
+kb_cums_config_t kb_cums_config;
+
+void housekeeping_task_kb(void) {
+    if (rgblight_is_enabled()) {
+        if (!kb_cums_config.rgb_sw[0]) {
+            rgblight_setrgb_at(0,0,0,0);
+        }
+        if (!kb_cums_config.rgb_sw[1]) {
+            rgblight_setrgb_at(0,0,0,1);
+        }
+        if (!kb_cums_config.rgb_sw[2]) {
+            rgblight_setrgb_at(0,0,0,2);
+        }
+    }
+}
+
+void eeconfig_init_kb(void) {
+    kb_cums_config.raw = 0;
+    kb_cums_config.rgb_sw[0] = false;
+    kb_cums_config.rgb_sw[1] = false;
+    kb_cums_config.rgb_sw[2] = true;
+    eeconfig_update_kb(kb_cums_config.raw);
+}
+
+void keyboard_post_init_kb(void) {
+    kb_cums_config.raw = eeconfig_read_kb();
+}
+
+bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
+    switch(keycode) {
+        case KC_F22:
+            if (rgblight_is_enabled() && record->event.pressed) {
+                kb_cums_config.rgb_sw[0] = kb_cums_config.rgb_sw[0] ? false : true;
+                eeconfig_update_kb(kb_cums_config.raw);
+            }
+            return false;
+        case KC_F23:
+            if (rgblight_is_enabled() && record->event.pressed) {
+                kb_cums_config.rgb_sw[1] = kb_cums_config.rgb_sw[1] ? false : true;
+                eeconfig_update_kb(kb_cums_config.raw);
+            }
+            return false;
+        case KC_F24:
+            if (rgblight_is_enabled() && record->event.pressed) {
+                kb_cums_config.rgb_sw[2] = kb_cums_config.rgb_sw[2] ? false : true;
+                eeconfig_update_kb(kb_cums_config.raw);
+            }
+            return false;
+        default:
+            return true;
+    }
+    return true;
+}
+#endif

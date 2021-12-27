@@ -28,35 +28,6 @@
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
 
-
-/* RGN Matrix */
-#ifdef RGB_MATRIX_ENABLE
-
-#    define RGB_DI_PIN A7
-#    define RGBLED_NUM 3
-#    define DRIVER_LED_TOTAL RGBLED_NUM
-
-
-#   define WS2812_PWM_DRIVER PWMD3  // default: PWMD2
-#   define WS2812_PWM_CHANNEL 2  // default: 2
-#   define WS2812_PWM_PAL_MODE 2
-#   define WS2812_DMA_STREAM STM32_DMA1_STREAM3
-#   define WS2812_DMA_CHANNEL 3
-
-
-#    define RGB_MATRIX_MAXIMUM_BRIGHTNESS 180
-#    define RGBLIGHT_VAL_STEP 15
-#    define RGB_DISABLE_WHEN_USB_SUSPENDED true
-#    define RGB_MATRIX_CENTER { 32, 96 }
-#    define RGB_MATRIX_KEYPRESSES
-#    define RGB_MATRIX_FRAMEBUFFER_EFFECTS
-#    define RGBLIGHT_ANIMATIONS
-
-// #    define WS2812_BYTE_ORDER WS2812_BYTE_ORDER_RGB
-
-#endif
-
-
 #ifdef RGBLIGHT_ENABLE
 
 #    define RGB_DI_PIN A7
