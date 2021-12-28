@@ -61,6 +61,8 @@
 
 #define ASSERT(exp) (void)((0))
 
+void FLASH_ClearFlag(uint32_t FLASH_FLAG);
+
 /**
  * @brief  Inserts a time delay.
  * @param  None
