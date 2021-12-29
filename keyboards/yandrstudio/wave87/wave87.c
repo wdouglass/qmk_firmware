@@ -48,26 +48,30 @@ void eeconfig_init_kb(void) {
 
 void keyboard_post_init_kb(void) {
     kb_cums_config.raw = eeconfig_read_kb();
+    rgblight_reload_from_eeprom();
 }
 
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     switch(keycode) {
         case KC_F22:
             if (rgblight_is_enabled() && record->event.pressed) {
-                kb_cums_config.rgb_sw[0] = kb_cums_config.rgb_sw[0] ? false : true;
+                kb_cums_config.rgb_sw[0] = !kb_cums_config.rgb_sw[0];
                 eeconfig_update_kb(kb_cums_config.raw);
+                rgblight_reload_from_eeprom();
             }
             return false;
         case KC_F23:
             if (rgblight_is_enabled() && record->event.pressed) {
-                kb_cums_config.rgb_sw[1] = kb_cums_config.rgb_sw[1] ? false : true;
+                kb_cums_config.rgb_sw[1] = !kb_cums_config.rgb_sw[1];
                 eeconfig_update_kb(kb_cums_config.raw);
+                rgblight_reload_from_eeprom();
             }
             return false;
         case KC_F24:
             if (rgblight_is_enabled() && record->event.pressed) {
-                kb_cums_config.rgb_sw[2] = kb_cums_config.rgb_sw[2] ? false : true;
+                kb_cums_config.rgb_sw[2] = !kb_cums_config.rgb_sw[2];
                 eeconfig_update_kb(kb_cums_config.raw);
+                rgblight_reload_from_eeprom();
             }
             return false;
         default:
