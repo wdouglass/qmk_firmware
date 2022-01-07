@@ -51,6 +51,3 @@
     { R110,  R111,  R112,  R113,  R114,  R115,  R116  }  \
 }
 
-extern volatile char current_alp[7];
-extern volatile uint8_t cur_alp_index;
-

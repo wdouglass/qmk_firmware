@@ -1,5 +1,6 @@
 #include "hotdox76v2.h"
 #include <string.h>
+#include <transactions.h>
 // #include "oled_font_lib/logo.h"
 #include "oled_font_lib/logo2.h"
 #include "oled_font_lib/ext_font.h"
@@ -70,20 +71,29 @@ led_config_t g_led_config = {
 
 
 
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 
 #   define UNC (94+0x21)
-volatile char current_alp[7];
-volatile uint8_t cur_alp_index;
+typedef struct _master_to_slave_t {
+    int cur_alp_index;
+    char current_alp[7];
+} master_to_slave_t;
+master_to_slave_t m2s;
 
-oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-    strcpy((char *)(current_alp), "[    ]");
-    current_alp[1] = UNC;
-    current_alp[2] = UNC;
-    current_alp[3] = UNC;
-    current_alp[4] = UNC;
+typedef struct _slave_to_master_t {
+    int cur_alp_index;
+    char current_alp[7];
+} slave_to_master_t;
+slave_to_master_t s2m;
 
-    cur_alp_index = 1;
+oled_rotation_t oled_init_kb(oled_rotation_t rotation) {
+    strcpy((char *)(m2s.current_alp), "[    ]");
+    m2s.current_alp[1] = UNC;
+    m2s.current_alp[2] = UNC;
+    m2s.current_alp[3] = UNC;
+    m2s.current_alp[4] = UNC;
+
+    m2s.cur_alp_index = 1;
 #   ifdef I_AM_LEFT
         return OLED_ROTATION_180;
 #   else
@@ -167,19 +177,20 @@ void render_cur_input_helper_fun(uint8_t start_line, const char * data, uint8_t 
 
 void render_cur_input(void) {
     render_cur_input_helper_fun(0, "INPUTS:", 6, 7);
-    render_cur_input_helper_fun(1, (const char *)(current_alp), 12, 6);
+    render_cur_input_helper_fun(1, (const char *)(m2s.current_alp), 12, 6);
     return;
 }
 #endif
 
 
-void oled_task_user(void) {
+bool oled_task_kb(void) {
     render_logo();
 #   ifdef I_AM_LEFT
     render_layer(biton32(layer_state));
 #   else
     render_cur_input();
 #   endif
+    return false;
 }
 
 
@@ -211,17 +222,17 @@ void get_cur_alp_hook(uint16_t keycode) {
     if (keycode >= 0xF0) {
         keycode = 0xF0;
     }
-    if (cur_alp_index < 4) {
-        current_alp[cur_alp_index] = pgm_read_byte(&code_to_name[keycode]);
-        if (cur_alp_index == 1) {
-            current_alp[2] = current_alp[3] = current_alp[4]  = UNC;
+    if (m2s.cur_alp_index < 4) {
+        m2s.current_alp[m2s.cur_alp_index] = pgm_read_byte(&code_to_name[keycode]);
+        if (m2s.cur_alp_index == 1) {
+            m2s.current_alp[2] = m2s.current_alp[3] = m2s.current_alp[4]  = UNC;
         }
-        cur_alp_index++;
+        m2s.cur_alp_index++;
     } else {
         for (uint8_t i = 2; i <= 4; ++i) {
-            current_alp[i-1] = current_alp[i];
+            m2s.current_alp[i-1] = m2s.current_alp[i];
         }
-        current_alp[cur_alp_index] = pgm_read_byte(&code_to_name[keycode]);
+        m2s.current_alp[m2s.cur_alp_index] = pgm_read_byte(&code_to_name[keycode]);
     }
 }
 
@@ -236,9 +247,27 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
 
 void matrix_scan_kb(void) {
     if(!is_oled_on()) {
-        cur_alp_index = 1;
+        m2s.cur_alp_index = 1;
     }
 }
+
+
+
+void user_sync_alpa_slave_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
+    const master_to_slave_t *m2s = (const master_to_slave_t*)in_data;
+    slave_to_master_t *s2m = (slave_to_master_t*)out_data;
+    s2m->cur_alp_index = m2s->cur_alp_index; // whatever comes in, add 5 so it can be sent back
+    for (size_t i = 0; i < 7; i++)
+    {
+        s2m->current_alp[i] = m2s->current_alp[i];
+    }
+}
+
+void keyboard_post_init_kb(void) {
+    transaction_register_rpc(KEYBOARD_CURRENT_ALPA_SYNC, user_sync_alpa_slave_handler);
+}
+
+
 #endif
 
 
