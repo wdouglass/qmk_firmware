@@ -19,6 +19,7 @@
 #include "biu_ble_common.h"
 #include "distributors.h"
 #include "usb_main.h"
+#include <stdio.h>
 
 enum keyboard_keycodes {
     BLE_TOG_EXT = SAFE_RANGE, // ble
@@ -79,20 +80,16 @@ void dance_tab_ble_on_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (keycode)
     {
         case BLE_TOG:
-            set_output(OUTPUT_BLUETOOTH);
+            switch_output_driver(0);
             break;
         case USB_TOG:
-            usb_event_queue_init();
-            init_usb_driver(&USB_DRIVER, false);
-            set_output(OUTPUT_USB);
+            switch_output_driver(1);
             break;
         case BAU_TOG:
             if (where_to_send() == OUTPUT_USB) {
-                set_output(OUTPUT_BLUETOOTH);
+                switch_output_driver(0);
             } else {
-                usb_event_queue_init();
-                init_usb_driver(&USB_DRIVER, false);
-                set_output(OUTPUT_USB);
+                switch_output_driver(1);
             }
             break;
         case BL_SW_0:
@@ -169,15 +166,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     LAYOUT(
 		KC_F1,   KC_ESC,  KC_1,     KC_2,     KC_3,     KC_4,     KC_5,      KC_6,     KC_7,     KC_8,     KC_9,     KC_0,    KC_MINS,  KC_EQL,   KC_BSPC,  KC_MUTE,
         KC_F2,   KC_TAB,  KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,      KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,    KC_LBRC,  KC_RBRC,  KC_BSLS,
-        KC_F3,   KC_CAPS, KC_A,     KC_S,     KC_D,     KC_F,     KC_G,      KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN, KC_QUOT,            KC_ENT,
+        KC_F3,   LT(1,KC_CAPS), KC_A,     KC_S,     KC_D,     KC_F,     KC_G,      KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN, KC_QUOT,            KC_ENT,
                  KC_LSFT, KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,      KC_B,     KC_N,     KC_M,     KC_COMM,  KC_DOT,  KC_SLSH,  KC_RSFT,  KC_UP,
-                 KC_LCTL,           KC_LALT,            KC_SPC,   MO(1),               KC_SPC,             KC_RALT,           KC_RGUI,  KC_LEFT,  KC_DOWN,  KC_RGHT),
+                 KC_LCTL,           KC_LALT,            KC_SPC,   MO(1),               LT(1,KC_SPC),       KC_RALT,           KC_RGUI,  KC_LEFT,  KC_DOWN,  KC_RGHT),
 	LAYOUT(
 		KC_TRNS, KC_GRV,  KC_F1,    KC_F2,    KC_F3,    KC_F4,     KC_F5,      KC_F6,  KC_F7,    KC_F8,     KC_F9,   KC_F10,  KC_F11,   KC_F12,    KC_DEL,  KC_TRNS,
 		KC_TRNS, KC_TRNS, BL_SW_0,  BL_SW_1,  BL_SW_2,  BL_SW_3,   BAU_TOG,    KC_TRNS,KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,   KC_TRNS,
 		KC_TRNS, KC_TRNS, BLE_TOG,  USB_TOG,  BLE_DEL,  BLE_CLR,   BLE_OFF,    KC_TRNS,KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS,
-		         KC_TRNS, RGB_TOG,  RGB_MOD,  RGB_RMOD, RGB_VAI,   RGB_VAD,    KC_TRNS,KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,   KC_TRNS,
-		         KC_TRNS,           KC_TRNS,            KC_TRNS,   KC_TRNS,            KC_TRNS,             KC_TRNS,          KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS),
+		         KC_TRNS, RGB_TOG,  RGB_MOD,  RGB_RMOD, RGB_VAI,   RGB_VAD,    KC_TRNS,KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,   KC_VOLU,
+		         KC_TRNS,           KC_TRNS,            KC_TRNS,   KC_TRNS,            KC_TRNS,             KC_TRNS,          KC_TRNS,  KC_TRNS,   KC_VOLD, KC_TRNS),
 	LAYOUT(
 		KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS,
 		KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,   KC_TRNS,
@@ -199,26 +196,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case BLE_TOG:
         case BLE_TOG_EXT:
             if (record->event.pressed) {
-                set_output(OUTPUT_BLUETOOTH);
+                switch_output_driver(0);
             }
             return false;
         case USB_TOG:
         case USB_TOG_EXT:
             if (record->event.pressed) {
-                usb_event_queue_init();
-                init_usb_driver(&USB_DRIVER, false);
-                set_output(OUTPUT_USB);
+                switch_output_driver(1);
             }
             return false;
         case BAU_TOG:
         case BAU_TOG_EXT:
             if (record->event.pressed) {
                 if (where_to_send() == OUTPUT_USB) {
-                    set_output(OUTPUT_BLUETOOTH);
+                    switch_output_driver(0);
                 } else {
-                    usb_event_queue_init();
-                    init_usb_driver(&USB_DRIVER, false);
-                    set_output(OUTPUT_USB);
+                    switch_output_driver(1);
                 }
             }
             return false;
@@ -243,7 +236,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case BL_SW_7_EXT:
             if (where_to_send() == OUTPUT_BLUETOOTH) {
                 if (record->event.pressed) {
-                    set_output(OUTPUT_BLUETOOTH);
                     bluetooth_switch_one(keycode - BL_SW_0_EXT);
                 }
             }
@@ -269,6 +261,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             stop_one_lilnk(0);
             return false;
 #endif
+        // case KC_F2:
+        // {
+        //     if (record->event.pressed) {
+        //         uint16_t adcv = debug_ble_info_helper();
+        //         char adc_str[8] = {0};
+        //         snprintf(adc_str, sizeof(adc_str), "%05d", adcv);
+        //         adc_str[6] = '\0';
+        //         SEND_STRING(adc_str);
+        //     }
+        // }
+        //     return false;
         default:
             return true;
     }

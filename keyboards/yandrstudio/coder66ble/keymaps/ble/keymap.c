@@ -106,20 +106,16 @@ void dance_tab_ble_on_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (keycode)
     {
         case BLE_TOG:
-            set_output(OUTPUT_BLUETOOTH);
+            switch_output_driver(0);
             break;
         case USB_TOG:
-            usb_event_queue_init();
-            init_usb_driver(&USB_DRIVER, false);
-            set_output(OUTPUT_USB);
+            switch_output_driver(1);
             break;
         case BAU_TOG:
             if (where_to_send() == OUTPUT_USB) {
-                set_output(OUTPUT_BLUETOOTH);
+                switch_output_driver(0);
             } else {
-                usb_event_queue_init();
-                init_usb_driver(&USB_DRIVER, false);
-                set_output(OUTPUT_USB);
+                switch_output_driver(1);
             }
             break;
         case BL_SW_0:
@@ -253,26 +249,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case BLE_TOG:
         case BLE_TOG_EXT:
             if (record->event.pressed) {
-                set_output(OUTPUT_BLUETOOTH);
+                switch_output_driver(0);
             }
             return false;
         case USB_TOG:
         case USB_TOG_EXT:
             if (record->event.pressed) {
-                usb_event_queue_init();
-                init_usb_driver(&USB_DRIVER, false);
-                set_output(OUTPUT_USB);
+                switch_output_driver(1);
             }
             return false;
         case BAU_TOG:
         case BAU_TOG_EXT:
             if (record->event.pressed) {
                 if (where_to_send() == OUTPUT_USB) {
-                    set_output(OUTPUT_BLUETOOTH);
+                    switch_output_driver(0);
                 } else {
-                    usb_event_queue_init();
-                    init_usb_driver(&USB_DRIVER, false);
-                    set_output(OUTPUT_USB);
+                    switch_output_driver(1);
                 }
             }
             return false;
@@ -297,7 +289,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case BL_SW_7_EXT:
             if (where_to_send() == OUTPUT_BLUETOOTH) {
                 if (record->event.pressed) {
-                    set_output(OUTPUT_BLUETOOTH);
                     bluetooth_switch_one(keycode - BL_SW_0_EXT);
                 }
             }

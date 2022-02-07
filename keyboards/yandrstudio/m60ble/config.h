@@ -35,7 +35,6 @@
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
 
-
 // enable the nkro when using the VIA.
 #define FORCE_NKRO
 
@@ -48,9 +47,11 @@
 /* Set 0 if debouncing isn't needed */
 #define DEBOUNCE 5
 
-
-#define SAMPLE_BATTERY
 #define BIUNRF52WKPin A3
 
-
-
+#ifdef OLED_ENABLE
+#   define OLED_TIMEOUT 90000
+#   define OLED_IC OLED_IC_CH1115
+#   define OLED_DISPLAY_128X64
+#   define OLED_FONT_H "glcdfont_biu_ble.c"
+#endif

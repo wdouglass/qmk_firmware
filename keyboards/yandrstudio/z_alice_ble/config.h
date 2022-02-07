@@ -48,10 +48,12 @@
 #define USB_POLLING_INTERVAL_MS 1
 #define QMK_KEYS_PER_SCAN 4
 
-
+#define HOLD_ON_OTHER_KEY_PRESS
+#define TAP_HOLD_CAPS_DELAY 150
 
 // for ble
-// #define Z_ALICE_REV1
+#define USE_MUILT_THREAD_FOR_BLE
+#define Z_ALICE_REV1
 // rgb switch
 #ifdef Z_ALICE_REV1
 

@@ -58,6 +58,7 @@
 #define DISABLE_EEPROM_CLEAR
 
 // for ble
+#define USE_MUILT_THREAD_FOR_BLE
 // disable rgb when using ble
 #define RGB_ONLY_ON_WHEN_USB
 // rgb switch

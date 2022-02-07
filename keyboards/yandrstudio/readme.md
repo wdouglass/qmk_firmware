@@ -53,6 +53,7 @@ A creative coder.
 | rs40ble      | 0xAA96    | 0xAAC8     | BLE 5.0 Dual mode, Hotswap, RGB  | &check;           |
 | s68m         | 0xAA96    | 0xAAC9     | STM32F103 UF2, Solder            | &check;           |
 | zpadble      | 0xAA96    | 0xAACA     | BLE, Hotswap, RGB, Encoder, OLED | &check;           |
+| ml75r2ble    | 0xAA96    | 0xAACB     | BLE, Encoder, OLED               | &check;           |
 
 
 
