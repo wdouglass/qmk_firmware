@@ -26,6 +26,7 @@
 #   define CUSTOM_DELAY_KEYCODE
 
 #   define CUSTOM_DELAY_KEYCODE_START KC_F15
+
 #   define CUSTOM_DELAY_KEYCODE_MAX   KC_F24
 
 #endif

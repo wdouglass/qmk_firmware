@@ -20,7 +20,6 @@ A creative coder.
 | yr64ble       | 0xAA96    | 0xAA06     | BLE 5.0 Dual mode                     | &quest;           |
 
 
-
 ### Keyboards Completed with Y&R Studio Participation 
 | NAME         | VENDOR_ID | PRODUCT_ID | FEATURES                         | COMMERCIALIZATION |
 | ------------ | --------- | ---------- | ---------------------------------| ----------------- |
@@ -54,6 +53,13 @@ A creative coder.
 | s68m         | 0xAA96    | 0xAAC9     | STM32F103 UF2, Solder            | &check;           |
 | zpadble      | 0xAA96    | 0xAACA     | BLE, Hotswap, RGB, Encoder, OLED | &check;           |
 | ml75r2ble    | 0xAA96    | 0xAACB     | BLE, Encoder, OLED               | &check;           |
+
+
+### Obsolete keyboard for reference design only
+
+| NAME         | VENDOR_ID | PRODUCT_ID | FEATURES                         | COMMERCIALIZATION |
+| --------- | ---- | ---- | ---- | ---- |
+| final80v2 | 0xFEED | 0x6060 | STM32F303 | &cross; |
 
 
 

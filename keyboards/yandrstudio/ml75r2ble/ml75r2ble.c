@@ -14,7 +14,3 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "ml75r2ble.h"
-
-void keyboard_post_init_kb(void) {
-    // debug_enable=true;
-}

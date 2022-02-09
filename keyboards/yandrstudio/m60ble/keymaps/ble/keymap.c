@@ -247,14 +247,14 @@ void oled_render_normal(void) {
     wpm_str[4] = 0;
     oled_write_P(PSTR(wpm_str), false);
 }
+
 extern uint32_t oled_timeout;
 
-#define XANM_ARR(idx) anm_##idx
 static bool has_start = false;
 static uint32_t start_time_anm = 0;
 static uint32_t start_frame_index = 0;
 void oled_render_anm(void) {
-    uint32_t one_frame_time = 30*1000/60;
+    uint32_t one_frame_time = 25*1000/60;
     if (!has_start) {
         has_start = true;
         start_time_anm = timer_read32();
@@ -291,16 +291,15 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     start_time_anm = 0;
     start_frame_index = 0;
 
-    need_clear_1 = true;
-    need_clear_2 = true;
+    need_clear_1 = false;
+    need_clear_2 = false;
     return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
 }
 
 bool oled_task_user(void) {
-    if (!start_render_anm && timer_expired32(timer_read32(), (oled_timeout-30000))) {
+    if (!start_render_anm && timer_expired32(timer_read32(), (oled_timeout-35000))) {
         start_render_anm = true;
     }
-
 
     if (start_render_anm) {
         if (need_clear_1) {
@@ -323,6 +322,9 @@ bool oled_task_user(void) {
 #endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+#ifdef OLED_ENABLE
+    start_render_anm = false;
+#endif
     // if (record->event.pressed) {
     //     uprintf("KL: kc: 0x%04X, col: %u, row: %u, pressed: %b, time: %u, interrupt: %b, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
     // }
