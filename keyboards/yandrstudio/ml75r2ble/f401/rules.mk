@@ -4,7 +4,7 @@ MCU = STM32F401
 # Bootloader selection
 # BOOTLOADER = stm32-dfu
 # Bootloader selection
-MCU_LDSCRIPT = STM32F401xC_tinyuf2
+MCU_LDSCRIPT = STM32F401xC_tinyuf2_lite
 BOOTLOADER = tinyuf2
 FIRMWARE_FORMAT = uf2
 

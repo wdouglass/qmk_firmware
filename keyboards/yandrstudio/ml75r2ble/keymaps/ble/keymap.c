@@ -379,7 +379,9 @@ static uint32_t start_time_anm = 0;
 static uint32_t start_frame_index = 0;
 void oled_render_anm(void) {
     oled_set_cursor(0, 0);
-    uint32_t one_frame_time = 25*1000/60;
+    uint8_t frame_count = 20;
+    uint8_t frame_turn = 3;
+    uint32_t one_frame_time = 25*1000/(frame_turn*frame_count);
     if (!has_start) {
         has_start = true;
         start_time_anm = timer_read32();
@@ -387,19 +389,14 @@ void oled_render_anm(void) {
     }
     uint32_t els_time = timer_elapsed32(start_time_anm);
     if (els_time >= start_frame_index*one_frame_time && els_time < (start_frame_index+1)*one_frame_time) {
-        if (start_frame_index >= 60) {
+        if (start_frame_index >= frame_turn*frame_count) {
             has_start = false;
             start_time_anm = 0;
             start_frame_index = 0;
             oled_off();
         } else  {
-            if (start_frame_index >= 40) {
-                oled_write_raw(anms[start_frame_index-40], 128*8);
-            } else if (start_frame_index >= 20) {
-                oled_write_raw(anms[start_frame_index-20], 128*8);
-            } else {
-                oled_write_raw(anms[start_frame_index], 128*8);
-            }
+            uint8_t start_frame_base = start_frame_index / frame_count;
+            oled_write_raw(anms[start_frame_index-start_frame_base*frame_count], 128*8);
             start_frame_index++;
         }
     }
