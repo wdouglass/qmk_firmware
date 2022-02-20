@@ -69,3 +69,7 @@ A creative coder.
 - Sound visualization script
 - Real time key remap software
 
+### Make Command
+```shell
+make yandrstudio/z_alice_ble/f401:ble; make yandrstudio/zhou65ble/f401:ble; make yandrstudio/m93ble/f401:ble; make yandrstudio/rs40ble/f401:ble;
+```

@@ -18,6 +18,9 @@
 
 #ifdef RGBLIGHT_ENABLE
 // globol
+extern rgblight_config_t rgblight_config;
+extern LED_TYPE led[RGBLED_NUM];
+LED_TYPE last_led = {0, 0, 0};
 typedef union {
   uint32_t raw;
   bool rgb_sw[3];
@@ -25,15 +28,27 @@ typedef union {
 kb_cums_config_t kb_cums_config;
 
 void housekeeping_task_kb(void) {
-    if (rgblight_is_enabled()) {
-        if (!kb_cums_config.rgb_sw[0]) {
-            rgblight_setrgb_at(0,0,0,0);
+    static bool first_back_caps = false;
+    if (!rgblight_is_enabled()) return;
+    if (!kb_cums_config.rgb_sw[0]) {
+        rgblight_setrgb_at(0, 0, 0, 0);
+    }
+    if (!kb_cums_config.rgb_sw[1]) {
+        rgblight_setrgb_at(0, 0, 0, 1);
+    }
+    if (!kb_cums_config.rgb_sw[2]) {
+        rgblight_setrgb_at(0, 0, 0, 2);
+    }
+    if (host_keyboard_led_state().caps_lock) {
+        if (!first_back_caps) {
+            first_back_caps = true;
+            last_led = led[2];
         }
-        if (!kb_cums_config.rgb_sw[1]) {
-            rgblight_setrgb_at(0,0,0,1);
-        }
-        if (!kb_cums_config.rgb_sw[2]) {
-            rgblight_setrgb_at(0,0,0,2);
+        rgblight_setrgb_at(120*255.0/rgblight_config.val, 255*255.0/rgblight_config.val, 255*255.0/rgblight_config.val, 2);
+    } else {
+        if (first_back_caps) {
+            first_back_caps = false;
+            rgblight_setrgb_at(last_led.r,last_led.g, last_led.b, 2);
         }
     }
 }
@@ -79,4 +94,5 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
+
 #endif

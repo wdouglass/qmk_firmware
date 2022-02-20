@@ -14,3 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "zhou65ble.h"
+
+// void keyboard_pre_init_kb(void) {
+//     palSetLineMode(A15, PAL_MODE_INPUT_PULLDOWN);
+// }
