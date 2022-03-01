@@ -22,7 +22,6 @@ led_config_t g_led_config = {
     },
     {
       // LED Index to Physical Position
-
     },
     {
       // LED Index to Flag

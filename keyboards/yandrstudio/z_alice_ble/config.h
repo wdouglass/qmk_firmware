@@ -53,7 +53,7 @@
 
 // for ble
 #define USE_MUILT_THREAD_FOR_BLE
-#define Z_ALICE_REV1
+// #define Z_ALICE_REV1
 // rgb switch
 #ifdef Z_ALICE_REV1
 

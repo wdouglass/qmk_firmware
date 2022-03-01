@@ -19,7 +19,7 @@
 
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0xAA96
-#define PRODUCT_ID      0xAACA
+#define PRODUCT_ID      0xAAAC
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    ZUOER_Y&R
 #define PRODUCT         zpad_ble
@@ -55,7 +55,7 @@
 
 // for ble
 // disable rgb when using ble
-#define RGB_ONLY_ON_WHEN_USB
+// #define RGB_ONLY_ON_WHEN_USB
 // rgb switch
 #define RGB_BLE_SW A6
 // USB Power

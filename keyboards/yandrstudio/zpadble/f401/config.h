@@ -61,9 +61,9 @@
 #ifdef ENCODER_ENABLE
 
 #    define ENCODERS_PAD_A { A5 }
-#    define ENCODERS_PAD_B { B12 }
+#    define ENCODERS_PAD_B { A8 }
 
-#    define ENCODER_RESOLUTIONS { 2 }
+#    define ENCODER_RESOLUTIONS { 4 }
 
 #endif
 
@@ -75,7 +75,7 @@
 
 //                        0       1       2       3       4       5       6       7       8       9       10      11
 #define MATRIX_COL_PINS { }
-#define MATRIX_ROW_PINS { B13 }
+#define MATRIX_ROW_PINS { B15 }
 
 #if (COL_F2L_FOR_595==TRUE)
                                  // a    b     c     d     e      f     g    h
@@ -91,6 +91,6 @@
 #endif
 
 
-#define SPI_SCK_PIN_OF_595 B15
-#define SPI_MOSI_PIN_OF_595 A8
-#define SPI_74HC595_CS B14
+#define SPI_SCK_PIN_OF_595 B14
+#define SPI_MOSI_PIN_OF_595 B12
+#define SPI_74HC595_CS B13
