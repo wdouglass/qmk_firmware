@@ -307,7 +307,7 @@ cal_rgb_index_all = function (row_num, col_num, reverse, skip_pair, is_z, last_s
             for (var i = row_num-1; i >= 0; --i) {
                 var rgb_index_row = new String()
                 var t = cal_a_row_rgb_index_with_skip(start_rgb_index, col_num, reverse, skip_pair[i])
-                reverse = ~reverse
+                reverse = !reverse
                 rgb_index_row = t[0]
                 start_rgb_index = t[1]
                 rgb_index = '{' + rgb_index_row + '},' + '\n' + rgb_index
@@ -316,7 +316,7 @@ cal_rgb_index_all = function (row_num, col_num, reverse, skip_pair, is_z, last_s
             for (var i = 0; i < row_num; ++i) {
                 var rgb_index_row = new String()
                 var t = cal_a_row_rgb_index_with_skip(start_rgb_index, col_num, reverse, skip_pair[i])
-                reverse = ~reverse
+                reverse = !reverse
                 rgb_index_row = t[0]
                 start_rgb_index = t[1]
                 rgb_index += '{' + rgb_index_row + '}, \n'
