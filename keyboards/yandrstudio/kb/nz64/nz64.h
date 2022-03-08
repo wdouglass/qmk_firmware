@@ -34,9 +34,9 @@
 
 
 #ifdef RGB_MATRIX_ENABLE
-#define UNDERRGB_TOG_K KC_F24
+#define URGB_K KC_F24
 #else
-#define UNDERRGB_TOG_K KC_TRNS
+#define URGB_K KC_TRNS
 #endif
 
 #define LOCK_GUI KC_F23
