@@ -109,5 +109,3 @@
 #define WS2812_DMA_CHANNEL 5  // DMA Channel for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
 
 #endif
-
-

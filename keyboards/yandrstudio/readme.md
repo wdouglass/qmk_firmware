@@ -53,6 +53,7 @@ A creative coder.
 | s68m         | 0xAA96    | 0xAAC9     | STM32F103 UF2, Solder            | &check;           |
 | zpadble      | 0xAA96    | 0xAACA     | BLE, Hotswap, RGB, Encoder, OLED | &check;           |
 | ml75r2ble    | 0xAA96    | 0xAACB     | BLE, Encoder, OLED               | &check;           |
+| eau_r2       | 0xAA96    | 0xAACD     | F401, RGB                        | &check;           |
 
 
 ### Obsolete keyboard for reference design only
