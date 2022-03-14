@@ -26,12 +26,12 @@ bool led_update_kb(led_t led_state) {
         if (host_keyboard_led_state().caps_lock) {
             if (pre_mode == 0xff) {
                 pre_mode = rgblight_get_mode();
-                rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+                rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
+                rgblight_sethsv(128, 135, rgblight_config.val);
             }
-            rgblight_setrgb(120*rgblight_config.val/255.0, 255*rgblight_config.val/255.0, 255*rgblight_config.val/255.0);
         } else {
             if (pre_mode != 0xff) {
-                rgblight_mode_noeeprom(pre_mode);
+                rgblight_mode(pre_mode);
                 pre_mode = 0xff;
             }
         }
