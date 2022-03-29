@@ -24,8 +24,8 @@
 #define PRODUCT         zhou980
 
 /* key matrix size */
-#define MATRIX_ROWS 7
-#define MATRIX_COLS 14
+#define MATRIX_ROWS 6
+#define MATRIX_COLS 19
 
 /* key matrix pins */
 /*                         0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17*/

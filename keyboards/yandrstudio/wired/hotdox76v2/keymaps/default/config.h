@@ -42,3 +42,9 @@
 #define DISABLE_RGB_MATRIX_RAINBOW_PINWHEELS
 
 #endif
+
+
+
+#ifdef RGBLIGHT_ENABLE
+#    define RGBLIGHT_ANIMATIONS
+#endif

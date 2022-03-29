@@ -1,11 +1,11 @@
 eau_r2
 ===
 
-A 80% keyboard.
+A 80% keyboard, APM32F103, 8M
 
 Keyboard Maintainer: https://github.com/jiaxin96
 
-Hardware Supported: eau_r2  
+Hardware Supported: eau_r2
 
 Hardware Availability: https://github.com/Oh-My-Mechanical-Keyboard 
 

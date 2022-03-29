@@ -10,11 +10,12 @@ BOOTLOADER = tinyuf2
 FIRMWARE_FORMAT = uf2
 MCU_STARTUP ?= stm32f1xx
 
-# RGB_MATRIX_ENABLE = yes
-# RGB_MATRIX_DRIVER = WS2812
 RGBLIGHT_ENABLE = yes
 RGBLIGHT_DRIVER = WS2812
-WS2812_DRIVER = pwm
+# WS2812_DRIVER = pwm
+
+CUSTOM_MATRIX = lite    # for using the A9 pin as matrix io
+QUANTUM_SRC += matrix_io.c 74hc595_io.c
 
 # Wildcard to allow APM32 MCU
 DFU_SUFFIX_ARGS = -p FFFF -v FFFF

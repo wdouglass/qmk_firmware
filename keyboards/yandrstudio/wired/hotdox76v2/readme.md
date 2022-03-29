@@ -14,11 +14,11 @@ Make example for this keyboard (after setting up your build environment):
 
 for left part:
 
-    make yandrstudio/hotdox76v2/leftkb:default
+    make yandrstudio/wired/hotdox76v2/leftkb:default
     
 for right part:
 
-    make yandrstudio/hotdox76v2/rightkb:default
+    make yandrstudio/wired/hotdox76v2/rightkb:default
 
 
 See [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) then the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information.

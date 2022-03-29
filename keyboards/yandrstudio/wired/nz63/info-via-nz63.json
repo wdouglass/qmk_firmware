@@ -2,6 +2,10 @@
     "name": "NZ63_NZ_Y&R",
     "vendorId": "0xAA96",
     "productId": "0xAACF",
+    "lighting": {
+        "extends": "none",
+        "keycodes": "qmk"
+    },
     "matrix": {
         "rows": 5,
         "cols": 14

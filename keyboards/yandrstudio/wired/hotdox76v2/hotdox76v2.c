@@ -94,6 +94,15 @@ oled_rotation_t oled_init_kb(oled_rotation_t rotation) {
     m2s.current_alp[4] = UNC;
 
     m2s.cur_alp_index = 1;
+
+    strcpy((char *)(s2m.current_alp), "[    ]");
+    s2m.current_alp[1] = UNC;
+    s2m.current_alp[2] = UNC;
+    s2m.current_alp[3] = UNC;
+    s2m.current_alp[4] = UNC;
+
+    s2m.cur_alp_index = 1;
+
 #   ifdef I_AM_LEFT
         return OLED_ROTATION_180;
 #   else
@@ -177,7 +186,11 @@ void render_cur_input_helper_fun(uint8_t start_line, const char * data, uint8_t 
 
 void render_cur_input(void) {
     render_cur_input_helper_fun(0, "INPUTS:", 6, 7);
-    render_cur_input_helper_fun(1, (const char *)(m2s.current_alp), 12, 6);
+    if (is_keyboard_master()) {
+        render_cur_input_helper_fun(1, (const char *)(m2s.current_alp), 12, 6);
+    } else {
+        render_cur_input_helper_fun(1, (const char *)(s2m.current_alp), 12, 6);
+    }
     return;
 }
 #endif
@@ -254,17 +267,31 @@ void matrix_scan_kb(void) {
 
 
 void user_sync_alpa_slave_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
-    const master_to_slave_t *m2s = (const master_to_slave_t*)in_data;
-    slave_to_master_t *s2m = (slave_to_master_t*)out_data;
-    s2m->cur_alp_index = m2s->cur_alp_index; // whatever comes in, add 5 so it can be sent back
+    const master_to_slave_t *m2s_p = (const master_to_slave_t*)in_data;
+    s2m.cur_alp_index = m2s_p->cur_alp_index;
     for (size_t i = 0; i < 7; i++)
     {
-        s2m->current_alp[i] = m2s->current_alp[i];
+        s2m.current_alp[i] = m2s_p->current_alp[i];
     }
 }
 
 void keyboard_post_init_kb(void) {
     transaction_register_rpc(KEYBOARD_CURRENT_ALPA_SYNC, user_sync_alpa_slave_handler);
+}
+
+void housekeeping_task_user(void) {
+    if (is_keyboard_master()) {
+        // Interact with slave every 200ms
+        static uint32_t last_sync = 0;
+        if (timer_elapsed32(last_sync) > 200) {
+            if(transaction_rpc_exec(KEYBOARD_CURRENT_ALPA_SYNC, sizeof(m2s), &m2s, sizeof(s2m), &s2m)) {
+                last_sync = timer_read32();
+                dprint("Slave sync successed!\n");
+            } else {
+                dprint("Slave sync failed!\n");
+            }
+        }
+    }
 }
 
 

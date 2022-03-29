@@ -92,7 +92,6 @@
 #    define RGBLIGHT_LIMIT_VAL 150
 #    define RGBLIGHT_SLEEP
 #    define WS2812_TRST_US 100
-#    define RGBLIGHT_ANIMATIONS
 
 // #    define WS2812_BYTE_ORDER WS2812_BYTE_ORDER_RGB
 
@@ -100,7 +99,7 @@
 
 #ifdef SPLIT_KEYBOARD
 
-#   define MASTER_LEFT
+// #   define MASTER_RIGHT
 
 #   define USE_SERIAL
 

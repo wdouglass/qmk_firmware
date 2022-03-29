@@ -30,3 +30,8 @@
 
 #define LED_CAPS_LOCK_PIN B7
 #define LED_PIN_ON_STATE  1
+
+
+#ifdef BOOTLOADER_TINYUF2
+#   define FEE_PAGE_BASE_ADDRESS 0x08004000
+#endif
