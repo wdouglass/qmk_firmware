@@ -20,47 +20,37 @@
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0xAA96
 #define PRODUCT_ID      0xAACE
+#define DEVICE_VER      0x0001
 #define MANUFACTURER    zhou_y&r
 #define PRODUCT         zhou980
 
 /* key matrix size */
-#define MATRIX_ROWS 6
 #define MATRIX_COLS 19
+#define MATRIX_ROWS 6
 
-/* key matrix pins */
-/*                         0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17*/
-#define MATRIX_ROW_PINS { E6, B0, B1, B2, B3, D0, F5}
-#define MATRIX_COL_PINS { D1, D2, D3, D5, D4, D6, D7, B4, B5, B6, C6, C7, F7, F6 }
+//                        1    2    3     4    5    6    7    8    9    10   11   12   13   14   15   16   17   18   19
+#define MATRIX_COL_PINS { A2,  A9,  B12,  B11, B10, B2,  B1,  B0,  A7,  A6,  A5,  A4,  B9,  B8,  B7,  B6,  B5,  B4,  B3}
+#define MATRIX_ROW_PINS { A8,  B15, B14, B13,  A10, A3}
 
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
 
-
 /* Set 0 if debouncing isn't needed */
 #define DEBOUNCE 5
 
+#ifdef RGBLIGHT_ENABLE
 
-#define RGB_DI_PIN B7
-#ifdef RGB_DI_PIN
-#define RGBLIGHT_ANIMATIONS
-#define RGBLED_NUM (114)
-#define RGBLIGHT_HUE_STEP 8
-#define RGBLIGHT_SAT_STEP 8
-#define RGBLIGHT_VAL_STEP 8
-#define RGBLIGHT_LIMIT_VAL 160
+#    define RGB_DI_PIN A15
+#    define RGBLED_NUM 4
+#    define DRIVER_LED_TOTAL RGBLED_NUM
+#    define RGBLIGHT_LIMIT_VAL 180
+#    define RGBLIGHT_ANIMATIONS
+#    define RGBLIGHT_SLEEP
+
 #endif
-
 
 #define DYNAMIC_KEYMAP_LAYER_COUNT 2
 
-
-/* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
-#define LOCKING_SUPPORT_ENABLE
-
-/* Locking resynchronize hack */
-#define LOCKING_RESYNC_ENABLE
-
-#define LED_NUM_LOCK_PIN F0
-#define LED_CAPS_LOCK_PIN F4
-#define LED_SCROLL_LOCK_PIN F1
-#define LED_PIN_ON_STATE 0
+#define LED_NUM_LOCK_PIN  C14
+#define LED_CAPS_LOCK_PIN C15
+#define LED_PIN_ON_STATE  1
