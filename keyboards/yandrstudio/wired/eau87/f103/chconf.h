@@ -1,4 +1,4 @@
-/* Copyright 2021 JasonRen(biu)
+/* Copyright 2020 QMK
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,11 +13,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "eau_r2.h"
 
+#pragma once
+#define CH_CFG_ST_TIMEDELTA 0
+#include_next <chconf.h>
 
-void keyboard_post_init_kb(void) {
-#   ifdef RGBLIGHT_ENABLE
-    rgblight_reload_from_eeprom();
-#   endif
-}

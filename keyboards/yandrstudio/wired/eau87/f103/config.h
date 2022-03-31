@@ -21,23 +21,12 @@
 #define MATRIX_ROWS 6
 #define MATRIX_COLS 17
 
-//                        0    1    2    3   4    5    6    7    8    9    10   11   12   13   14   15   16
-#define MATRIX_COL_PINS { B7,  A6,  B6, B5,  B4,  B3,  A5,  A1,  B1,  B0,  A7,  A9,  B11, B10, B2,  A15, B15 }
-#define MATRIX_ROW_PINS { A3,  B9,  B8,  A4, C14, C13 }
-
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
 
-#ifdef RGBLIGHT_ENABLE
-
-#    define RGB_DI_PIN A8
-#    define RGBLED_NUM 12
-#    define DRIVER_LED_TOTAL RGBLED_NUM
-#    define RGBLIGHT_LIMIT_VAL 180
-#    define RGBLIGHT_ANIMATIONS
-#    define RGBLIGHT_SLEEP
-
-#endif
+//                        0    1    2    3    4    5    6    7    8    9    10   11   12   13   14   15   16
+#define MATRIX_COL_PINS { A10, A9,  A8,  B15, B14, B13, B11, B10, B2,  B1,  B0,  A7,  A6,  A5,  A3,  A15, B3 }
+#define MATRIX_ROW_PINS { B12, B5,  B4,  A4,  B7,  B6 }
 
 #ifdef BOOTLOADER_TINYUF2
 #   define FEE_PAGE_BASE_ADDRESS 0x08004000

@@ -57,6 +57,7 @@ A creative coder.
 | zhou980      | 0xAA96    | 0xAACE     | F103, RGB                        | &check;           |
 | nz63         | 0xAA96    | 0xAACF     | F103, RGB                        | &check;           |
 | mupad        | 0xAA96    | 0xAAEA     | BLE                              | &check;           |
+| eau87        | 0xAA96    | 0xAAEB     | F103                             | &check;           |
 
 
 ### Obsolete keyboard for reference design only
