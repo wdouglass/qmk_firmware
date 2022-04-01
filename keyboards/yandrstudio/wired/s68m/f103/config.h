@@ -16,22 +16,3 @@
 #pragma once
 
 #include "config_common.h"
-
-/* key matrix size */
-#define MATRIX_ROWS 5
-#define MATRIX_COLS 16
-
-//                        0    1    2    3    4    5    6    7    8    9    10   11   12   13    14   15
-#define MATRIX_COL_PINS { C14, B11, B10, B2,  B1,  B0,  A7,  A6,  A5,  A4,  B5,  B4,  B3,  A15,  A3,  A2 }
-#define MATRIX_ROW_PINS { A1,  A0,  B6,  B8,  B9}
-
-/* COL2ROW or ROW2COL */
-#define DIODE_DIRECTION ROW2COL
-
-#define LED_CAPS_LOCK_PIN B7
-#define LED_PIN_ON_STATE  1
-
-
-#ifdef BOOTLOADER_TINYUF2
-#   define FEE_PAGE_BASE_ADDRESS 0x08004000
-#endif

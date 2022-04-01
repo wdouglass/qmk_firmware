@@ -46,7 +46,3 @@
 // #    define WS2812_BYTE_ORDER WS2812_BYTE_ORDER_RGB
 
 #endif
-
-#ifdef BOOTLOADER_TINYUF2
-#   define FEE_PAGE_BASE_ADDRESS 0x08004000
-#endif

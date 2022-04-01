@@ -14,3 +14,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "zhou980.h"
+
+void keyboard_post_init_kb(void) {
+#   ifdef RGBLIGHT_ENABLE
+    rgblight_reload_from_eeprom();
+#   endif
+}

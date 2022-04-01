@@ -77,5 +77,8 @@ A creative coder.
 
 ### Make Command
 ```shell
+# ble
 make yandrstudio/z_alice_ble/f401:ble; make yandrstudio/zhou65ble/f401:ble; make yandrstudio/m93ble/f401:ble; make yandrstudio/rs40ble/f401:ble;
+# wired
+make yandrstudio/wired/s68m/f103:via; make yandrstudio/wired/eau_r2/f103:via; make yandrstudio/wired/eau87/f103:via; make yandrstudio/wired/wy65/f103:via; make yandrstudio/wired/zhou980/f103:via;
 ```

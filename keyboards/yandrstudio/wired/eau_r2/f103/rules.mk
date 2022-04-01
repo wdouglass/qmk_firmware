@@ -10,13 +10,5 @@ BOOTLOADER = tinyuf2
 FIRMWARE_FORMAT = uf2
 MCU_STARTUP ?= stm32f1xx
 
-# RGB_MATRIX_ENABLE = yes
-# RGB_MATRIX_DRIVER = WS2812
-RGBLIGHT_ENABLE = yes
-RGBLIGHT_DRIVER = WS2812
-# WS2812_DRIVER = pwm
-
 # Wildcard to allow APM32 MCU
 DFU_SUFFIX_ARGS = -p FFFF -v FFFF
-# Enter lower-power sleep mode when on the ChibiOS idle thread
-OPT_DEFS += -DCORTEX_ENABLE_WFI_IDLE=TRUE
