@@ -49,6 +49,7 @@
 #    define RGBLED_NUM 16
 #    define RGBLIGHT_ANIMATIONS
 #    define DRIVER_LED_TOTAL RGBLED_NUM
+#    define RGBLIGHT_LIMIT_VAL 160
 
 #define WS2812_PWM_DRIVER PWMD3  // default: PWMD2
 #define WS2812_PWM_CHANNEL 2  // default: 2
@@ -63,7 +64,7 @@
 #    define ENCODERS_PAD_A { A5 }
 #    define ENCODERS_PAD_B { A8 }
 
-#    define ENCODER_RESOLUTIONS { 4 }
+#    define ENCODER_RESOLUTIONS { 2 }
 
 #endif
 

@@ -261,17 +261,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             stop_one_lilnk(0);
             return false;
 #endif
-        // case KC_F2:
-        // {
-        //     if (record->event.pressed) {
-        //         uint16_t adcv = debug_ble_info_helper();
-        //         char adc_str[8] = {0};
-        //         snprintf(adc_str, sizeof(adc_str), "%05d", adcv);
-        //         adc_str[6] = '\0';
-        //         SEND_STRING(adc_str);
-        //     }
-        // }
-        //     return false;
         default:
             return true;
     }

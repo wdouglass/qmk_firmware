@@ -22,7 +22,7 @@
 #define PRODUCT_ID      0xAAC2
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    ZUOER_Y&R
-#define PRODUCT         Z_Alice_Ble
+#define PRODUCT         Z_Alice
 
 /* key matrix size */
 #define MATRIX_ROWS 5
@@ -53,7 +53,7 @@
 
 // for ble
 #define USE_MUILT_THREAD_FOR_BLE
-// #define Z_ALICE_REV1
+#define Z_ALICE_REV1
 // rgb switch
 #ifdef Z_ALICE_REV1
 

@@ -219,8 +219,8 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 #endif
 
 
-#ifdef OLED_DRIVER_ENABLE
-void oled_task_user(void) {
+#ifdef OLED_ENABLE
+bool oled_task_user(void) {
     // Host Keyboard Layer Status
     oled_write_P(PSTR("Layer: "), false);
 
@@ -244,5 +244,6 @@ void oled_task_user(void) {
     oled_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("    "), false);
     oled_write_P(led_state.caps_lock ? PSTR("CAP ") : PSTR("    "), false);
     oled_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
+    return false;
 }
 #endif

@@ -56,10 +56,12 @@ A creative coder.
 | eau_r2       | 0xAA96    | 0xAACD     | F103, RGB                        | &check;           |
 | zhou980      | 0xAA96    | 0xAACE     | F103, RGB                        | &check;           |
 | nz63         | 0xAA96    | 0xAACF     | F103, RGB                        | &check;           |
-| mupad        | 0xAA96    | 0xAAEA     | BLE                              | &check;           |
+| prism_pad    | 0xAA96    | 0xAAEA     | BLE                              | &check;           |
 | eau87        | 0xAA96    | 0xAAEB     | F103                             | &check;           |
 | wy65         | 0xAA96    | 0xAAEC     | F103                             | &check;           |
-
+| xray1xx      | 0xAA96    | 0xAAED     | BLE, Hotswap, RGB                | &check;           |
+| jupiter980   | 0xAA96    | 0xAAEF     | BLE, Hotswap, RGB                | &check;           |
+| jupiter980   | 0xAA96    | 0xAAFF     | BLE, Solder, RGB                 | &check;           |
 
 ### Obsolete keyboard for reference design only
 

@@ -74,8 +74,10 @@
 
 #ifdef ENCODER_ENABLE
 
-#    define ENCODERS_PAD_A { C13 }
-#    define ENCODERS_PAD_B { C14 }
+#    define ENCODERS_PAD_A { B8 }
+#    define ENCODERS_PAD_B { B9 }
+// #    define ENCODERS_PAD_A { C13 }
+// #    define ENCODERS_PAD_B { C14 }
 
 #    define ENCODER_RESOLUTIONS { 4 }
 
@@ -92,7 +94,7 @@
 #ifdef RGBLIGHT_ENABLE
 
 #    define RGB_DI_PIN A7
-#    define RGBLED_NUM 1
+#    define RGBLED_NUM 82
 #    define RGBLIGHT_LIMIT_VAL 180
 #    define DRIVER_LED_TOTAL RGBLED_NUM
 #    define RGBLIGHT_ANIMATIONS
@@ -112,7 +114,7 @@
 /* for ble */
 #define DISABLE_MAGIC_BOOTLOADER
 #define DISABLE_EEPROM_CLEAR
-#define DISABLE_ENCODER_WAKEUP
+// #define DISABLE_ENCODER_WAKEUP
 
 /* disable rgb when using ble */
 #define RGB_ONLY_ON_WHEN_USB

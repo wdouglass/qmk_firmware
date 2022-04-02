@@ -58,3 +58,10 @@ void keyboard_pre_init_kb(void) {
 void keyboard_post_init_kb(void) {
     // debug_enable = true;
 }
+
+#ifndef BIU_BLE5_ENABLE
+void keyboard_pre_init_kb(void) {
+    palSetLineMode(RGB_BLE_SW, PAL_MODE_OUTPUT_PUSHPULL);
+    palClearLine(RGB_BLE_SW);
+}
+#endif
