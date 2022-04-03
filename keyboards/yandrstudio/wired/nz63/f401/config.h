@@ -17,4 +17,7 @@
 
 #include "config_common.h"
 
+#ifdef BOOTLOADER_TINYUF2
+#   define FEE_PAGE_BASE_ADDRESS 0x08008000
+#endif
 

@@ -17,4 +17,3 @@
 
 #include "config_common.h"
 #define PRODUCT_ID      0xAAA7
-

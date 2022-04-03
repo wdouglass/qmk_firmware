@@ -14,21 +14,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 #pragma once
+#include_next <halconf.h>
 
-#define CH_CFG_ST_FREQUENCY 10000
-
-#define CH_CFG_FACTORY_OBJECTS_REGISTRY TRUE
-
-#define CH_CFG_FACTORY_GENERIC_BUFFERS TRUE
-
-#define CH_CFG_FACTORY_SEMAPHORES TRUE
-
-#define CH_CFG_FACTORY_MAILBOXES TRUE
-
-#define CH_CFG_FACTORY_OBJ_FIFOS TRUE
-
-#define CH_CFG_FACTORY_PIPES TRUE
-
-#include_next <chconf.h>
+#undef HAL_USE_PWM
+#define HAL_USE_PWM    TRUE
 

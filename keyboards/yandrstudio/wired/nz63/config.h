@@ -47,8 +47,6 @@
 
 #define TAP_CODE_DELAY 15
 
-#define FEE_PAGE_BASE_ADDRESS 0x08008000
-
 /* RGN Matrix */
 #ifdef RGB_MATRIX_ENABLE
 
