@@ -18,6 +18,7 @@ A creative coder.
 | whitemouse28t | 0xAA96    | 0xAA04     | External EEPROM (95256), For Test     | &cross;           |
 | m60ble        | 0xAA96    | 0xAA05     | BLE 5.0 Dual mode, RGB                | &quest;           |
 | yr64ble       | 0xAA96    | 0xAA06     | BLE 5.0 Dual mode                     | &quest;           |
+| zn660         | 0xAA96    | 0xAA07     | 2.4G Single mode Split Keyboard       | &check;           |
 
 
 ### Keyboards Completed with Y&R Studio Participation 
