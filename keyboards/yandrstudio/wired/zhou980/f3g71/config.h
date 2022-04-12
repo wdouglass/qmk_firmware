@@ -1,4 +1,4 @@
-/* Copyright 2020 QMK
+/* Copyright 2021 JasonRen(biu)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,10 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 #pragma once
 
-#include_next <mcuconf.h>
-
-#undef STM32_PLLMUL_VALUE
-#define STM32_PLLMUL_VALUE 6
+#include "config_common.h"
+#define FEE_PAGE_BASE_ADDRESS 0x08008000

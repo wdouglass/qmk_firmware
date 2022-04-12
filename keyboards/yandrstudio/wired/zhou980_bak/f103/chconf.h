@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include_next <mcuconf.h>
+#define CH_CFG_ST_TIMEDELTA 0
 
-#undef STM32_PLLMUL_VALUE
-#define STM32_PLLMUL_VALUE 6
+#include_next <chconf.h>
+

@@ -16,7 +16,5 @@
 
 #pragma once
 
-#include_next <mcuconf.h>
+#include_next <chconf.h>
 
-#undef STM32_PLLMUL_VALUE
-#define STM32_PLLMUL_VALUE 6

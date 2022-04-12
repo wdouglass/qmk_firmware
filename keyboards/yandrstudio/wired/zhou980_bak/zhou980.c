@@ -1,4 +1,4 @@
-/* Copyright 2020 QMK
+/* Copyright 2021 JasonRen(biu)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,10 +13,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include "zhou980.h"
 
-#pragma once
-
-#include_next <mcuconf.h>
-
-#undef STM32_PLLMUL_VALUE
-#define STM32_PLLMUL_VALUE 6
+void keyboard_post_init_kb(void) {
+#   ifdef RGBLIGHT_ENABLE
+    rgblight_reload_from_eeprom();
+#   endif
+}

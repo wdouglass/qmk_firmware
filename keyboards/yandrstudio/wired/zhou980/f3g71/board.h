@@ -17,8 +17,4 @@
 
 #include_next "board.h"
 
-
-#undef STM32_HSECLK
-#define STM32_HSECLK 12000000
-
-#define BOARD_YANDR_BIU_F103
+#define BOARD_YANDR_BIU_F3G71
