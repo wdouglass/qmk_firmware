@@ -18,5 +18,7 @@
 
 #include_next <mcuconf.h>
 
-#undef STM32_PLLMUL_VALUE
-#define STM32_PLLMUL_VALUE 6
+#undef STM32_PLLXTPRE
+#define STM32_PLLXTPRE STM32_PLLXTPRE_DIV2
+
+

@@ -60,11 +60,11 @@
 #    define RGBLED_NUM 93
 #    define DRIVER_LED_TOTAL RGBLED_NUM
 
-#   define WS2812_PWM_DRIVER PWMD3  // default: PWMD2
-#   define WS2812_PWM_CHANNEL 2  // default: 2
-#   define WS2812_PWM_PAL_MODE 2
-#   define WS2812_DMA_STREAM STM32_DMA1_STREAM3
-#   define WS2812_DMA_CHANNEL 3
+#    define WS2812_PWM_DRIVER PWMD3  // default: PWMD2
+#    define WS2812_PWM_CHANNEL 2  // default: 2
+#    define WS2812_PWM_PAL_MODE 2  // Pin "alternate function", see the respective datasheet for the appropriate values for your MCU. default: 2
+#    define WS2812_DMA_STREAM STM32_DMA1_STREAM2  // DMA Stream for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
+#    define WS2812_DMA_CHANNEL 5  // DMA Channel for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
 
 #    define RGB_MATRIX_MAXIMUM_BRIGHTNESS 150
 #    define RGBLIGHT_VAL_STEP 15
@@ -134,10 +134,10 @@
 #    define RGB_DISABLE_WHEN_USB_SUSPENDED true
 #    define RGBLIGHT_ANIMATIONS
 
-#   define WS2812_PWM_DRIVER PWMD3  // default: PWMD2
-#   define WS2812_PWM_CHANNEL 2  // default: 2
-#   define WS2812_PWM_PAL_MODE 2
-#   define WS2812_DMA_STREAM STM32_DMA1_STREAM3
-#   define WS2812_DMA_CHANNEL 3
+#    define WS2812_PWM_DRIVER PWMD3  // default: PWMD2
+#    define WS2812_PWM_CHANNEL 2  // default: 2
+#    define WS2812_PWM_PAL_MODE 2  // Pin "alternate function", see the respective datasheet for the appropriate values for your MCU. default: 2
+#    define WS2812_DMA_STREAM STM32_DMA1_STREAM2  // DMA Stream for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
+#    define WS2812_DMA_CHANNEL 5  // DMA Channel for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
 
 #endif
