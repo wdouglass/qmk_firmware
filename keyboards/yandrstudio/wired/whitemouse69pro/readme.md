@@ -1,7 +1,7 @@
 whitemouse69pro
 ===
 
-A 69 keys keyboard (60%) with rgb (keys).
+A 69 keys keyboard (65%) with rgb (keys).
 This keyboard use 16mhz HSE  STM32F401 as MCU.
 
 Keyboard Maintainer: https://github.com/jiaxin96
