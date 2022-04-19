@@ -2,7 +2,7 @@
     "name": "eau87_Y&R",
     "vendorId": "0xAA96",
     "productId": "0xAAEB",
-    "lighting": "qmk_rgblight",
+    "lighting": "none",
     "matrix": {
         "rows": 6,
         "cols": 17

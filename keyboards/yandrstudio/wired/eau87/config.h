@@ -32,6 +32,4 @@
 /* Set 0 if debouncing isn't needed */
 #define DEBOUNCE 5
 
-#define QMK_KEYS_PER_SCAN 4
-
 #define TAP_CODE_DELAY 15
