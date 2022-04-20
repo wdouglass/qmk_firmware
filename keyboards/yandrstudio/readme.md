@@ -65,6 +65,7 @@ A creative coder.
 | jupiter980      | 0xAA96    | 0xAAFF     | BLE, Solder, RGB                 | &check;           |
 | whitemouse69pro | 0xAA96    | 0xAA80     | F401, RGB, Encoder               | &check;           |
 | zlice           | 0xAA96    | 0xAA81     | BLE, F401, RGB, Encoder          | &check;           |
+| binary68        | 0xAA96    | 0xAA81     | BLE, F401, RGB                   | &check;           |
 
 ### Obsolete keyboard for reference design only
 

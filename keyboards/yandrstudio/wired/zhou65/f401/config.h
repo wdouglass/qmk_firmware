@@ -31,3 +31,6 @@
 #define LED_CAPS_LOCK_PIN A15
 #define LED_PIN_ON_STATE    0
 
+#ifdef BOOTLOADER_TINYUF2
+#   define FEE_PAGE_BASE_ADDRESS 0x08008000
+#endif
