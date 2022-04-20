@@ -1,6 +1,6 @@
 # MCU name
 MCU = atmega32u2
-BOOTLOADER = caterina
+BOOTLOADER = atmel-dfu
 
 # Build Options
 #   comment out to disable the options.
@@ -12,7 +12,7 @@ CONSOLE_ENABLE = no	# Console for debug
 COMMAND_ENABLE = no   # Commands for debug and configuration
 NKRO_ENABLE = yes		# USB Nkey Rollover - not yet supported in LUFA
 
-LTO_ENABLE = yes
+# LTO_ENABLE = yes
 
 CUSTOM_MATRIX = yes    # Remote matrix from the wireless bridge
 # # project specific file

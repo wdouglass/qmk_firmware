@@ -52,8 +52,8 @@
 #define TAP_HOLD_CAPS_DELAY 150
 
 // for ble
-#define USE_MUILT_THREAD_FOR_BLE
-#define Z_ALICE_REV1
+// #define USE_MUILT_THREAD_FOR_BLE
+// #define Z_ALICE_REV1
 // rgb switch
 #ifdef Z_ALICE_REV1
 

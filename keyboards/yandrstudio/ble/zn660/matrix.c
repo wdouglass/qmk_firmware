@@ -129,6 +129,7 @@ uint8_t matrix_scan(void)
         // 先处理左边的数据，一行一行的处理
         // 由于发过来的是一列一列的数据所以先处理左边
         for (uint8_t i = 0; i < MATRIX_ROWS/2; i++) {
+            matrix[i] = 0;
             for (uint8_t j = 0; j < MATRIX_COLS; j++) {
                 matrix[i] |= (matrix_row_t)((uart_data[j] & 1<<i) ? 1:0) << j;
             }
@@ -136,6 +137,7 @@ uint8_t matrix_scan(void)
         // 处理右边的数据，一行一行的处理
         // 由于发过来的是一列一列的数据所以再处理右边
         for (uint8_t i = MATRIX_ROWS/2; i < MATRIX_ROWS; i++) {
+            matrix[i] = 0;
             for (uint8_t j = 0; j < MATRIX_COLS; j++) {
                 matrix[i] |= (matrix_row_t)((uart_data[j+MATRIX_COLS] & 1<<(i-MATRIX_ROWS/2)) ? 1:0) << j;
             }
