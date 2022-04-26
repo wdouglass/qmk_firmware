@@ -1,4 +1,4 @@
-/* Copyright 2021 JasonRen(biu)
+/* Copyright 2020 QMK
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,29 +13,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 #pragma once
+#include_next <halconf.h>
 
-#include "config_common.h"
+#undef  SERIAL_USB_BUFFERS_SIZE
+#define SERIAL_USB_BUFFERS_SIZE 256
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0xAA96
-#define PRODUCT_ID      0xAAAD
-#define DEVICE_VER      0x0001
-#define MANUFACTURER    ZHOU_Y&R
-#define PRODUCT         zhou65
+#undef  SERIAL_BUFFERS_SIZE
+#define SERIAL_BUFFERS_SIZE     128
 
-// enable the nkro when using the VIA.
-#define FORCE_NKRO
+#undef  SPI_USE_WAIT
+#define SPI_USE_WAIT TRUE
 
-// fix VIA RGB_light
-#define VIA_HAS_BROKEN_KEYCODES
+#undef HAL_USE_ADC
+#define HAL_USE_ADC    TRUE
 
-/* define if matrix has ghost */
-//#define MATRIX_HAS_GHOST
+#undef  SPI_SELECT_MODE
+#define SPI_SELECT_MODE SPI_SELECT_MODE_PAD
 
-/* Set 0 if debouncing isn't needed */
-#define DEBOUNCE 5
-
-// #define DEBUG_MATRIX_SCAN_RATE
-
-#define QMK_KEYS_PER_SCAN 4

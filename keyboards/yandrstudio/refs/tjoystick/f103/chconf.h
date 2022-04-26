@@ -1,4 +1,4 @@
-/* Copyright 2021 JasonRen(biu)
+/* Copyright 2020 QMK
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,29 +13,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #pragma once
 
-#include "config_common.h"
+#define CH_CFG_ST_FREQUENCY 10000
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0xAA96
-#define PRODUCT_ID      0xAAAD
-#define DEVICE_VER      0x0001
-#define MANUFACTURER    ZHOU_Y&R
-#define PRODUCT         zhou65
+#define CH_CFG_ST_TIMEDELTA 0
 
-// enable the nkro when using the VIA.
-#define FORCE_NKRO
+#define CH_CFG_USE_CONDVARS_TIMEOUT FALSE
 
-// fix VIA RGB_light
-#define VIA_HAS_BROKEN_KEYCODES
+#define CH_CFG_FACTORY_OBJECTS_REGISTRY TRUE
 
-/* define if matrix has ghost */
-//#define MATRIX_HAS_GHOST
+#define CH_CFG_FACTORY_GENERIC_BUFFERS TRUE
 
-/* Set 0 if debouncing isn't needed */
-#define DEBOUNCE 5
+#define CH_CFG_FACTORY_SEMAPHORES TRUE
 
-// #define DEBUG_MATRIX_SCAN_RATE
+#define CH_CFG_FACTORY_MAILBOXES TRUE
 
-#define QMK_KEYS_PER_SCAN 4
+#define CH_CFG_FACTORY_OBJ_FIFOS TRUE
+
+#define CH_CFG_FACTORY_PIPES TRUE
+
+#include_next <chconf.h>
+

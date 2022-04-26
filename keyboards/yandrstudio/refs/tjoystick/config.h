@@ -14,15 +14,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #pragma once
-
 #include "config_common.h"
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID       0xAA96
-#define PRODUCT_ID      0xAAAD
-#define DEVICE_VER      0x0001
-#define MANUFACTURER    ZHOU_Y&R
-#define PRODUCT         zhou65
+#define VENDOR_ID  0xFEED
+#define PRODUCT_ID 0x6060
+#define DEVICE_VER 0x0001
+#define MANUFACTURER    TEST_Y&R
+#define PRODUCT         tjoystick
 
 // enable the nkro when using the VIA.
 #define FORCE_NKRO
@@ -38,4 +37,30 @@
 
 // #define DEBUG_MATRIX_SCAN_RATE
 
-#define QMK_KEYS_PER_SCAN 4
+#define TAP_CODE_DELAY 15
+
+/* key matrix size */
+#define MATRIX_ROWS 2
+#define MATRIX_COLS 3
+
+//                        0    1    2
+#define MATRIX_COL_PINS { B0,  A8,  A9 }
+#define MATRIX_ROW_PINS { B1,  A11 }
+
+/* COL2ROW or ROW2COL */
+#define DIODE_DIRECTION COL2ROW
+
+
+// Max 32
+#define JOYSTICK_BUTTON_COUNT 0
+// Max 6: X, Y, Z, Rx, Ry, Rz
+#define JOYSTICK_AXES_COUNT 3
+
+#define JOYSTICK_AXES_RESOLUTION 12
+
+#ifdef JOYSTICK_ENABLE
+    /* Joystick pins */
+#   define JOYSTICK_X_PIN A1
+#   define JOYSTICK_Y_PIN A2
+#   define JOYSTICK_Z_PIN A3
+#endif

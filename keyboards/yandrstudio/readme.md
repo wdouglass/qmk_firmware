@@ -64,14 +64,17 @@ A creative coder.
 | jupiter980      | 0xAA96    | 0xAAEF     | BLE, Hotswap, RGB                | &check;           |
 | jupiter980      | 0xAA96    | 0xAAFF     | BLE, Solder, RGB                 | &check;           |
 | whitemouse69pro | 0xAA96    | 0xAA80     | F401, RGB, Encoder               | &check;           |
-| zlice           | 0xAA96    | 0xAA81     | BLE, F401, RGB, Encoder          | &check;           |
-| binary68        | 0xAA96    | 0xAA81     | BLE, F401, RGB                   | &check;           |
+| zhoulice        | 0xAA96    | 0xAA81     | BLE, F401, RGB, Encoder          | &check;           |
+| binary68        | 0xAA96    | 0xAA82     | BLE, F401, RGB                   | &check;           |
+| nz67            | 0xAA96    | 0xAA83     | F401, RGB, Encoder               | &check;           |
+| sam40v2         | 0xAA96    | 0xAA84     | BLE, F401                        | &check;           |
 
-### Obsolete keyboard for reference design only
+### Obsolete or Test keyboard for reference design only
 
 | NAME      | VENDOR_ID | PRODUCT_ID | FEATURES  | COMMERCIALIZATION |
 | --------- | --------- | ---------- | --------- | ----------------- |
 | final80v2 | 0xFEED    | 0x6060     | STM32F303 | &cross;           |
+| tjoystick | 0xFEED    | 0x6060     | STM32F303 | &cross;           |
 
 
 
