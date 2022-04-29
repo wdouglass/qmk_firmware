@@ -10,8 +10,7 @@ BOOTLOADER = tinyuf2
 FIRMWARE_FORMAT = uf2
 MCU_STARTUP ?= stm32f1xx
 
-# WS2812_DRIVER = pwm
-WS2812_DRIVER = spi
+WS2812_DRIVER = pwm
 
 # Wildcard to allow APM32 MCU
 # DFU_SUFFIX_ARGS = -p FFFF -v FFFF
