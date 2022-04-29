@@ -22,7 +22,7 @@
 #define PRODUCT_ID      0xAA83
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    Y&R
-#define PRODUCT         nz64
+#define PRODUCT         nz67v2
 
 /* key matrix size */
 #define MATRIX_ROWS 5

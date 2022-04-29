@@ -66,7 +66,7 @@ A creative coder.
 | whitemouse69pro | 0xAA96    | 0xAA80     | F401, RGB, Encoder               | &check;           |
 | zhoulice        | 0xAA96    | 0xAA81     | BLE, F401, RGB, Encoder          | &check;           |
 | binary68        | 0xAA96    | 0xAA82     | BLE, F401, RGB                   | &check;           |
-| nz67            | 0xAA96    | 0xAA83     | F401, RGB, Encoder               | &check;           |
+| nz67v2          | 0xAA96    | 0xAA83     | F401, RGB, Encoder               | &check;           |
 | sam40v2         | 0xAA96    | 0xAA84     | BLE, F401                        | &check;           |
 
 ### Obsolete or Test keyboard for reference design only

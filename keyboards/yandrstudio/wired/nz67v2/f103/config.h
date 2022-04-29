@@ -19,15 +19,13 @@
 /* RGB Matrix */
 #ifdef RGB_MATRIX_ENABLE
 
-#    define WS2812_PWM_DRIVER PWMD3  // default: PWMD2
-#    define WS2812_PWM_CHANNEL 2  // default: 2
-#    define WS2812_PWM_PAL_MODE 2  // Pin "alternate function", see the respective datasheet for the appropriate values for your MCU. default: 2
-#    define WS2812_DMA_STREAM STM32_DMA1_STREAM3  // DMA Stream for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
-#    define WS2812_DMA_CHANNEL 3  // DMA Channel for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
+// #    define WS2812_PWM_DRIVER PWMD3  // default: PWMD2
+// #    define WS2812_PWM_CHANNEL 2  // default: 2
+// #    define WS2812_PWM_PAL_MODE 2  // Pin "alternate function", see the respective datasheet for the appropriate values for your MCU. default: 2
+// #    define WS2812_DMA_STREAM STM32_DMA1_STREAM3  // DMA Stream for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
+// #    define WS2812_DMA_CHANNEL 3  // DMA Channel for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
 
 #   define WS2812_SPI SPID1 // default: SPID1
-#   define WS2812_SPI_MOSI_PAL_MODE 5
-#   define WS2812_SPI_USE_CIRCULAR_BUFFER
 // #   define WS2812_SPI_DIVISOR 4
 
 #endif
@@ -43,7 +41,5 @@
 
 
 #   define WS2812_SPI SPID1 // default: SPID1
-#   define WS2812_SPI_MOSI_PAL_MODE 5
-#   define WS2812_SPI_USE_CIRCULAR_BUFFER
 // #   define WS2812_SPI_DIVISOR 8
 #endif
