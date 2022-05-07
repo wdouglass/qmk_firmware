@@ -17,6 +17,10 @@
 
 #include "config_common.h"
 
+#ifdef BOOTLOADER_TINYUF2
+#   define FEE_PAGE_BASE_ADDRESS 0x08008000
+#endif
+
 /* key matrix size */
 #define MATRIX_ROWS 5
 #define MATRIX_COLS 14

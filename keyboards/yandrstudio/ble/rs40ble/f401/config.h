@@ -17,7 +17,9 @@
 
 #include "config_common.h"
 
-
+#ifdef BOOTLOADER_TINYUF2
+#   define FEE_PAGE_BASE_ADDRESS 0x08008000
+#endif
 
 /* RGN Matrix */
 #ifdef RGB_MATRIX_ENABLE
@@ -36,7 +38,7 @@
 #    define RGB_MATRIX_MAXIMUM_BRIGHTNESS 160
 #    define RGBLIGHT_VAL_STEP 16
 #    define RGB_DISABLE_WHEN_USB_SUSPENDED TRUE
-#    define RGB_MATRIX_CENTER { 96, 32 }
+#    define RGB_MATRIX_CENTER { 96 32 }
 #    define RGB_MATRIX_KEYPRESSES
 #    define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 

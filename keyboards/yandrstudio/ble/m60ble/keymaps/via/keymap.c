@@ -35,7 +35,7 @@ void keyboard_post_init_user(void) {
     // eeconfig_init();
     // uart_init(115200);
     // debug_enable=true;
-    //   debug_matrix=true;
-    //   debug_keyboard=true;
-    //     //debug_mouse=true;
+    // debug_matrix=true;
+    // debug_keyboard=true;
+    // debug_mouse=true;
 }

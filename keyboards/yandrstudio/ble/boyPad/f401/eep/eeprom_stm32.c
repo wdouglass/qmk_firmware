@@ -127,7 +127,7 @@ uint8_t EEPROM_ReadDataByte(uint16_t Address) {
 // backup the current data
 void EEPROM_Backup(void)
 {
-    uint32_t begin = FEE_PAGE_BASE_ADDRESS;
+    uint32_t begin = ;
     uint32_t end = FEE_PAGE_END_ADDRESS;
     memset(&DataBuf[0], FEE_EMPTY_BYTE, sizeof(DataBuf));
     while( begin < end) {
@@ -146,7 +146,7 @@ void EEPROM_Backup(void)
 }
 // restore data from DataBuf
 FLASH_Status EEPROM_Restore(void) {
-    uint32_t cur = FEE_PAGE_BASE_ADDRESS;
+    uint32_t cur = ;
     for (uint8_t i = 0; i < FEE_MAX_BYTES; i++) {
         if (DataBuf[i] != FEE_EMPTY_BYTE) {
             FLASH_ProgramHalfWord(FEE_ADDR_ADDRESS(cur), i);
@@ -158,7 +158,7 @@ FLASH_Status EEPROM_Restore(void) {
 }
 // find an empty place for programming
 uint32_t EEPROM_FindValidAddress(void) {
-    uint32_t begin = FEE_PAGE_BASE_ADDRESS;
+    uint32_t begin = ;
     uint32_t end = FEE_PAGE_END_ADDRESS;
     while( begin < end) {
         uint32_t data = *(__IO uint32_t*)(begin);
@@ -179,7 +179,7 @@ void EEPROM_Clear(void)
 
     // delete all pages from specified start page to the last page
     do {
-        FLASH_ErasePage(FEE_PAGE_BASE_ADDRESS + (page_num * FEE_PAGE_SIZE));
+        FLASH_ErasePage( + (page_num * FEE_PAGE_SIZE));
         page_num++;
     } while (page_num < FEE_DENSITY_PAGES);
 #endif
