@@ -20,6 +20,7 @@ A creative coder.
 | nz64ble       | 0xAA96    | 0xAA06     | BLE 5.0 Dual mode                     | &check;           |
 | zn660         | 0xAA96    | 0xAA07     | 2.4G Single mode Split Keyboard       | &check;           |
 | nz60ble       | 0xAA96    | 0xAA08     | BLE 5.0 Dual mode                     | &check;           |
+| zalicer2      | 0xAA96    | 0xAA09     | BLE 5.0 Dual mode, RGB                | &check;           |
 
 
 ### Keyboards Completed with Y&R Studio Participation 
