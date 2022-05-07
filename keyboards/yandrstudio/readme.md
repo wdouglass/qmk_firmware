@@ -14,11 +14,12 @@ A creative coder.
 | rainbow65     | 0xAA96    | 0xAA00     | OLED, RGB, ENCODER                    | &check;           |
 | cool87        | 0xAA96    | 0xAA01     | 32u4                                  | &cross;           |
 | sb65p         | 0xAA96    | 0xAA02     | 2.4G Single mode Split Keyboard       | &cross;           |
-| r65ble        | 0xAA96    | 0xAA03     | BLE 5.0 Dual mod version of rainbow65 | &cross;           |
+| r65ble        | 0xAA96    | 0xAA03     | BLE 5.0 Dual mod version of rainbow65 | &quest;           |
 | whitemouse28t | 0xAA96    | 0xAA04     | External EEPROM (95256), For Test     | &cross;           |
 | m60ble        | 0xAA96    | 0xAA05     | BLE 5.0 Dual mode, RGB                | &quest;           |
-| yr64ble       | 0xAA96    | 0xAA06     | BLE 5.0 Dual mode                     | &quest;           |
+| nz64ble       | 0xAA96    | 0xAA06     | BLE 5.0 Dual mode                     | &check;           |
 | zn660         | 0xAA96    | 0xAA07     | 2.4G Single mode Split Keyboard       | &check;           |
+| nz60ble       | 0xAA96    | 0xAA08     | BLE 5.0 Dual mode                     | &check;           |
 
 
 ### Keyboards Completed with Y&R Studio Participation 
@@ -42,12 +43,12 @@ A creative coder.
 | zhou65          | 0xAA96    | 0xAAAD     | F401                             | &check;           |
 | lh68            | 0xAA96    | 0xAAAE     | F401, RGB                        | &quest;           |
 | nz64            | 0xAA96    | 0xAAAF     | F401, RGB                        | &check;           |
-| ty66ble         | 0xAA96    | 0xAAC0     | BLE 5.0 Dual mode                | &check;           |
+| ty66ble         | 0xAA96    | 0xAAC0     | BLE 5.0 Dual mode                | &cross;           |
 | sci980          | 0xAA96    | 0xAAC1     | 32u4, RGB                        | &check;           |
 | z_alice_ble     | 0xAA96    | 0xAAC2     | BLE 5.0 Dual mode, RGB           | &check;           |
 | coder68ble      | 0xAA96    | 0xAAC3     | BLE 5.0 Dual mode, Hotswap       | &check;           |
 | coder68ble      | 0xAA96    | 0xAAC4     | BLE 5.0 Dual mode, Solder        | &check;           |
-| s68mble         | 0xAA96    | 0xAAC5     | BLE 5.0 Dual mode, Solder        | &check;           |
+| s68mble         | 0xAA96    | 0xAAC5     | BLE 5.0 Dual mode, Solder        | &cross;           |
 | zhou65ble       | 0xAA96    | 0xAAC6     | BLE 5.0 Dual mode, Hotswap       | &check;           |
 | m93ble          | 0xAA96    | 0xAAC7     | BLE 5.0 Dual mode, Hotswap, RGB  | &check;           |
 | rs40ble         | 0xAA96    | 0xAAC8     | BLE 5.0 Dual mode, Hotswap, RGB  | &check;           |
@@ -64,11 +65,14 @@ A creative coder.
 | jupiter980      | 0xAA96    | 0xAAEF     | BLE, Hotswap, RGB                | &check;           |
 | jupiter980      | 0xAA96    | 0xAAFF     | BLE, Solder, RGB                 | &check;           |
 | whitemouse69pro | 0xAA96    | 0xAA80     | F401, RGB, Encoder               | &check;           |
-| zhoulice        | 0xAA96    | 0xAA81     | BLE, F401, RGB, Encoder          | &check;           |
+| zhoulice        | 0xAA96    | 0xAA81     | F401, RGB, Encoder               | &check;           |
 | binary68        | 0xAA96    | 0xAA82     | BLE, F401, RGB                   | &check;           |
 | nz67v2          | 0xAA96    | 0xAA83     | F401, RGB, Encoder               | &check;           |
 | sam40v2         | 0xAA96    | 0xAA84     | BLE, F401                        | &check;           |
 | zhou75r2        | 0xAA96    | 0xAA85     | F103, RGB                        | &check;           |
+| rita65r2        | 0xAA96    | 0xAA86     | F103, RGB                        | &check;           |
+| dome65          | 0xAA96    | 0xAA87     | BLE                              | &check;           |
+| soul75          | 0xAA96    | 0xAA88     | BLE                              | &check;           |
 
 ### Obsolete or Test keyboard for reference design only
 
