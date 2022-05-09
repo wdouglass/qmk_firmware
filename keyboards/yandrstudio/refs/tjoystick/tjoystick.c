@@ -38,7 +38,7 @@ void matrix_scan_kb() {
     #   endif
     if (readPin(JOYSTICK_Z_PIN) == 1) {
     #   ifdef VIA_ENABLE
-        keycode = dynamic_keymap_get_keycode(biton32(layer_state), 0, 2);
+        keycode = dynamic_keymap_get_keycode(biton32(layer_state), 1, 1);
         if (keycode >= MACRO00 && keycode <= MACRO15) {
             dynamic_keymap_macro_send(keycode - MACRO00);
         } else {
@@ -48,58 +48,68 @@ void matrix_scan_kb() {
         tap_code16(KC_MUTE);
     #   endif
     }
+    bool left, right, up, down;
+    left = right = up = down = false;
     if (analogReadPin(JOYSTICK_X_PIN) > 768) {
-    #   ifdef VIA_ENABLE
-        keycode = dynamic_keymap_get_keycode(biton32(layer_state), 1, 2);
-        if (keycode >= MACRO00 && keycode <= MACRO15) {
-            dynamic_keymap_macro_send(keycode - MACRO00);
-        } else {
-            tap_code16(keycode);
-        }
-    #   else
-        tap_code16(KC_LEFT);
-    #   endif
-
+        left = true;
     } else if (analogReadPin(JOYSTICK_X_PIN) < 256) {
-    #   ifdef VIA_ENABLE
-        keycode = dynamic_keymap_get_keycode(biton32(layer_state), 1, 0);
-        if (keycode >= MACRO00 && keycode <= MACRO15) {
-            dynamic_keymap_macro_send(keycode - MACRO00);
-        } else {
-            tap_code16(keycode);
-        }
-    #   else
-        tap_code16(KC_RIGHT);
-    #   endif
+        right = true;
     }
-    if (analogReadPin(JOYSTICK_Y_PIN) < 256) {
-    #   ifdef VIA_ENABLE
-        keycode = dynamic_keymap_get_keycode(biton32(layer_state), 0, 1);
-        if (keycode >= MACRO00 && keycode <= MACRO15) {
-            dynamic_keymap_macro_send(keycode - MACRO00);
-        } else {
-            tap_code16(keycode);
-        }
-    #   else
-        tap_code16(KC_UP);
-    #   endif
-    } else if (analogReadPin(JOYSTICK_Y_PIN) > 768) {
-    #   ifdef VIA_ENABLEs
-        keycode = dynamic_keymap_get_keycode(biton32(layer_state), 1, 1);
-        if (keycode >= MACRO00 && keycode <= MACRO15) {
-            dynamic_keymap_macro_send(keycode - MACRO00);
-        } else {
-            tap_code16(keycode);
-        }
-    #   else
-        tap_code16(KC_DOWN);
-    #   endif
+    if (analogReadPin(JOYSTICK_Y_PIN) > 768) {
+        up = true;
+    } else if (analogReadPin(JOYSTICK_Y_PIN) < 256) {
+        down = true;
     }
+    //                             0  1  2  3  4  5  6  7
+    //                             u  d  l  r  ul ur dl dr
+    uint8_t joystick_direction = 8;
+    if (up) {
+        if (left) {
+            joystick_direction = 4;
+        } else if (right) {
+            joystick_direction = 5;
+        } else {
+            joystick_direction = 0;
+        }
+    } else if (down) {
+        if (left) {
+            joystick_direction = 6;
+        } else if (right) {
+            joystick_direction = 7;
+        } else {
+            joystick_direction = 1;
+        }
+    } else if (left) {
+        joystick_direction = 2;
+    } else if (right) {
+        joystick_direction = 3;
+    }
+    #   ifdef VIA_ENABLE
+        //                             u  d  l  r  ul ur dl dr
+        uint8_t joystick_map_rows[] = {0, 2, 1, 1, 0, 0, 2, 2};
+        uint8_t joystick_map_cols[] = {1, 1, 0, 2, 0, 2, 0, 2};
+        if (joystick_direction < 8 &&
+            joystick_map_rows[joystick_direction] != 0xff &&
+            joystick_map_cols[joystick_direction] != 0xff) {
+            keycode = dynamic_keymap_get_keycode(biton32(layer_state),
+                                                 joystick_map_rows[joystick_direction],
+                                                 joystick_map_cols[joystick_direction]);
+            if (keycode >= MACRO00 && keycode <= MACRO15) {
+                dynamic_keymap_macro_send(keycode - MACRO00);
+            } else {
+                tap_code16(keycode);
+            }
+        }
+    #   else
+        if (joystick_direction < 8) {
+            tap_code16(KC_UP-(joystick_direction%4));
+        }
+    #   endif
 }
 
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     switch(keycode) {
-        case KC_A:
+        case KC_Q:
             if (record->event.pressed) {
                 dprintf("X read value:%d \n", analogReadPin(JOYSTICK_X_PIN));
                 dprintf("Y read value:%d \n", analogReadPin(JOYSTICK_Y_PIN));

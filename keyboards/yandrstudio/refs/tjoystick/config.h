@@ -40,12 +40,12 @@
 #define TAP_CODE_DELAY 15
 
 /* key matrix size */
-#define MATRIX_ROWS 2
+#define MATRIX_ROWS 3
 #define MATRIX_COLS 3
 
 //                        0    1    2
 #define MATRIX_COL_PINS { B0,  A8,  A9 }
-#define MATRIX_ROW_PINS { B1,  A11 }
+#define MATRIX_ROW_PINS { B1,  A11, A10}
 
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
