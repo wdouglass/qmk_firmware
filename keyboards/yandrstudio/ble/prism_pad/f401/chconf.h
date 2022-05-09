@@ -16,7 +16,7 @@
 
 #pragma once
 
-#define CH_CFG_ST_FREQUENCY 10000
+#define CH_CFG_ST_FREQUENCY 5000
 
 #define CH_CFG_FACTORY_OBJECTS_REGISTRY TRUE
 
@@ -31,4 +31,3 @@
 #define CH_CFG_FACTORY_PIPES TRUE
 
 #include_next <chconf.h>
-

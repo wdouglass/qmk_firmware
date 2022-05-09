@@ -30,11 +30,10 @@
 
 //                        0    1    2    3    4   5   6   7   8   9   10  11  12  13
 #define MATRIX_COL_PINS { A6,  A7,  A15, B4}
-#define MATRIX_ROW_PINS { A5,  A4,  A3,  A13, A14 }
+#define MATRIX_ROW_PINS { A5,  A4,  A3,  C13, C14 }
 
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
-
 
 // enable the nkro when using the VIA.
 #define FORCE_NKRO
@@ -42,20 +41,13 @@
 // fix VIA RGB_light
 #define VIA_HAS_BROKEN_KEYCODES
 
-/* define if matrix has ghost */
-//#define MATRIX_HAS_GHOST
-
 /* Set 0 if debouncing isn't needed */
 #define DEBOUNCE 5
-
-#define USB_POLLING_INTERVAL_MS 1
-#define QMK_KEYS_PER_SCAN 4
 
 #define LED_NUM_LOCK_PIN     B12
 #define LED_PIN_ON_STATE     1
 
 #define HOLD_ON_OTHER_KEY_PRESS
-#define USE_MUILT_THREAD_FOR_BLE
 #define TAP_HOLD_CAPS_DELAY 200
 
 //for caps
@@ -74,6 +66,4 @@
 // ADC SETTING
 #define SAMPLE_BATTERY
 #define BATTERY_LEVEL_SW_PIN B7
-
-
 

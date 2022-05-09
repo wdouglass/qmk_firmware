@@ -62,6 +62,6 @@ void keyboard_post_init_kb(void) {
 #ifndef BIU_BLE5_ENABLE
 void keyboard_pre_init_kb(void) {
     palSetLineMode(RGB_BLE_SW, PAL_MODE_OUTPUT_PUSHPULL);
-    palClearLine(RGB_BLE_SW);
+    writePin(RGB_BLE_SW, 0);
 }
 #endif

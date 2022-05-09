@@ -53,6 +53,6 @@ led_config_t g_led_config = {
 void keyboard_post_init_kb(void) {
     debug_enable=true;
     // palSetLineMode(RGB_BLE_SW, PAL_MODE_OUTPUT_PUSHPULL);
-    // palSetLine(RGB_BLE_SW);
-    // palClearLine(RGB_BLE_SW);
+    // writePin(RGB_BLE_SW, 1);
+    // writePin(RGB_BLE_SW, 0);
 }
