@@ -14,3 +14,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "zhou75r2.h"
+
+bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
+    switch(keycode) {
+        case LOCK_GUI:
+            process_magic(GUI_TOG, record);
+            return false;
+        default:
+            return true;
+    }
+    return true;
+}
