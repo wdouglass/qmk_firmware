@@ -52,11 +52,6 @@
 #define SPI_MOSI_PIN_OF_595 A15
 #define SPI_74HC595_CS B3
 
-#ifdef VIA_ENABLE
-#   define DYNAMIC_KEYMAP_EEPROM_MAX_ADDR 2047
-#endif
-
-
 /* enable the nkro when using the VIA. */
 #define FORCE_NKRO
 

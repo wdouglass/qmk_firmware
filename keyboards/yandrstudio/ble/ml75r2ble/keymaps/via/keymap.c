@@ -15,152 +15,10 @@
  */
 #include QMK_KEYBOARD_H
 
-#include "outputselect.h"
-#include "biu_ble_common.h"
-#include "distributors.h"
-#include "usb_main.h"
 // #include "anm.h"
 #include "anm_apple.h"
 #include <stdio.h>
 // #include "print.h"
-
-enum keyboard_keycodes {
-    BLE_TOG_EXT = SAFE_RANGE, // ble
-    USB_TOG_EXT,              // usb
-    BAU_TOG_EXT,              // if ble then usb, if usb then ble
-    BL_SW_0_EXT,              // ble id 0
-    BL_SW_1_EXT,
-    BL_SW_2_EXT,
-    BL_SW_3_EXT,
-    BL_SW_4_EXT,
-    BL_SW_5_EXT,
-    BL_SW_6_EXT,
-    BL_SW_7_EXT,
-    BLE_DEL_EXT,              // delete current ble bound
-    BLE_CLR_EXT,              // delete all ble bound
-    BLE_OFF_EXT,             // power off
-    NEW_SAFE_RANGE  // Important!
-};
-
-
-#define BLE_TOG     KC_F15  // 打开蓝牙
-#define USB_TOG     KC_F16  // 打开USB
-#define BAU_TOG     KC_F17  // 蓝牙和USB之间切换
-#define BL_SW_0     KC_F18  // 开启蓝牙通道0（需要打开蓝牙的条件下才行）
-#define BL_SW_1     KC_F19  // 开启蓝牙通道1（需要打开蓝牙的条件下才行）
-#define BL_SW_2     KC_F20  // 开启蓝牙通道2（需要打开蓝牙的条件下才行）
-#define BL_SW_3     KC_F21  // 开启蓝牙通道3（需要打开蓝牙的条件下才行）
-#define BLE_DEL     KC_F22  // 删除当前蓝牙绑定
-#define BLE_CLR     KC_F23  // 清空所有蓝牙绑定
-#define BLE_OFF     KC_F24  // 关闭蓝牙连接
-
-#ifdef TAP_DANCE_ENABLE
-// Tap Dance declarations
-enum {
-    TD_FN_BLE_TOG,
-    TD_FN_USB_TOG,
-    TD_FN_BAU_TOG,
-    TD_FN_BLE_SW_0,
-    TD_FN_BLE_SW_1,
-    TD_FN_BLE_SW_2,
-    TD_FN_BLE_SW_3,
-    TD_FN_BLE_DEL,
-    TD_FN_BLE_CLR,
-    TD_FN_BLE_OFF
-};
-
-typedef struct {
-    uint16_t kc;
-} qk_kc;
-
-
-
-
-void dance_tab_ble_on_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (!state->pressed || state->interrupted) return;
-    qk_kc * p_keycode = (qk_kc *)user_data;
-    uint16_t keycode = p_keycode->kc;
-    switch (keycode)
-    {
-        case BLE_TOG:
-            switch_output_driver(0);
-            break;
-        case USB_TOG:
-            switch_output_driver(1);
-            break;
-        case BAU_TOG:
-            if (where_to_send() == OUTPUT_USB) {
-                switch_output_driver(0);
-            } else {
-                switch_output_driver(1);
-            }
-            break;
-        case BL_SW_0:
-        case BL_SW_1:
-        case BL_SW_2:
-        case BL_SW_3:
-            if (where_to_send() == OUTPUT_BLUETOOTH) {
-                bluetooth_switch_one(keycode - BL_SW_0);
-            }
-            break;
-        case BLE_DEL:
-            if (where_to_send() == OUTPUT_BLUETOOTH) {
-                bluetooth_unpair_current();
-            }
-            break;
-        case BLE_CLR:
-            if (where_to_send() == OUTPUT_BLUETOOTH) {
-                bluetooth_unpair_all();
-            }
-            break;
-        case BLE_OFF:
-            stop_one_lilnk(0);
-            break;
-        default:
-            break;
-    }
-}
-
-
-#define ACTION_TAP_DANCE_FN_ADVANCED_BLE(kc, user_fn_on_dance_finished) \
-        { .fn = {NULL, user_fn_on_dance_finished, NULL}, .user_data = (void *)&(qk_kc){kc}, }
-
-// Tap Dance definitions
-qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_FN_BLE_TOG] = ACTION_TAP_DANCE_FN_ADVANCED_BLE(BLE_TOG, dance_tab_ble_on_finished),
-    [TD_FN_USB_TOG] = ACTION_TAP_DANCE_FN_ADVANCED_BLE(USB_TOG, dance_tab_ble_on_finished),
-    [TD_FN_BAU_TOG] = ACTION_TAP_DANCE_FN_ADVANCED_BLE(BAU_TOG, dance_tab_ble_on_finished),
-    [TD_FN_BLE_SW_0] = ACTION_TAP_DANCE_FN_ADVANCED_BLE(BL_SW_0, dance_tab_ble_on_finished),
-    [TD_FN_BLE_SW_1] = ACTION_TAP_DANCE_FN_ADVANCED_BLE(BL_SW_1, dance_tab_ble_on_finished),
-    [TD_FN_BLE_SW_2] = ACTION_TAP_DANCE_FN_ADVANCED_BLE(BL_SW_2, dance_tab_ble_on_finished),
-    [TD_FN_BLE_SW_3] = ACTION_TAP_DANCE_FN_ADVANCED_BLE(BL_SW_3, dance_tab_ble_on_finished),
-    [TD_FN_BLE_DEL] = ACTION_TAP_DANCE_FN_ADVANCED_BLE(BLE_DEL, dance_tab_ble_on_finished),
-    [TD_FN_BLE_CLR] = ACTION_TAP_DANCE_FN_ADVANCED_BLE(BLE_CLR, dance_tab_ble_on_finished),
-    [TD_FN_BLE_OFF] = ACTION_TAP_DANCE_FN_ADVANCED_BLE(BLE_OFF, dance_tab_ble_on_finished),
-};
-
-
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case TD(TD_FN_BLE_TOG):
-        case TD(TD_FN_USB_TOG):
-        case TD(TD_FN_BAU_TOG):
-            return 500;
-        case TD(TD_FN_BLE_SW_0):
-        case TD(TD_FN_BLE_SW_1):
-        case TD(TD_FN_BLE_SW_2):
-        case TD(TD_FN_BLE_SW_3):
-            return  500;
-        case TD(TD_FN_BLE_DEL):
-        case TD(TD_FN_BLE_CLR):
-        case TD(TD_FN_BLE_OFF):
-            return 2000;
-        default:
-            return TAPPING_TERM;
-    }
-}
-
-#endif
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -174,9 +32,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	LAYOUT(
         KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_CALC,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-        KC_TRNS, BL_SW_0, BL_SW_1, BL_SW_2, BL_SW_3, BAU_TOG, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MNXT,
-        KC_TRNS, BLE_TOG, USB_TOG, BLE_DEL, BLE_CLR, BLE_OFF, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_MPLY,
-        KC_TRNS, KC_TRNS, RESET,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MPRV,
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MNXT,
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_MPLY,
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MPRV,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_RIGHT,KC_TRNS, KC_LEFT, KC_TRNS, KC_TRNS,          KC_TRNS, KC_INS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
 	LAYOUT(
         KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
@@ -248,23 +106,7 @@ static const char wpm_str_2[] PROGMEM = {
 
 void oled_render_normal(void) {
     /* Host output mode */
-    char out_model[5] = {0};
-    out_model[2] = ' ';
-    out_model[3] = ' ';
-    out_model[4] = 0;
-    if (where_to_send() == OUTPUT_BLUETOOTH) {
-        out_model[0] = 3;
-        out_model[1] = 4;
-        oled_write_P(out_model, false);
-    } else if (where_to_send() == OUTPUT_USB) {
-        out_model[0] = 1;
-        out_model[1] = 2;
-        oled_write_P(out_model, false);
-    } else if (where_to_send() == OUTPUT_AUTO) {
-        oled_write_P(PSTR("AUTO"), false);
-    } else {
-        oled_write_P(PSTR("NONE"), false);
-    }
+    oled_write_P(PSTR("USBD"), false);
 
     /* Host Keyboard Layer Status */
     oled_set_cursor(4,0);
@@ -285,14 +127,8 @@ void oled_render_normal(void) {
     }
 
     /* bat info */
-    uint8_t bat_l = get_bat_level();
-    bat_l = bat_l >= 99 ? 99 : bat_l;
-    char bat_str[5] = {0};
-    snprintf(bat_str, sizeof(bat_str), "%02u%%", bat_l);
-    bat_str[3] = 0;
-    bat_str[4] = 0;
     oled_write_P(PSTR(" BAT "), false);
-    oled_write_P(PSTR(bat_str), false);
+    oled_write_P(PSTR("XX"), false);
 
     /*Caps state */
     oled_set_cursor(0,1);
@@ -381,7 +217,7 @@ static uint32_t start_frame_index = 0;
 void oled_render_anm(void) {
     uint8_t frame_count = 150;
     uint8_t frame_turn = 1;
-    uint32_t one_frame_time = (30*1000.0)/(frame_turn*frame_count);
+    uint32_t one_frame_time = (20*1000.0)/(frame_turn*frame_count);
     if (!has_start) {
         has_start = true;
         start_time_anm = timer_read32();
@@ -467,78 +303,5 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef OLED_ENABLE
     start_render_anm = false;
 #endif
-    switch(keycode) {
-#ifndef CUSTOM_DELAY_KEYCODE
-        case BLE_TOG:
-        case BLE_TOG_EXT:
-            if (record->event.pressed) {
-                switch_output_driver(0);
-            }
-            return false;
-        case USB_TOG:
-        case USB_TOG_EXT:
-            if (record->event.pressed) {
-                switch_output_driver(1);
-            }
-            return false;
-        case BAU_TOG:
-        case BAU_TOG_EXT:
-            if (record->event.pressed) {
-                if (where_to_send() == OUTPUT_USB) {
-                    switch_output_driver(0);
-                } else {
-                    switch_output_driver(1);
-                }
-            }
-            return false;
-        case BL_SW_0:
-        case BL_SW_1:
-        case BL_SW_2:
-        case BL_SW_3:
-            if (where_to_send() == OUTPUT_BLUETOOTH) {
-                if (record->event.pressed) {
-                    set_output(OUTPUT_BLUETOOTH);
-                    bluetooth_switch_one(keycode - BL_SW_0);
-                }
-            }
-            return false;
-        case BL_SW_0_EXT:
-        case BL_SW_1_EXT:
-        case BL_SW_2_EXT:
-        case BL_SW_3_EXT:
-        case BL_SW_4_EXT:
-        case BL_SW_5_EXT:
-        case BL_SW_6_EXT:
-        case BL_SW_7_EXT:
-            if (where_to_send() == OUTPUT_BLUETOOTH) {
-                if (record->event.pressed) {
-                    bluetooth_switch_one(keycode - BL_SW_0_EXT);
-                }
-            }
-            return false;
-        case BLE_DEL:
-        case BLE_DEL_EXT:
-            if (record->event.pressed) {
-                if (where_to_send() == OUTPUT_BLUETOOTH) {
-                    bluetooth_unpair_current();
-                }
-            }
-            return false;
-        case BLE_CLR:
-        case BLE_CLR_EXT:
-            if (record->event.pressed) {
-                if (where_to_send() == OUTPUT_BLUETOOTH) {
-                    bluetooth_unpair_all();
-                }
-            }
-            return false;
-        case BLE_OFF:
-        case BLE_OFF_EXT:
-            stop_one_lilnk(0);
-            return false;
-#endif
-        default:
-            return true;
-    }
     return true;
 }

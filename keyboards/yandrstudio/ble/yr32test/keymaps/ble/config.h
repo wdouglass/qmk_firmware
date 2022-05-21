@@ -1,4 +1,4 @@
-/* Copyright 2022 JasonRen(biu)
+/* Copyright 2021 JasonRen(biu)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,8 +15,15 @@
  */
 #pragma once
 
-#include "config_common.h"
+#ifdef TAP_DANCE_ENABLE
 
-#ifdef BOOTLOADER_TINYUF2
-#   define FEE_PAGE_BASE_ADDRESS 0x08008000
+#   define TAPPING_TERM 250
+
+#   define TAPPING_TERM_PER_KEY
+
+#   define CUSTOM_DELAY_KEYCODE
+
+#   define CUSTOM_DELAY_KEYCODE_START KC_F15
+#   define CUSTOM_DELAY_KEYCODE_MAX   KC_F24
+
 #endif

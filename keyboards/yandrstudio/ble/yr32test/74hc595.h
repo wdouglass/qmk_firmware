@@ -1,4 +1,4 @@
-/* Copyright 2022 JasonRen(biu)
+/* Copyright 2021 JasonRen(biu)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,8 +15,10 @@
  */
 #pragma once
 
-#include "config_common.h"
-
-#ifdef BOOTLOADER_TINYUF2
-#   define FEE_PAGE_BASE_ADDRESS 0x08008000
+#if (DIODE_DIRECTION == COL2ROW)
+void select_cols_595(void);
+void unselect_cols_595(void);
+#else
+void select_rows_595(void);
+void unselect_rows_595(void);
 #endif

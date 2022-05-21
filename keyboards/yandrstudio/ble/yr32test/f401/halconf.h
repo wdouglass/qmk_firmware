@@ -1,4 +1,4 @@
-/* Copyright 2022 JasonRen(biu)
+/* Copyright 2020 QMK
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,10 +13,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #pragma once
+#include_next <halconf.h>
 
-#include "config_common.h"
+#undef HAL_USE_PWM
+#define HAL_USE_PWM TRUE
 
-#ifdef BOOTLOADER_TINYUF2
-#   define FEE_PAGE_BASE_ADDRESS 0x08008000
-#endif
+#undef HAL_USE_SERIAL
+#define HAL_USE_SERIAL TRUE
+
+#undef HAL_USE_ADC
+#define HAL_USE_ADC    TRUE
+
+#undef  SERIAL_USB_BUFFERS_SIZE
+#define SERIAL_USB_BUFFERS_SIZE 256
+
+#undef  SERIAL_BUFFERS_SIZE
+#define SERIAL_BUFFERS_SIZE     256
+
+#undef  SPI_SELECT_MODE
+#define SPI_SELECT_MODE SPI_SELECT_MODE_NONE
+
+#undef  SPI_USE_WAIT
+#define SPI_USE_WAIT TRUE
+
+#undef  PAL_USE_CALLBACKS
+#define PAL_USE_CALLBACKS TRUE

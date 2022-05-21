@@ -13,10 +13,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#pragma once
+#include "dome65.h"
 
-#include "config_common.h"
-
-#ifdef BOOTLOADER_TINYUF2
-#   define FEE_PAGE_BASE_ADDRESS 0x08008000
-#endif
+bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
+    switch(keycode) {
+        case LOCK_GUI:
+            process_magic(GUI_TOG, record);
+            return false;
+        default:
+            return true;
+    }
+    return true;
+}
