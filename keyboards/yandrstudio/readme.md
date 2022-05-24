@@ -74,14 +74,17 @@ A creative coder.
 | zhou75r2        | 0xAA96    | 0xAA85     | F103, RGB                        | &check;           |
 | rita65r2        | 0xAA96    | 0xAA86     | F103, RGB                        | &check;           |
 | dome65          | 0xAA96    | 0xAA87     | BLE                              | &check;           |
-| soul75          | 0xAA96    | 0xAA88     | BLE                              | &check;           |
+| soul70          | 0xAA96    | 0xAA88     | BLE                              | &check;           |
+| buff65v2        | 0xAA96    | 0xAA89     | F103, RGB                        | &check;           |
+| nightstar75     | 0xAA96    | 0xAA8A     | F103, RGB                        | &check;           |
 
 ### Obsolete or Test keyboard for reference design only
 
-| NAME      | VENDOR_ID | PRODUCT_ID | FEATURES  | COMMERCIALIZATION |
-| --------- | --------- | ---------- | --------- | ----------------- |
-| final80v2 | 0xFEED    | 0x6060     | STM32F303 | &cross;           |
-| tjoystick | 0xFEED    | 0x6060     | STM32F303 | &cross;           |
+| NAME      | VENDOR_ID | PRODUCT_ID | FEATURES           | COMMERCIALIZATION |
+| --------- | --------- | ---------- | ------------------ | ----------------- |
+| final80v2 | 0xAA96    | 0xFFFF     | STM32F303           | &cross;           |
+| tjoystick | 0xAA96    | 0xFFFF     | STM32F103, Joystick | &cross;           |
+| tlcd      | 0xAA96    | 0xFFFF     | STM32F401, LCD      | &cross;           |
 
 
 

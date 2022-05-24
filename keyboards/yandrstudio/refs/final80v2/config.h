@@ -4,8 +4,8 @@
 #include "config_common.h"
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID 0xFEED
-#define PRODUCT_ID 0x6060
+#define VENDOR_ID  0xAA96
+#define PRODUCT_ID 0xFFFF
 #define DEVICE_VER 0x0002
 #define MANUFACTURER Neilzx - Design
 #define PRODUCT Final80 % v2
