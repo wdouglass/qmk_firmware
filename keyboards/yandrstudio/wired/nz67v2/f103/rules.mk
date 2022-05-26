@@ -13,4 +13,4 @@ MCU_STARTUP ?= stm32f1xx
 WS2812_DRIVER = pwm
 
 # Wildcard to allow APM32 MCU
-# DFU_SUFFIX_ARGS = -p FFFF -v FFFF
+DFU_SUFFIX_ARGS = -p FFFF -v FFFF

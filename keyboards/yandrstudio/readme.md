@@ -77,6 +77,7 @@ A creative coder.
 | buff65v2        | 0xAA96    | 0xAA88     | F103, RGB                        | &check;           |
 | dome65          | 0xAA96    | 0xAA89     | BLE                              | &check;           |
 | soul70          | 0xAA96    | 0xAA8A     | BLE                              | &check;           |
+| yr67ble         | 0xAA96    | 0xAA8B     | BLE                              | &check;           |
 
 ### Obsolete or Test keyboard for reference design only
 
