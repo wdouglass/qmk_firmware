@@ -29,8 +29,6 @@
 	{ K300,  K301,  K302,  K303,  KC_NO, K305,  K306,  KC_NO, K308,  K309,  KC_NO, K311 }  \
 }
 
-
-
 #ifdef RGB_MATRIX_ENABLE
 #define UNDERRGB_TOG_K KC_F13
 #else

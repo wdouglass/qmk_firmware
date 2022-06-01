@@ -2,7 +2,7 @@
     "name": "YR32TEST_Y&R",
     "vendorId": "0xAA96",
     "productId": "0xAA0A",
-    "lighting": "none",
+    "lighting": "qmk_rgblight",
     "matrix": {
         "rows": 5,
         "cols": 11

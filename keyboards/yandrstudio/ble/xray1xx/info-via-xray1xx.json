@@ -13,6 +13,7 @@
                 0,
                 0,
                 0,
+                0,
                 0
             ]
         },
@@ -20,7 +21,8 @@
             "Split Backspace",
             "ISO Enter",
             "Stepped Caps",
-            "Split Left Shift"
+            "Split Left Shift",
+            "7U"
         ],
         "keymap": [
             [

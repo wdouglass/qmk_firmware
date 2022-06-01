@@ -59,16 +59,9 @@
 
 #    define RGB_DI_PIN B5
 #    define RGBLED_NUM 6
-#    define RGBLIGHT_LIMIT_VAL 180
 #    define DRIVER_LED_TOTAL RGBLED_NUM
+#    define RGBLIGHT_LIMIT_VAL 180
 #    define RGBLIGHT_ANIMATIONS
-
-
-#    define WS2812_PWM_DRIVER PWMD3  // default: PWMD2
-#    define WS2812_PWM_CHANNEL 2  // default: 2
-#    define WS2812_PWM_PAL_MODE 2  // Pin "alternate function", see the respective datasheet for the appropriate values for your MCU. default: 2
-#    define WS2812_DMA_STREAM STM32_DMA1_STREAM2  // DMA Stream for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
-#    define WS2812_DMA_CHANNEL 5  // DMA Channel for TIMx_UP, see the respective reference manual for the appropriate values for your MCU.
 
 #endif
 
@@ -82,9 +75,6 @@
 #define DEBOUNCE 5
 
 #define TAP_CODE_DELAY 15
-
-#define USB_POLLING_INTERVAL_MS 1
-#define QMK_KEYS_PER_SCAN 4
 
 #define HOLD_ON_OTHER_KEY_PRESS
 #define TAP_HOLD_CAPS_DELAY 150

@@ -171,11 +171,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LSFT, KC_BSLS, KC_Z,    KC_X,     KC_C,     KC_V,     KC_B,      KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,           KC_RSFT,                      KC_UP,            KC_P1,    KC_P2,    KC_P3,    KC_PENT,
         KC_LCTL, KC_LGUI, KC_LALT,                     KC_SPC,                                            KC_RALT,  MO(1),   KC_APP,   KC_RCTL,            KC_LEFT,  KC_DOWN, KC_RGHT,           KC_P0,    KC_PDOT),
 	LAYOUT(
-		KC_TRNS,          KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,   KC_TRNS,  KC_TRNS,            KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS,                                                           KC_TRNS,
+		KC_TRNS,          KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,   KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS,                                                           KC_TRNS,
 		KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
-		KC_TRNS, KC_TRNS, BL_SW_0,  BL_SW_1,  BL_SW_2,  BL_SW_3,  BAU_TOG,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS, KC_TRNS,  KC_TRNS,            KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
-		KC_TRNS, KC_TRNS, BLE_TOG,  USB_TOG,  BLE_DEL,  BLE_CLR,  BLE_OFF,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,           KC_TRNS,                                       KC_TRNS,  KC_TRNS,  KC_TRNS,
-		KC_TRNS, RGB_TOG, RGB_TOG,  RGB_MOD,  RGB_RMOD, RGB_VAI,  RGB_VAD,   RGB_HUI,  RGB_HUD,  RGB_SAI,  RGB_SAD,  KC_TRNS,           KC_TRNS,                     KC_TRNS,          KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
+		KC_TRNS, BL_SW_0, BL_SW_1,  BL_SW_2,  BL_SW_3,  BAU_TOG,  KC_TRNS,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS, KC_TRNS,  KC_TRNS,            KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
+		KC_TRNS, BLE_TOG, USB_TOG,  BLE_DEL,  BLE_CLR,  BLE_OFF,  KC_TRNS,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,           KC_TRNS,                                       KC_TRNS,  KC_TRNS,  KC_TRNS,
+		KC_TRNS, KC_TRNS, RGB_TOG,  RGB_MOD,  RGB_RMOD, RGB_VAI,  RGB_VAD,   RGB_HUI,  RGB_HUD,  RGB_SAI,  RGB_SAD,  KC_TRNS,           KC_TRNS,                     KC_TRNS,          KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
 		KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS,                                           KC_TRNS,  KC_TRNS, KC_TRNS,  KC_TRNS,            KC_TRNS, KC_TRNS, KC_TRNS,           KC_TRNS,  KC_TRNS),
 	LAYOUT(
 		KC_TRNS,          KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,   KC_TRNS,  KC_TRNS,            KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS,                                                           KC_TRNS,

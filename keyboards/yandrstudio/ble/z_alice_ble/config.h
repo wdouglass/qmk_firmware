@@ -210,11 +210,11 @@
 #   define BIUNRF52ResetPin A1
 #   define BIUNRF52WKPin A3
 
-
 // USB Power
 #   define USB_PWR_READ
 #   define USB_PWR_READ_PIN A8
 // ADC SETTING
 #   define SAMPLE_BATTERY
 #   define BATTERY_LEVEL_SW_PIN A2 // Adc pin
+
 #endif
