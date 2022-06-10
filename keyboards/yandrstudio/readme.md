@@ -81,11 +81,12 @@ A creative coder.
 
 ### Obsolete or Test keyboard for reference design only
 
-| NAME      | VENDOR_ID | PRODUCT_ID | FEATURES           | COMMERCIALIZATION |
-| --------- | --------- | ---------- | ------------------ | ----------------- |
-| final80v2 | 0xAA96    | 0xFFFF     | STM32F303           | &cross;           |
-| tjoystick | 0xAA96    | 0xFFFF     | STM32F103, Joystick | &cross;           |
-| tlcd      | 0xAA96    | 0xFFFF     | STM32F401, LCD      | &cross;           |
+| NAME      | VENDOR_ID | PRODUCT_ID | FEATURES                      | COMMERCIALIZATION |
+| --------- | --------- | ---------- | ----------------------------- | ----------------- |
+| final80v2 | 0xAA96    | 0xFFFF     | STM32F303                     | &cross;           |
+| tjoystick | 0xAA96    | 0xFFFF     | STM32F103, Joystick           | &cross;           |
+| tlcd      | 0xAA96    | 0xFFFF     | STM32F401, LCD                | &cross;           |
+| tec       | 0xAA96    | 0xFFFF     | STM32F401, Electro Capacitive | &cross;           |
 
 
 
