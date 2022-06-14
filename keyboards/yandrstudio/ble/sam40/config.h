@@ -71,4 +71,4 @@
 #define BIUNRF52WKPin         A2
 
 // for ble
-#   define SLEEP_IN_STOP_MATRIX_LOW
+// #   define SLEEP_IN_STOP_MATRIX_LOW

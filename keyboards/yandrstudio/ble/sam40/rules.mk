@@ -7,5 +7,5 @@ COMMAND_ENABLE     = yes         # Commands for debug and configuration
 NKRO_ENABLE = yes               # USB Nkey Rollover
 
 CUSTOM_MATRIX = lite    # for using the A9 pin as matrix io
-QUANTUM_SRC += matrix_inv.c
-# QUANTUM_SRC += matrix.c
+# QUANTUM_SRC += matrix_inv.c
+QUANTUM_SRC += matrix.c
