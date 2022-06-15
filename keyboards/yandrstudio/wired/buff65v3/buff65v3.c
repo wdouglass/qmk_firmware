@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "buff65v2.h"
+#include "buff65v3.h"
 
 
 #ifdef RGBLIGHT_ENABLE
@@ -23,6 +23,23 @@ void keyboard_post_init_kb(void) {
 }
 
 #endif
+
+
+bool led_update_kb(led_t led_state) {
+    bool res = led_update_user(led_state);
+    if(led_state.caps_lock){
+        if(!rgblight_is_enabled()) {
+            rgblight_enable_noeeprom();
+        }
+        rgblight_sethsv_at(0, 255, (rgblight_get_val()*RGBLIGHT_LIMIT_VAL)/255.0, 0);
+    } else {
+        if (!rgblight_is_enabled()) {
+            rgblight_disable_noeeprom();
+        }
+    }
+    return res;
+}
+
 
 
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {

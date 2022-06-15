@@ -22,7 +22,7 @@
 #define PRODUCT_ID      0xAA88
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    BUFF_Y&R
-#define PRODUCT         buff65v2
+#define PRODUCT         buff65v3
 
 /* key matrix size */
 #define MATRIX_ROWS 5
