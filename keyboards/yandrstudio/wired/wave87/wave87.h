@@ -18,3 +18,4 @@
 	{ K500,  K501,  K502,  K503,  K504,  K505,  KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, K512,  K513,  K514,  K515,  K516 }  \
 }
 
+#define LOCK_GUI KC_F23

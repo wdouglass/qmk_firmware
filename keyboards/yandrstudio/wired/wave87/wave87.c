@@ -15,32 +15,35 @@
  */
 #include "wave87.h"
 
-
 #ifdef RGBLIGHT_ENABLE
-extern rgblight_config_t rgblight_config;
-uint8_t pre_mode = 0xff;
+
+const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 3, 128, 135, 255}
+);
+
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+    my_capslock_layer
+);
 
 bool led_update_kb(led_t led_state) {
-    bool res = led_update_user(led_state);
-    if (res) {
-        if (host_keyboard_led_state().caps_lock) {
-            if (pre_mode == 0xff) {
-                pre_mode = rgblight_get_mode();
-                rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
-                rgblight_sethsv(128, 135, rgblight_config.val);
-            }
-        } else {
-            if (pre_mode != 0xff) {
-                rgblight_mode(pre_mode);
-                pre_mode = 0xff;
-            }
-        }
-    }
-    return res;
+    rgblight_set_layer_state(0, led_state.caps_lock);
+    return true;
 }
 
 void keyboard_post_init_kb(void) {
     rgblight_reload_from_eeprom();
+    rgblight_layers = my_rgb_layers;
 }
 
 #endif
+
+bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
+    switch(keycode) {
+        case LOCK_GUI:
+            process_magic(GUI_TOG, record);
+            return false;
+        default:
+            return true;
+    }
+    return true;
+}

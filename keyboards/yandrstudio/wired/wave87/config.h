@@ -23,21 +23,39 @@
 #define MANUFACTURER    WAVE_Y&R
 #define PRODUCT         wave87
 
+/* key matrix size */
+#define MATRIX_ROWS 6
+#define MATRIX_COLS 17
+
+//                        0    1    2    3     4    5    6    7    8    9    10    11   12  13   14   15   16   17
+#define MATRIX_COL_PINS { B8,  B9,  C13, C14,  C15, A0,  A3,  A4,  A5,  A6,  B0,   B1,  A1, A2,  B14, B13, B12 }
+#define MATRIX_ROW_PINS { A15, B3,  B4,  B5,   B6,  B7}
+
+/* COL2ROW or ROW2COL */
+#define DIODE_DIRECTION COL2ROW
+
 // enable the nkro when using the VIA.
 #define FORCE_NKRO
 
 // fix VIA RGB_light
 #define VIA_HAS_BROKEN_KEYCODES
 
-/* define if matrix has ghost */
-//#define MATRIX_HAS_GHOST
-
 /* Set 0 if debouncing isn't needed */
 #define DEBOUNCE 5
 
-// #define DEBUG_MATRIX_SCAN_RATE
-
-#define USB_POLLING_INTERVAL_MS 1
-#define QMK_KEYS_PER_SCAN 4
-
 #define TAP_CODE_DELAY 15
+
+
+#ifdef RGBLIGHT_ENABLE
+
+#    define RGB_DI_PIN A7
+#    define RGBLED_NUM 3
+#    define DRIVER_LED_TOTAL RGBLED_NUM
+#    define RGBLIGHT_LIMIT_VAL 180
+#    define RGBLIGHT_ANIMATIONS
+#    define RGBLIGHT_SLEEP
+#    define RGBLIGHT_LAYERS
+#    define RGBLIGHT_LAYERS_RETAIN_VAL
+#    define RGBLIGHT_LAYERS_OVERRIDE_RGB_OFF
+
+#endif

@@ -22,7 +22,7 @@
 #define PRODUCT_ID      0xAA88
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    BUFF_Y&R
-#define PRODUCT         buff65v3
+#define PRODUCT         buff67v3
 
 /* key matrix size */
 #define MATRIX_ROWS 5
@@ -56,6 +56,9 @@
 #    define RGBLIGHT_LIMIT_VAL 200
 #    define RGB_DISABLE_WHEN_USB_SUSPENDED true
 #    define RGBLIGHT_ANIMATIONS
+#    define RGBLIGHT_LAYERS
+#    define RGBLIGHT_LAYERS_RETAIN_VAL
+#    define RGBLIGHT_LAYERS_OVERRIDE_RGB_OFF
 
 #endif
 

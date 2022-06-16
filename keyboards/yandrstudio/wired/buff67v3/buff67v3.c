@@ -13,34 +13,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "buff65v3.h"
+#include "buff67v3.h"
 
 
 #ifdef RGBLIGHT_ENABLE
 
+
+
+const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 1, HSV_RED}
+);
+
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+    my_capslock_layer
+);
+
+bool led_update_kb(led_t led_state) {
+    rgblight_set_layer_state(0, led_state.caps_lock);
+    return true;
+}
+
 void keyboard_post_init_kb(void) {
     rgblight_reload_from_eeprom();
+    rgblight_layers = my_rgb_layers;
 }
 
 #endif
-
-
-bool led_update_kb(led_t led_state) {
-    bool res = led_update_user(led_state);
-    if(led_state.caps_lock){
-        if(!rgblight_is_enabled()) {
-            rgblight_enable_noeeprom();
-        }
-        rgblight_sethsv_at(0, 255, (rgblight_get_val()*RGBLIGHT_LIMIT_VAL)/255.0, 0);
-    } else {
-        if (!rgblight_is_enabled()) {
-            rgblight_disable_noeeprom();
-        }
-    }
-    return res;
-}
-
-
 
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     switch(keycode) {

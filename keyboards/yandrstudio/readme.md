@@ -75,7 +75,7 @@ A creative coder.
 | zhou75r2        | 0xAA96    | 0xAA85     | F103, RGB                        | &check;           |
 | rita65r2        | 0xAA96    | 0xAA86     | F103, RGB                        | &check;           |
 | nightstar75     | 0xAA96    | 0xAA87     | F103, RGB                        | &check;           |
-| buff65v3        | 0xAA96    | 0xAA88     | F103, RGB                        | &check;           |
+| buff67v3        | 0xAA96    | 0xAA88     | F103, RGB                        | &check;           |
 | dome65          | 0xAA96    | 0xAA89     | BLE                              | &check;           |
 | soul70          | 0xAA96    | 0xAA8A     | BLE                              | &check;           |
 | nz67ble         | 0xAA96    | 0xAA8B     | BLE                              | &check;           |
