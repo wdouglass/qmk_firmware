@@ -510,6 +510,10 @@ static void usb_event_cb(USBDriver *usbp, usbevent_t event) {
         case USB_EVENT_UNCONFIGURED:
             /* Falls into.*/
         case USB_EVENT_RESET:
+            keyboard_protocol = 1;
+#   ifdef NKRO_ENABLE
+            keymap_config.nkro = !!keyboard_protocol;
+#   endif
             usb_event_queue_enqueue(event);
             for (int i = 0; i < NUM_USB_DRIVERS; i++) {
                 chSysLockFromISR();

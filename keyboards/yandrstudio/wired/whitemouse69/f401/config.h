@@ -17,6 +17,10 @@
 
 #include "config_common.h"
 
+#ifdef BOOTLOADER_TINYUF2
+#   define FEE_PAGE_BASE_ADDRESS 0x08008000
+#endif
+
 /* key matrix size */
 #define MATRIX_ROWS 5
 #define MATRIX_COLS 15
@@ -42,16 +46,6 @@
 #   define WS2812_SPI_USE_CIRCULAR_BUFFER
 #   define WS2812_SPI_DIVISOR 4
 
-#    define RGB_MATRIX_MAXIMUM_BRIGHTNESS 150
-#    define RGBLIGHT_VAL_STEP 15
-#    define RGB_DISABLE_WHEN_USB_SUSPENDED true
-#    define RGB_MATRIX_CENTER { 96, 32 }
-#    define RGB_MATRIX_KEYPRESSES
-#    define RGB_MATRIX_FRAMEBUFFER_EFFECTS
-#    define RGBLIGHT_ANIMATIONS
-
-// #    define WS2812_BYTE_ORDER WS2812_BYTE_ORDER_RGB
-
 #endif
 
 
@@ -60,19 +54,11 @@
 #    define RGB_DI_PIN B15
 #    define RGBLED_NUM 72
 #    define DRIVER_LED_TOTAL RGBLED_NUM
-#    define RGBLIGHT_SLEEP
-#    define RGBLIGHT_VAL_STEP 15
-#    define RGBLIGHT_LIMIT_VAL 150
-#    define RGB_DISABLE_WHEN_USB_SUSPENDED true
-#    define RGBLIGHT_ANIMATIONS
 
 #   define WS2812_SPI SPID2 // default: SPID1
 #   define WS2812_SPI_MOSI_PAL_MODE 5
 #   define WS2812_SPI_USE_CIRCULAR_BUFFER
 #   define WS2812_SPI_DIVISOR 4
-
-
-// #    define WS2812_BYTE_ORDER WS2812_BYTE_ORDER_RGB
 
 #endif
 
