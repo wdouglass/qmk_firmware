@@ -79,6 +79,8 @@ A creative coder.
 | dome65          | 0xAA96    | 0xAA89     | BLE                              | &check;           |
 | soul70          | 0xAA96    | 0xAA8A     | BLE                              | &check;           |
 | nz67ble         | 0xAA96    | 0xAA8B     | BLE                              | &check;           |
+| whitemouse69v2  | 0xAA96    | 0xAA8C     | F103, RGB                        | &check;           |
+
 
 ### Obsolete or Test keyboard for reference design only
 
