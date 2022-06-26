@@ -2,10 +2,8 @@
 MCU = STM32F401
 
 # Bootloader selection
-# BOOTLOADER = tinyuf2
-BOOTLOADER = stm32-dfu
-
-# MCU_LDSCRIPT = AT32F425x8
+BOOTLOADER = tinyuf2
+# BOOTLOADER = stm32-dfu
 
 # # project specific file
 CUSTOM_MATRIX = lite    # for using the A9 pin as matrix io
