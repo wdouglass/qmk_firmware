@@ -49,13 +49,13 @@
 #ifdef RGB_MATRIX_ENABLE
 
 #    define RGB_DI_PIN B5
-#    define RGBLED_NUM 86
+#    define RGBLED_NUM 67
 #    define DRIVER_LED_TOTAL RGBLED_NUM
 
 #    define RGB_MATRIX_MAXIMUM_BRIGHTNESS 250
 #    define RGBLIGHT_VAL_STEP 5
 #    define RGB_DISABLE_WHEN_USB_SUSPENDED
-#    define RGB_MATRIX_CENTER { 96, 32 }
+#    define RGB_MATRIX_CENTER { 112, 32 }
 #    define RGB_MATRIX_KEYPRESSES
 #    define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #    define RGBLIGHT_ANIMATIONS
@@ -112,7 +112,7 @@
 #ifdef RGBLIGHT_ENABLE
 
 #    define RGB_DI_PIN B5
-#    define RGBLED_NUM 86
+#    define RGBLED_NUM 67
 #    define DRIVER_LED_TOTAL RGBLED_NUM
 #    define RGBLIGHT_SLEEP
 #    define RGBLIGHT_VAL_STEP 15
