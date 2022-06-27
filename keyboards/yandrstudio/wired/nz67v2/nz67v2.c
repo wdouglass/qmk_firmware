@@ -74,7 +74,11 @@ void rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
     } else {
         rgb_matrix_set_color_all(0,0,0);
     }
+    if (host_keyboard_led_state().caps_lock) {
+        RGB_MATRIX_INDICATOR_SET_COLOR(25, rgblight_get_val(), rgblight_get_val(), rgblight_get_val()); // assuming caps lock is at led #5
+    }
 }
+
 
 void eeconfig_init_kb(void) {
     kb_cums.raw = 0;
