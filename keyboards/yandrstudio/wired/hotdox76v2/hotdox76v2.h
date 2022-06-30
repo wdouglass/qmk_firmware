@@ -51,3 +51,4 @@
     { R110,  R111,  R112,  R113,  R114,  R115,  R116  }  \
 }
 
+#define TOG_OLED KC_F13

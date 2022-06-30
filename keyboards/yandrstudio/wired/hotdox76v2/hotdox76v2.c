@@ -253,6 +253,19 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         get_cur_alp_hook(keycode);
     }
+    switch(keycode) {
+        case TOG_OLED:
+            if (record->event.pressed) {
+                if (is_oled_on()) {
+                    oled_off();
+                } else {
+                    oled_on();
+                }
+            }
+            return false;
+        default:
+            return true;
+    }
     return true;
 
 }
@@ -296,7 +309,6 @@ void housekeeping_task_user(void) {
 
 
 #endif
-
 
 
 
