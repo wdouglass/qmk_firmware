@@ -31,8 +31,8 @@
 #define DIODE_DIRECTION COL2ROW
 
 //                         0    1    2    3    4    5    6    7    8    9    10   11   12   13   14
-#define MATRIX_COL_PINS {  B9,  A3,  A4,  A5,  A6,  A7,  B0,  B2,  B10, B11, B12, B13, B14, B15, A8 }
-#define MATRIX_ROW_PINS {  B3,  B4,  B6,  B7,  B8 }
+#define MATRIX_COL_PINS {  B2,  B10, B11, A8,  A9,  A10, B5,  A15, B3,  A2,  A3,  B4,  B4,  B5,  B6 }
+#define MATRIX_ROW_PINS {  B0,  B6,  B1,  B7,  A1 }
 
 #define TAP_CODE_DELAY 15
 
@@ -48,8 +48,8 @@
 /* RGB Matrix */
 #ifdef RGB_MATRIX_ENABLE
 
-#    define RGB_DI_PIN B5
-#    define RGBLED_NUM 67
+#    define RGB_DI_PIN A7
+#    define RGBLED_NUM 69
 #    define DRIVER_LED_TOTAL RGBLED_NUM
 
 #    define RGB_MATRIX_MAXIMUM_BRIGHTNESS 250
@@ -111,8 +111,8 @@
 
 #ifdef RGBLIGHT_ENABLE
 
-#    define RGB_DI_PIN B5
-#    define RGBLED_NUM 67
+#    define RGB_DI_PIN A7
+#    define RGBLED_NUM 69
 #    define DRIVER_LED_TOTAL RGBLED_NUM
 #    define RGBLIGHT_SLEEP
 #    define RGBLIGHT_VAL_STEP 15
