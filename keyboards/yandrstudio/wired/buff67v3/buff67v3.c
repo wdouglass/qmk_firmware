@@ -43,6 +43,7 @@ void keyboard_post_init_kb(void) {
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     switch(keycode) {
         case LOCK_GUI:
+        case KC_F23:
             process_magic(GUI_TOG, record);
             return false;
         default:
