@@ -2,9 +2,9 @@
 #include "oled_font_lib/ext_font.h"
 
 enum Layer_name {
-    HOME,
-    CODE,
-    OFFICE,
+    QWERTY,
+    RAISE,
+    LOWER,
     OTHER
 };
 
@@ -31,13 +31,13 @@ void render_layer(uint8_t layer) {
     render_layer_helper_fun(0, PSTR("LAYER:"), 12, 6);
     switch (layer) {
     case 0:
-        render_layer_helper_fun(1, PSTR("1:HOME"), 12, 6);
+        render_layer_helper_fun(1, PSTR("1:QWERTY"), 12, 8);
         break;
     case 1:
-        render_layer_helper_fun(1, PSTR("2:CODE"), 12, 6);
+        render_layer_helper_fun(1, PSTR("2:RAISE"), 12, 7);
         break;
     case 2:
-        render_layer_helper_fun(1, PSTR("3:OFFICE"), 0, 8);
+        render_layer_helper_fun(1, PSTR("3:LOWER"), 0, 7);
         break;
     case 3:
     default:

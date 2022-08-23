@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "oled_font_lib/ext_font.h"
 
 enum Layer_name {
     HOME,
@@ -6,6 +7,46 @@ enum Layer_name {
     OFFICE,
     OTHER
 };
+
+#   ifdef I_AM_LEFT
+void render_layer_helper_fun(uint8_t start_line, const char * data, uint8_t gap_w, uint8_t l) {
+    uint8_t j = 0, k = 0;
+    for (j = 0; j < l; ++j) { // font index
+        for (k = 0; k < 12; ++k) { // font byte index
+            //                                        base + logo_w(32) + gap_w(12) +l*font_w(12)+current_byte_index
+            oled_write_raw_byte(pgm_read_byte(&ext_big_font[pgm_read_byte(&data[j])-0x21][k]), start_line*2*128 + 32 + gap_w + j*12+k);
+            oled_write_raw_byte(pgm_read_byte(&ext_big_font[pgm_read_byte(&data[j])-0x21][k+12]), start_line*2*128+128 + 32 + gap_w + j*12+k);
+        }
+    }
+    for (j = 0; j < gap_w; ++j) {
+        oled_write_raw_byte(pgm_read_byte(&blank_block), start_line*2*128 + 32 + j);
+        oled_write_raw_byte(pgm_read_byte(&blank_block), start_line*2*128 + 32 + gap_w + l*12 + j);
+
+        oled_write_raw_byte(pgm_read_byte(&blank_block), start_line*2*128+128 + 32 + j);
+        oled_write_raw_byte(pgm_read_byte(&blank_block), start_line*2*128+128 + 32 + gap_w + l*12 + j);
+
+    }
+}
+void render_layer(uint8_t layer) {
+    render_layer_helper_fun(0, PSTR("LAYER:"), 12, 6);
+    switch (layer) {
+    case 0:
+        render_layer_helper_fun(1, PSTR("1:HOME"), 12, 6);
+        break;
+    case 1:
+        render_layer_helper_fun(1, PSTR("2:CODE"), 12, 6);
+        break;
+    case 2:
+        render_layer_helper_fun(1, PSTR("3:OFFICE"), 0, 8);
+        break;
+    case 3:
+    default:
+        render_layer_helper_fun(1, PSTR("4:OTHERS"), 0, 8);
+        break;
+    }
+}
+
+# endif
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Basic layer
