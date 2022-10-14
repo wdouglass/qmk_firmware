@@ -3,6 +3,7 @@
 #include <transactions.h>
 // #include "oled_font_lib/logo.h"
 #include "oled_font_lib/logo2.h"
+#include "oled_font_lib/ext_font.h"
 
 void render_layer(uint8_t layer);
 
