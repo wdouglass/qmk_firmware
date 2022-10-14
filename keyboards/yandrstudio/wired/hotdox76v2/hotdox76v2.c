@@ -72,36 +72,8 @@ led_config_t g_led_config = {
 
 #ifdef OLED_ENABLE
 
-#   define UNC (94+0x21)
-typedef struct _master_to_slave_t {
-    int cur_alp_index;
-    char current_alp[7];
-} master_to_slave_t;
-master_to_slave_t m2s;
-
-typedef struct _slave_to_master_t {
-    int cur_alp_index;
-    char current_alp[7];
-} slave_to_master_t;
-slave_to_master_t s2m;
-
+#   define UNC (0x20)
 oled_rotation_t oled_init_kb(oled_rotation_t rotation) {
-    strcpy((char *)(m2s.current_alp), "[    ]");
-    m2s.current_alp[1] = UNC;
-    m2s.current_alp[2] = UNC;
-    m2s.current_alp[3] = UNC;
-    m2s.current_alp[4] = UNC;
-
-    m2s.cur_alp_index = 1;
-
-    strcpy((char *)(s2m.current_alp), "[    ]");
-    s2m.current_alp[1] = UNC;
-    s2m.current_alp[2] = UNC;
-    s2m.current_alp[3] = UNC;
-    s2m.current_alp[4] = UNC;
-
-    s2m.cur_alp_index = 1;
-
 #   ifdef I_AM_LEFT
         return OLED_ROTATION_180;
 #   else
@@ -130,8 +102,8 @@ void render_cur_input_helper_fun(uint8_t start_line, const char * data, uint8_t 
     for (j = 0; j < l; ++j) { // font index
         for (k = 0; k < 12; ++k) { // font byte index
             //                                        base + logo_w(0) + gap_w(12) +l*font_w(12)+current_byte_index
-            oled_write_raw_byte(pgm_read_byte(&ext_big_font[data[j]-0x21][k]), start_line*2*128 + gap_w + j*12+k);
-            oled_write_raw_byte(pgm_read_byte(&ext_big_font[data[j]-0x21][12+k]), start_line*2*128+128 + gap_w + j*12+k);
+            oled_write_raw_byte(pgm_read_byte(&ext_big_font[data[j]-0x20][k]), start_line*2*128 + gap_w + j*12+k);
+            oled_write_raw_byte(pgm_read_byte(&ext_big_font[data[j]-0x20][12+k]), start_line*2*128+128 + gap_w + j*12+k);
         }
     }
     for (j = 0; j < gap_w; ++j) {
@@ -144,12 +116,8 @@ void render_cur_input_helper_fun(uint8_t start_line, const char * data, uint8_t 
 }
 
 void render_cur_input(void) {
-    render_cur_input_helper_fun(0, "INPUTS:", 6, 7);
-    if (is_keyboard_master()) {
-        render_cur_input_helper_fun(1, (const char *)(m2s.current_alp), 12, 6);
-    } else {
-        render_cur_input_helper_fun(1, (const char *)(s2m.current_alp), 12, 6);
-    }
+    render_cur_input_helper_fun(0, "WOODROW", 6, 7);
+    render_cur_input_helper_fun(1, "CRL SE ", 6, 7);
     return;
 }
 #endif
@@ -187,31 +155,7 @@ static const char PROGMEM code_to_name[0xFF] = {
     UNC,        UNC,        UNC,        UNC,        UNC,        UNC,        UNC,        UNC,        UNC,        UNC,        UNC,        UNC,        UNC,        UNC,        UNC        // Fx
 };
 
-
-
-
-void get_cur_alp_hook(uint16_t keycode) {
-    if (keycode >= 0xF0) {
-        keycode = 0xF0;
-    }
-    if (m2s.cur_alp_index < 4) {
-        m2s.current_alp[m2s.cur_alp_index] = pgm_read_byte(&code_to_name[keycode]);
-        if (m2s.cur_alp_index == 1) {
-            m2s.current_alp[2] = m2s.current_alp[3] = m2s.current_alp[4]  = UNC;
-        }
-        m2s.cur_alp_index++;
-    } else {
-        for (uint8_t i = 2; i <= 4; ++i) {
-            m2s.current_alp[i-1] = m2s.current_alp[i];
-        }
-        m2s.current_alp[m2s.cur_alp_index] = pgm_read_byte(&code_to_name[keycode]);
-    }
-}
-
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
-    if (record->event.pressed) {
-        get_cur_alp_hook(keycode);
-    }
     switch(keycode) {
         case TOG_OLED:
             if (record->event.pressed) {
@@ -230,43 +174,6 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
 }
 
 
-void matrix_scan_kb(void) {
-    if(!is_oled_on()) {
-        m2s.cur_alp_index = 1;
-    }
-}
-
-
-
-void user_sync_alpa_slave_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
-    const master_to_slave_t *m2s_p = (const master_to_slave_t*)in_data;
-    s2m.cur_alp_index = m2s_p->cur_alp_index;
-    for (size_t i = 0; i < 7; i++)
-    {
-        s2m.current_alp[i] = m2s_p->current_alp[i];
-    }
-}
-
-void keyboard_post_init_kb(void) {
-    transaction_register_rpc(KEYBOARD_CURRENT_ALPA_SYNC, user_sync_alpa_slave_handler);
-}
-
-void housekeeping_task_user(void) {
-    if (is_keyboard_master()) {
-        // Interact with slave every 200ms
-        static uint32_t last_sync = 0;
-        if (timer_elapsed32(last_sync) > 200) {
-            if(transaction_rpc_exec(KEYBOARD_CURRENT_ALPA_SYNC, sizeof(m2s), &m2s, sizeof(s2m), &s2m)) {
-                last_sync = timer_read32();
-                dprint("Slave sync successed!\n");
-            } else {
-                dprint("Slave sync failed!\n");
-            }
-        }
-    }
-}
-
-
 #endif
 
 
@@ -278,4 +185,4 @@ void housekeeping_task_user(void) {
 //     // debug_matrix=false;
 //     // debug_keyboard=true;
 //     //debug_mouse=true;
-// }
+// 
