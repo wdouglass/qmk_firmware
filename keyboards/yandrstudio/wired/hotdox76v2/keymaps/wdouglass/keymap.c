@@ -110,9 +110,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                        ,-------------.       ,-------------.
  *                                        |Animat|      |       |Toggle|      |
  *                                 ,------|------|------|       |------+------+------.
- *                                 |Bright|Bright|      |       |      |Hue-  |Hue+  |
+ *                                 |Bright|Bright|      |       |Hue+  |      |      |
  *                                 |ness- |ness+ |------|       |------|      |      |
- *                                 |      |      |      |       |      |      |      |
+ *                                 |      |      |      |       |Hue-  |      |      |
  *                                 `--------------------'       `--------------------'
  */
 	LAYOUT(
@@ -132,8 +132,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_TRNS, KC_AMPR, KC_1,    KC_2,    KC_3,    KC_BSLS, KC_TRNS,
                          KC_TRNS, KC_DOT,  KC_0,    KC_EQL,  KC_TRNS,
        RGB_TOG, KC_TRNS,
-       KC_TRNS,
-       KC_TRNS, RGB_HUD, RGB_HUI
+       RGB_HUI,
+       RGB_HUD, KC_TRNS, KC_TRNS
     ),
 /* Keymap 2: Lower=
  *
@@ -169,7 +169,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // right hand
        KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS,  KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_DEL,
-                 KC_TRNS, KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_MPLY,
+                 KC_TRNS, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_MPLY,
        KC_TRNS,  KC_TRNS, KC_MPLY, KC_MPRV, KC_MNXT, KC_TRNS, KC_TRNS,
                           KC_VOLU, KC_VOLD, KC_MUTE, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS,
