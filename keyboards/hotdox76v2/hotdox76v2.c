@@ -101,38 +101,18 @@ void render_logo(void) {
     uint8_t i = 0, j = 0;
     for (i = 0; i < 4; ++i) {
         for (j = 0; j < 32; ++j) {
-            if (is_keyboard_left()) {
-                oled_write_raw_byte(pgm_read_byte(&logo_crl[i * 32 + j]), i * 128 + j);
-            } else {
-                oled_write_raw_byte(pgm_read_byte(&logo_crl[i * 32 + j]), i * 128 + j + 96);
-            }
+            oled_write_raw_byte(pgm_read_byte(&logo_crl[i * 32 + j]), i * 128 + j + 96);
         }
     }
 }
 
 void render_layer(uint8_t layer);
 
-void render_cur_input_helper_fun(uint8_t start_line, const char *data, uint8_t gap_w, uint8_t l) {
-    uint8_t j = 0, k = 0;
-    for (j = 0; j < l; ++j) {      // font index
-        for (k = 0; k < 12; ++k) { // font byte index
-            //                                        base + logo_w(0) + gap_w(12) +l*font_w(12)+current_byte_index
-            oled_write_raw_byte(pgm_read_byte(&ext_big_font[data[j] - 0x20][k]), start_line * 2 * 128 + gap_w + j * 12 + k);
-            oled_write_raw_byte(pgm_read_byte(&ext_big_font[data[j] - 0x20][12 + k]), start_line * 2 * 128 + 128 + gap_w + j * 12 + k);
-        }
-    }
-    for (j = 0; j < gap_w; ++j) {
-        oled_write_raw_byte(pgm_read_byte(&blank_block), start_line * 2 * 128 + j);
-        oled_write_raw_byte(pgm_read_byte(&blank_block), start_line * 2 * 128 + gap_w + l * 12 + j);
-
-        oled_write_raw_byte(pgm_read_byte(&blank_block), start_line * 2 * 128 + 128 + j);
-        oled_write_raw_byte(pgm_read_byte(&blank_block), start_line * 2 * 128 + 128 + gap_w + l * 12 + j);
-    }
-}
+void render_text_helper_fun(uint8_t start_line, const char *data, uint8_t gap_w, uint8_t l);
 
 void render_cur_input(void) {
-    render_cur_input_helper_fun(0, "WOODROW", 6, 7);
-    render_cur_input_helper_fun(1, "CRL SE ", 6, 7);
+    render_text_helper_fun(0, PSTR("WOODROW"), 6, 7);
+    render_text_helper_fun(1, PSTR("CRL SE "), 6, 7);
     return;
 }
 
