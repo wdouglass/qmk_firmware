@@ -19,6 +19,8 @@
     },
     "rgb_matrix": {
         "animations": {
+	    "typing_heatmap": true,
+	    "solid_reactive_simple": true,
             "breathing": true
         },
         "center_point": [112, 32],
