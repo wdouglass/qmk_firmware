@@ -9,7 +9,7 @@
         "command": false,
         "console": false,
         "extrakey": true,
-        "mousekey": true,
+        "mousekey": false,
         "nkro": true,
         "oled": true,
         "rgb_matrix": true
@@ -19,10 +19,8 @@
     },
     "rgb_matrix": {
         "animations": {
-            "gradient_up_down": true,
-            "gradient_left_right": true,
-            "cycle_left_right": true,
-            "cycle_out_in_dual": true
+            "typing_heatmap": true,
+            "breathing": true
         },
         "center_point": [112, 32],
         "driver": "ws2812",
