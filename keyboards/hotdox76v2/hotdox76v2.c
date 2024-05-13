@@ -5,7 +5,7 @@
 #include "hotdox76v2.h"
 #include <string.h>
 #include <transactions.h>
-#include "oled_font_lib/logo2.h"
+#include "oled_font_lib/logo3.h"
 #include "oled_font_lib/ext_font.h"
 
 
@@ -102,49 +102,15 @@ void render_logo(void) {
     for (i = 0; i < 4; ++i) {
         for (j = 0; j < 32; ++j) {
             if (is_keyboard_left()) {
-                oled_write_raw_byte(pgm_read_byte(&logo_mouse[i * 32 + j]), i * 128 + j);
+                oled_write_raw_byte(pgm_read_byte(&logo_crl[i * 32 + j]), i * 128 + j);
             } else {
-                oled_write_raw_byte(pgm_read_byte(&logo_mouse[i * 32 + j]), i * 128 + j + 96);
+                oled_write_raw_byte(pgm_read_byte(&logo_crl[i * 32 + j]), i * 128 + j + 96);
             }
         }
     }
 }
 
-void render_layer_helper_fun(uint8_t start_line, const char *data, uint8_t gap_w, uint8_t l) {
-    uint8_t j = 0, k = 0;
-    for (j = 0; j < l; ++j) {      // font index
-        for (k = 0; k < 12; ++k) { // font byte index
-            //                                        base + logo_w(32) + gap_w(12) +l*font_w(12)+current_byte_index
-            oled_write_raw_byte(pgm_read_byte(&ext_big_font[pgm_read_byte(&data[j]) - 0x20][k]), start_line * 2 * 128 + 32 + gap_w + j * 12 + k);
-            oled_write_raw_byte(pgm_read_byte(&ext_big_font[pgm_read_byte(&data[j]) - 0x20][k + 12]), start_line * 2 * 128 + 128 + 32 + gap_w + j * 12 + k);
-        }
-    }
-    for (j = 0; j < gap_w; ++j) {
-        oled_write_raw_byte(pgm_read_byte(&blank_block), start_line * 2 * 128 + 32 + j);
-        oled_write_raw_byte(pgm_read_byte(&blank_block), start_line * 2 * 128 + 32 + gap_w + l * 12 + j);
-
-        oled_write_raw_byte(pgm_read_byte(&blank_block), start_line * 2 * 128 + 128 + 32 + j);
-        oled_write_raw_byte(pgm_read_byte(&blank_block), start_line * 2 * 128 + 128 + 32 + gap_w + l * 12 + j);
-    }
-}
-void render_layer(uint8_t layer) {
-    render_layer_helper_fun(0, PSTR("LAYER:"), 12, 6);
-    switch (layer) {
-        case 0:
-            render_layer_helper_fun(1, PSTR("1:HOME"), 12, 6);
-            break;
-        case 1:
-            render_layer_helper_fun(1, PSTR("2:CODE"), 12, 6);
-            break;
-        case 2:
-            render_layer_helper_fun(1, PSTR("3:OFFICE"), 0, 8);
-            break;
-        case 3:
-        default:
-            render_layer_helper_fun(1, PSTR("4:OTHERS"), 0, 8);
-            break;
-    }
-}
+void render_layer(uint8_t layer);
 
 void render_cur_input_helper_fun(uint8_t start_line, const char *data, uint8_t gap_w, uint8_t l) {
     uint8_t j = 0, k = 0;
@@ -165,12 +131,8 @@ void render_cur_input_helper_fun(uint8_t start_line, const char *data, uint8_t g
 }
 
 void render_cur_input(void) {
-    render_cur_input_helper_fun(0, "INPUTS:", 6, 7);
-    if (is_keyboard_master()) {
-        render_cur_input_helper_fun(1, (const char *)(m2s.current_alp), 12, 6);
-    } else {
-        render_cur_input_helper_fun(1, (const char *)(s2m.current_alp), 12, 6);
-    }
+    render_cur_input_helper_fun(0, "WOODROW", 6, 7);
+    render_cur_input_helper_fun(1, "CRL SE ", 6, 7);
     return;
 }
 
